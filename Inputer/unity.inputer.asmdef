@@ -1,0 +1,6 @@
+{
+    "name": "unity.Inputer",
+    "references": ["com.unity.inputsystem"],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

@@ -1,0 +1,17 @@
+{
+  "name": "com.downun-phitures",
+  "version": "1.0.0",
+  "displayName": "PhiTures",
+  "description": "This packages contains extensions to the inspector, and several useful methods, struct, ect...",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "keywords": [
+    "inspector",
+    "palette"
+  ],
+  "author": {
+    "name": "Saint-Val Yahnis",
+    "email": "xynhay0@gmail.com"
+  },
+  "hideInEditor": false
+}

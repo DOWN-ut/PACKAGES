@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Effects_Palette
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::ColorPalette
+  name: Effects Palette
+  colors:
+  - name: Heal
+    colors:
+    - {r: 1, g: 0, b: 0.12047005, a: 1}
+    - {r: 1, g: 0.5707547, b: 0.5741213, a: 1}
+    - {r: 0.38679248, g: 0, b: 0.0030336203, a: 1}
+    - {r: 0.38679248, g: 0, b: 0.0030336203, a: 1}
+    - {r: 0.38679248, g: 0, b: 0.0030336203, a: 1}
+    - {r: 0.38679248, g: 0, b: 0.0030336203, a: 1}
+  - name: Damage
+    colors:
+    - {r: 1, g: 0.77250254, b: 0, a: 1}
+    - {r: 1, g: 0.9774129, b: 0.4764151, a: 1}
+    - {r: 0.509434, g: 0.39356273, b: 0, a: 1}
+    - {r: 1, g: 0.77250254, b: 0, a: 1}
+    - {r: 1, g: 0.77250254, b: 0, a: 1}
+    - {r: 1, g: 0.77250254, b: 0, a: 1}
+  - name: Protection
+    colors:
+    - {r: 0, g: 0.9193516, b: 1, a: 1}
+    - {r: 0.5707547, g: 0.9646505, b: 1, a: 1}
+    - {r: 0, g: 0.49345186, b: 0.5377358, a: 1}
+    - {r: 0, g: 0.9193516, b: 1, a: 1}
+    - {r: 0, g: 0.9193516, b: 1, a: 1}
+    - {r: 0, g: 0.9193516, b: 1, a: 1}
+  - name: Speed
+    colors:
+    - {r: 0, g: 1, b: 0.1187284, a: 1}
+    - {r: 0.5613208, g: 1, b: 0.6129301, a: 1}
+    - {r: 0, g: 0.5471698, b: 0.06437298, a: 1}
+    - {r: 0, g: 1, b: 0.1187284, a: 1}
+    - {r: 0, g: 1, b: 0.1187284, a: 1}
+    - {r: 0, g: 1, b: 0.1187284, a: 1}
+  - name: 
+    colors:
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+    - {r: 1, g: 1, b: 1, a: 1}
+  variation: 0

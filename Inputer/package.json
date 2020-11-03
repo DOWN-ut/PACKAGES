@@ -1,0 +1,19 @@
+{
+  "name": "com.downun-inputer",
+  "version": "1.0.0",
+  "displayName": "Inputer",
+  "description": "This package is an extension to the Input System.",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "dependencies":{
+	"com.unity.inputsystem":"1.0.0"
+  },
+  "keywords": [
+    "input"
+  ],
+  "author": {
+    "name": "Saint-Val Yahnis",
+    "email": "xynhay0@gmail.com"
+  },
+  "hideInEditor": false
+}

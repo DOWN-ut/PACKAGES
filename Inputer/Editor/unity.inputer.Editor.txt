@@ -1,0 +1,6 @@
+{
+    "name": "unity.inputer.Editor",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

@@ -1,0 +1,6 @@
+{
+    "name": "unity.phitures.Editor",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}
