@@ -592,6 +592,7 @@ public class Calculations : MonoBehaviour
         Gradient gradient = new Gradient();
 
         gradient.colorKeys = new GradientColorKey[1] { new GradientColorKey( color , 0 ) };
+        gradient.alphaKeys = new GradientAlphaKey[1] { new GradientAlphaKey( color.a , 0 ) };
 
         return gradient;
     }
