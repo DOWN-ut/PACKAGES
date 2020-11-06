@@ -596,6 +596,21 @@ public class Calculations : MonoBehaviour
 
         return gradient;
     }
+
+    public static void AddToArray<T>(ref T[] array, T add)
+    {
+        List<T> list = new List<T>(array);
+        list.Add( add );
+        array = list.ToArray();
+    }
+    public static void RemoveFromArray<T> ( ref T[] array, int index )
+    {
+        if(array.Length <= 0) { return; }
+        index = index < 0 ? 0 : index >= array.Length ? array.Length - 1 : index;
+        List<T> list = new List<T>(array);
+        list.RemoveAt( index );
+        array = list.ToArray();
+    }
 }
 
 public static class PlayerData
@@ -650,6 +665,8 @@ public struct IColor
     {
         return a.color;
     }
+
+    public static Color none { get { return new Color( 0 , 0 , 0 , 0 ); } }
 
     public static IColor Blend( IColor[] colors )
     {

@@ -210,4 +210,43 @@ public static class GUING
 
         return v;
     }
+
+    public static void FloatField ( ref float value , string label , float valueWidth , float labelWidth , float labelHeight )
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField( label , GUILayout.Width( labelWidth ) , GUILayout.Height( labelHeight ) );
+        value = EditorGUILayout.FloatField( value , GUILayout.Width( valueWidth ) , GUILayout.Height( labelHeight ) );
+        EditorGUILayout.EndHorizontal();
+    }
+    public static void Vector3Field ( ref Vector3 value , string label , float valueWidth , float labelWidth , float labelHeight )
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField( label , GUILayout.Width( labelWidth ) , GUILayout.Height( labelHeight ) );
+        value = EditorGUILayout.Vector3Field("", value , GUILayout.Width( valueWidth ) , GUILayout.Height( labelHeight ) );
+        EditorGUILayout.EndHorizontal();
+    }
+
+    public static void Space ( int count )
+    {
+        for (int i = 0 ; i < count ; i++)
+            EditorGUILayout.Space();
+    }
+
+    public static void CircleInTexture(ref Texture2D text, float diameterRatio, float ellipsity, Color color)
+    {
+        float dia = Mathf.Min(text.width,text.height) * diameterRatio; float ra = dia/2f;
+        float w = ra; if(ellipsity > 1) { w /= ellipsity; }
+        float h = ra; if (ellipsity < 1) { h *= ellipsity; }
+        Vector2Int center = new Vector2Int(Mathf.RoundToInt( text.width/2f),Mathf.RoundToInt( text.height/2f));
+
+        for (float c = -1 ; c <=1 ;c += 1f/ (float)text.width)
+        {
+            float acos = Mathf.Acos( c);
+            float y = Mathf.Sin(acos) * h;
+            float x = c*w;
+    
+            text.SetPixel( Mathf.RoundToInt( center.x + x ), Mathf.RoundToInt( center.y + y ), color ) ;
+            text.SetPixel( Mathf.RoundToInt( center.x + x ), Mathf.RoundToInt( center.y - y ), color );
+        }
+    }
 }
