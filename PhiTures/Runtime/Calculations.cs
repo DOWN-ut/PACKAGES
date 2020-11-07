@@ -1131,6 +1131,7 @@ public struct AudioElement
         return list[Random.Range( 0 , list.Count - 1 )];
     }
 }
+[System.Serializable]
 public class ObjectProbalize 
 {
 
