@@ -1090,10 +1090,15 @@ public struct interval
     public float amplitude { get { return top - bottom; } }
     public float random { get { return Random.Range( bottom , top ); } }
 
+    public static interval Null { get { return new interval( 0 , 0 ); } }
     public static interval Default { get { return new interval( -1 , 1 ); } }
     public interval ( float _top_,float _bottom_ ) { _bottom = _bottom_; _top = _top_; bottom = _bottom; top = _top; }
     public interval CreateFromTop ( float _top_,float _amplitude_) { return new interval( _top_,_top_ - _amplitude_); }
     public interval CreateFromBottom ( float _bottom_ , float _amplitude_ ) { return new interval( _bottom_ + _amplitude_ , _bottom_ ); }
+    public bool Contains(float v )
+    {
+        return v >= bottom && v <= top;
+    }
 
     public static implicit operator float (interval i ) { return i.random; }
 }
@@ -1141,30 +1146,56 @@ public class ObjectProbalized<T> : ObjectProbalize
 {
     public T obj;
     public float probability=1;
+    interval interval = interval.Null;
 
     public ObjectProbalized () { obj = default; probability = 1; }
     public ObjectProbalized (T _obj, float _p){obj = _obj; probability = _p;}
 
-    public static void Flatten ( ref ObjectProbalized<T>[] array )
+    public static void SetInterval(ref ObjectProbalized<T>[] array )
+    {
+        ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr , 0 );
+        if(Sum(_arr) > 1) { Flatten( ref _arr ); }
+
+        float bottom= 0;
+        foreach (ObjectProbalized<T> obj in array) 
+        {
+            obj.interval = new interval( bottom + obj.probability, bottom );
+            bottom = obj.probability;
+        }
+    }
+
+    public static float Sum( ObjectProbalized<T>[] array )
     {
         float sum =0;
         foreach (ObjectProbalized<T> o in array) { sum += o.probability; }
+        return sum;
+    }
+
+    public static float Flatten ( ref ObjectProbalized<T>[] array )
+    {
+        float sum = Sum( array ); if(sum == 0) { return 0; }
         foreach (ObjectProbalized<T> o in array) { o.probability /= sum; }
+        return sum ;
     }
 
-    public static ObjectProbalized<T> Get ( ObjectProbalized<T>[] array , float precision = 100 )
+    public static ObjectProbalized<T> Get ( ObjectProbalized<T>[] array )
     {
-        Flatten( ref array );
+        ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr,0 ); Flatten( ref _arr );
 
-        List<ObjectProbalized<T>> list = new List<ObjectProbalized<T>>();
-        foreach (ObjectProbalized<T> o in array) { for (int i = 0 ; i < o.probability * precision ; i++) { list.Add( o ); } }
+        SetInterval( ref _arr );
+        float v = Random.Range(0,1f);
 
-        return list[Random.Range( 0 , list.Count )];
+        foreach(ObjectProbalized<T> obj in _arr)
+        {
+            if(obj.interval.Contains(v) ) { return obj; }
+        }
+
+        return null; ;
     }
 
-    public static ObjectProbalized<T> Get( ObjectProbalized<T>[] array , out int id, float precision = 100 )
+    public static ObjectProbalized<T> Get( ObjectProbalized<T>[] array , out int id )
     {
-        ObjectProbalized<T> selected = Get(array,precision);
+        ObjectProbalized<T> selected = Get(array);
 
         id = 0;int a = 0;
         foreach (ObjectProbalized<T> o in array) { if (o == selected) { id = a; a++; } }
@@ -1184,6 +1215,18 @@ public class ObjectProbalized<T> : ObjectProbalize
         for(int i = 0 ; i < array.Length ; i++) { array[i] = objectProbalizeds[i].obj; }
 
         return array;
+    }
+
+    public static ObjectProbalized<T>[] SetArray( T[] array , float[] probas = null)
+    {
+        ObjectProbalized<T>[] arr = new ObjectProbalized<T>[array.Length];
+
+        for(int i = 0 ; i < array.Length ; i++)
+        {
+            arr[i] = new ObjectProbalized<T>( array[i] , probas == null ? 1 : probas[i] );
+        }
+
+        return arr;
     }
 }
 

@@ -226,10 +226,11 @@ public static class GUING
         EditorGUILayout.EndHorizontal();
     }
 
-    public static void Space ( int count )
+    public static void Space ( int count , float width = default)
     {
         for (int i = 0 ; i < count ; i++)
-            EditorGUILayout.Space();
+            if (width == 0) { EditorGUILayout.Space( ); }
+            else { EditorGUILayout.Space( width ); }
     }
 
     public static void CircleInTexture(ref Texture2D text, float diameterRatio, float ellipsity, Color color)

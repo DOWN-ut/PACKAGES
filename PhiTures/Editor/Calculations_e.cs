@@ -338,7 +338,7 @@ public class ObjectProbalizedDrawer : PropertyDrawer
 
         Rect rect = position; rect.width = w * sizes[0];
 
-        EditorGUI.ObjectField( rect , obj );
+        EditorGUI.PropertyField( rect , obj );
 
         rect.x += rect.width; rect.width = w * sizes[1];
 
