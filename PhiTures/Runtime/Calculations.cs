@@ -551,6 +551,20 @@ public class Calculations : MonoBehaviour
         return false;
     }
 
+    public static string IntToString(int n, int charCount = 1 )
+    {
+        for(float N = n ; N >= 10 ; N /= 10f) { charCount--; }
+
+        string str = charCount > 0?  RepeatString( "0" , charCount ) : "";
+
+        return str + n.ToString( "F0" );
+    }
+
+    public static string RepeatString(string str, int count)
+    {
+        while(count > 0) { str += str; count--; } return str;
+    }
+
     public static Color CleanColor( Color c )
     {
         float coef = 3f/(c.r+c.g+c.b);
@@ -610,6 +624,21 @@ public class Calculations : MonoBehaviour
         List<T> list = new List<T>(array);
         list.RemoveAt( index );
         array = list.ToArray();
+    }
+
+    public static int ToLinearArrayID(int[] ids, int[] lenghts )
+    {
+        if(ids.Length <= 0) { return ids[0]; }
+
+        int r =  ids[0];
+        int max = Mathf.Min(ids.Length,lenghts.Length);
+
+        for (int i = 1 ; i < max ; i++)
+        {
+            r += ids[i] * lenghts[i];
+        }
+
+        return r;
     }
 }
 
@@ -1093,11 +1122,16 @@ public struct interval
     public static interval Null { get { return new interval( 0 , 0 ); } }
     public static interval Default { get { return new interval( -1 , 1 ); } }
     public interval ( float _top_,float _bottom_ ) { _bottom = _bottom_; _top = _top_; bottom = _bottom; top = _top; }
-    public interval CreateFromTop ( float _top_,float _amplitude_) { return new interval( _top_,_top_ - _amplitude_); }
-    public interval CreateFromBottom ( float _bottom_ , float _amplitude_ ) { return new interval( _bottom_ + _amplitude_ , _bottom_ ); }
+    public static interval CreateFromTop ( float _top_,float _amplitude_) { return new interval( _top_,_top_ - _amplitude_); }
+    public static interval CreateFromBottom ( float _bottom_ , float _amplitude_ ) { return new interval( _bottom_ + _amplitude_ , _bottom_ ); }
     public bool Contains(float v )
     {
-        return v >= bottom && v <= top;
+        return v >= _bottom && v <= _top;
+    }
+
+    public string ToString (string F)
+    {
+        return _bottom.ToString( F ) + " | " + _top.ToString( F );
     }
 
     public static implicit operator float (interval i ) { return i.random; }
@@ -1147,20 +1181,33 @@ public class ObjectProbalized<T> : ObjectProbalize
     public T obj;
     public float probability=1;
     interval interval = interval.Null;
+    bool isNull;
+
+    public static ObjectProbalized<T> NULL { get { return new ObjectProbalized<T>( true ); } }
+    public static ObjectProbalized<T>[] NULLARRAY { get { return new ObjectProbalized<T>[1] { NULL }; } }
 
     public ObjectProbalized () { obj = default; probability = 1; }
     public ObjectProbalized (T _obj, float _p){obj = _obj; probability = _p;}
+    public ObjectProbalized (bool _null) { obj = default; probability = 1; isNull = _null; }
+
+    public bool IsNull () { return isNull; }
 
     public static void SetInterval(ref ObjectProbalized<T>[] array )
     {
         ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr , 0 );
         if(Sum(_arr) > 1) { Flatten( ref _arr ); }
 
-        float bottom= 0;
+        Debug.Log( _arr.Length );
+        float bottom= 0; int id = 0;
         foreach (ObjectProbalized<T> obj in array) 
         {
-            obj.interval = new interval( bottom + obj.probability, bottom );
-            bottom = obj.probability;
+            Debug.Log( bottom.ToString("F2") + " | " + _arr[id].probability.ToString("F2") + " or " + obj.probability.ToString("F2"));
+
+            obj.interval = interval.CreateFromBottom( bottom , _arr[id].probability );
+            bottom += _arr[id].probability;
+            id++;
+
+            Debug.Log( obj.interval.ToString( "F2" ) );
         }
     }
 
@@ -1178,28 +1225,35 @@ public class ObjectProbalized<T> : ObjectProbalize
         return sum ;
     }
 
-    public static ObjectProbalized<T> Get ( ObjectProbalized<T>[] array )
+    public static ObjectProbalized<T> Get ( ObjectProbalized<T>[] array, out int id )
     {
+        if(array.Length == 0) { id = -1; return null; }
+        if(array.Length == 1 && array[0].isNull) { id = -1; return null; }
+
         ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr,0 ); Flatten( ref _arr );
 
         SetInterval( ref _arr );
         float v = Random.Range(0,1f);
 
-        foreach(ObjectProbalized<T> obj in _arr)
+        id = 0;
+        foreach (ObjectProbalized<T> obj in _arr)
         {
-            if(obj.interval.Contains(v) ) { return obj; }
+            if (obj.interval.Contains(v) ) { return obj; }
+            id++;
         }
+        id = -1;
 
-        return null; ;
+        return null; 
     }
 
-    public static ObjectProbalized<T> Get( ObjectProbalized<T>[] array , out int id )
+    public static ObjectProbalized<T> Get( ObjectProbalized<T>[] array )
     {
-        ObjectProbalized<T> selected = Get(array);
-
+        int id = 0;
+        ObjectProbalized<T> selected = Get(array, out id);
+        /*
         id = 0;int a = 0;
         foreach (ObjectProbalized<T> o in array) { if (o == selected) { id = a; a++; } }
-
+        */
         return selected;
     }
 
@@ -1235,5 +1289,30 @@ public class ObjectProbalizedTyped<T> : ObjectProbalized<T>
 {
     public string type;
     public ObjectProbalizedTyped ( T _obje , float _p, string _t ) { obj = _obje; probability = _p; type = _t; }
+}
+
+[System.Serializable]
+public struct RandomScalar
+{
+    public static float __1_1 { get { return Random.Range( -1f , 1f ); } }
+    public static float __10_10 { get { return Random.Range( -10f , 10f ); } }
+    public static float __100_100 { get { return Random.Range( -100f , 100f ); } }
+    public static float __1000_1000 { get { return Random.Range( -1000f , 1000f ); } }
+    public static float _0_1 { get { return Random.Range( 0 , 1f ); } }
+    public static float _0_10 { get { return Random.Range( 0 , 10f ); } }
+    public static float _0_100 { get { return Random.Range( 0 , 100f ); } }
+    public static float _0_1000 { get { return Random.Range( 0 , 1000f ); } }
+
+    public static float GetAround(float center,float amplitude,float curve )
+    {
+        return GetBetween( center - amplitude / 2f , center + amplitude / 2f , curve );
+    }
+
+    public static float GetBetween(float min, float max, float curve = 1)
+    {
+        return Mathf.Pow( 1f / curve ,
+            Random.Range( 
+                Mathf.Pow( min , curve ) , Mathf.Pow( max , curve ) ) );
+    }
 }
 
