@@ -1,9 +1,8 @@
 {
-    "name": "unity.fpis",
+    "name": "unity.phisiks",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "unity.Inputer",
         "unity.phitures"
     ],
     "includePlatforms": [],
