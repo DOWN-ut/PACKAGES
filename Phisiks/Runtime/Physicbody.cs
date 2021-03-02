@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Physicbody : MonoBehaviour
 {
+    #region Header
+
+    #region Properties
     [Header("Properties")]
 
     [SerializeField]
@@ -23,6 +26,10 @@ public class Physicbody : MonoBehaviour
 
     public PhysicMaterialCombine frictionCombine = PhysicMaterialCombine.Average;
 
+    #endregion
+
+    #region Ingame
+
     [Header("Ingame")]
 
     private Vector3 _gravityDirection;
@@ -33,12 +40,22 @@ public class Physicbody : MonoBehaviour
 
     private PhysicMaterial physicMaterial;
 
+    #endregion
+
+    #region References
+
     [Header( "References" )]
     [HideInInspector]
     private PhysicManager physicManager;
     public Rigidbody rigidbody { get { return GetComponent<Rigidbody>(); } }
     [HideInInspector]
     public Collider collider { get { return GetComponent<Collider>(); } }
+
+    #endregion
+
+    #endregion
+
+    #region Ingame
 
     #region Main
     private void Awake ()
@@ -96,4 +113,6 @@ public class Physicbody : MonoBehaviour
     }
 
     #endregion
+
+#endregion
 }
