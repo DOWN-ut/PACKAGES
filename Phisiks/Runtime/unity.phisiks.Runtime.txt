@@ -1,0 +1,6 @@
+{
+    "name": "unity.phisiks.Runtime",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

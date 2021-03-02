@@ -3,7 +3,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
@@ -408,6 +407,150 @@ public class @INPUT : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""76917e8e-615c-4eb2-894a-3caf66a5c4ba"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RightJoystick"",
+                    ""type"": ""Value"",
+                    ""id"": ""5efd7c9e-1e61-44aa-8297-d1b531acbdf0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftJoystick"",
+                    ""type"": ""Value"",
+                    ""id"": ""39fd1716-8caa-438c-8fed-07bcc41d3332"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""L1"",
+                    ""type"": ""Value"",
+                    ""id"": ""2b4f73ad-5477-45dc-b547-c1bf83611373"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""L2"",
+                    ""type"": ""Value"",
+                    ""id"": ""3d6d3835-c0d5-4ebd-8b17-1bd350fd8c61"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""L3"",
+                    ""type"": ""Value"",
+                    ""id"": ""2d07598c-97d1-4249-8723-48561ed21f67"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""R1"",
+                    ""type"": ""Value"",
+                    ""id"": ""5140d41d-32ab-4cda-a6a6-2c25d278fbd9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""R2"",
+                    ""type"": ""Value"",
+                    ""id"": ""d664de64-cb3d-46f4-9c41-5e01d7192b15"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""R3"",
+                    ""type"": ""Value"",
+                    ""id"": ""0f60c1d7-b809-45d3-be58-29dfafe9c67d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""North"",
+                    ""type"": ""Value"",
+                    ""id"": ""26186372-b6f4-4d20-81d8-2fcd250821a6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""South"",
+                    ""type"": ""Value"",
+                    ""id"": ""9a6fcef4-f64c-4736-a394-e465703c40b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""East"",
+                    ""type"": ""Value"",
+                    ""id"": ""c44340da-2933-4eeb-955d-7ffa8bce8c5b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""West"",
+                    ""type"": ""Value"",
+                    ""id"": ""4097b35a-9651-4b53-8e98-01ef88228c26"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PadUp"",
+                    ""type"": ""Value"",
+                    ""id"": ""a8d22634-988f-40fc-90e1-ff112f7be7e0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PadDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""8592ffc6-d45e-4e40-9367-694a7cc6a2d7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PadLeft"",
+                    ""type"": ""Value"",
+                    ""id"": ""e2d54ea1-a791-4c7b-aec6-fc30f1e6511c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PadRight"",
+                    ""type"": ""Value"",
+                    ""id"": ""6da4cf3f-3dae-413a-85bc-f1f3773bb08b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9a6cb3b-548e-42dd-b741-5816f602f985"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""New action1"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f83f303-473d-433b-ade8-f3ae92ba5217"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -951,6 +1094,204 @@ public class @INPUT : IInputActionCollection, IDisposable
                     ""action"": ""mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef966be2-a9b6-473b-b8d2-f89a7f2fe30a"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c47dc3bf-3c2f-41b0-a34d-9c17a243aff8"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d41c05ed-3d65-4b05-9234-c443da6e5189"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""L1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79169f0e-5fcf-4395-8aa4-cc855621dd2b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""L2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d50e0017-70a3-4ab8-bc21-748be223b865"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""L3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4b5d4be-f965-431c-9272-52d5704f72ba"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""R1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0490f2e-c7d6-4e4c-9d84-058705afd698"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""R2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9104e65-1bd0-445c-b948-adb6638b444c"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""R3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7647058c-72b5-46bb-ac68-f1120af601c0"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""North"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1ec32a4-6a77-47cc-85ea-57df4b6b4270"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""South"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4298a611-0753-45b1-8d16-42949a02de63"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""East"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69087314-cbcd-4d66-a764-2eea95e4cd99"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""West"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60505d1c-6a58-4ff5-b4ac-e9283e5c5d26"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""PadUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59db3d4f-e532-4e5f-b7c4-0abaf0a6ee6f"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""PadDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99357598-0c30-4a54-ae78-901ef5e7e24f"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""PadLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e35cff60-6b0e-481e-a136-b581f88210d8"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""PadRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""240545ee-5bdf-43fa-9701-adfb05821497"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""RightJoystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24378485-b964-4e7b-877f-4de6862884bf"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""LeftJoystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1025,6 +1366,24 @@ public class @INPUT : IInputActionCollection, IDisposable
         m_Keyboard_mouse_middle = m_Keyboard.FindAction("mouse_middle", throwIfNotFound: true);
         m_Keyboard_wheel = m_Keyboard.FindAction("wheel", throwIfNotFound: true);
         m_Keyboard_mouse = m_Keyboard.FindAction("mouse", throwIfNotFound: true);
+        m_Keyboard_RightJoystick = m_Keyboard.FindAction("RightJoystick", throwIfNotFound: true);
+        m_Keyboard_LeftJoystick = m_Keyboard.FindAction("LeftJoystick", throwIfNotFound: true);
+        m_Keyboard_L1 = m_Keyboard.FindAction("L1", throwIfNotFound: true);
+        m_Keyboard_L2 = m_Keyboard.FindAction("L2", throwIfNotFound: true);
+        m_Keyboard_L3 = m_Keyboard.FindAction("L3", throwIfNotFound: true);
+        m_Keyboard_R1 = m_Keyboard.FindAction("R1", throwIfNotFound: true);
+        m_Keyboard_R2 = m_Keyboard.FindAction("R2", throwIfNotFound: true);
+        m_Keyboard_R3 = m_Keyboard.FindAction("R3", throwIfNotFound: true);
+        m_Keyboard_North = m_Keyboard.FindAction("North", throwIfNotFound: true);
+        m_Keyboard_South = m_Keyboard.FindAction("South", throwIfNotFound: true);
+        m_Keyboard_East = m_Keyboard.FindAction("East", throwIfNotFound: true);
+        m_Keyboard_West = m_Keyboard.FindAction("West", throwIfNotFound: true);
+        m_Keyboard_PadUp = m_Keyboard.FindAction("PadUp", throwIfNotFound: true);
+        m_Keyboard_PadDown = m_Keyboard.FindAction("PadDown", throwIfNotFound: true);
+        m_Keyboard_PadLeft = m_Keyboard.FindAction("PadLeft", throwIfNotFound: true);
+        m_Keyboard_PadRight = m_Keyboard.FindAction("PadRight", throwIfNotFound: true);
+        m_Keyboard_Newaction = m_Keyboard.FindAction("New action", throwIfNotFound: true);
+        m_Keyboard_Newaction1 = m_Keyboard.FindAction("New action1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1123,6 +1482,24 @@ public class @INPUT : IInputActionCollection, IDisposable
     private readonly InputAction m_Keyboard_mouse_middle;
     private readonly InputAction m_Keyboard_wheel;
     private readonly InputAction m_Keyboard_mouse;
+    private readonly InputAction m_Keyboard_RightJoystick;
+    private readonly InputAction m_Keyboard_LeftJoystick;
+    private readonly InputAction m_Keyboard_L1;
+    private readonly InputAction m_Keyboard_L2;
+    private readonly InputAction m_Keyboard_L3;
+    private readonly InputAction m_Keyboard_R1;
+    private readonly InputAction m_Keyboard_R2;
+    private readonly InputAction m_Keyboard_R3;
+    private readonly InputAction m_Keyboard_North;
+    private readonly InputAction m_Keyboard_South;
+    private readonly InputAction m_Keyboard_East;
+    private readonly InputAction m_Keyboard_West;
+    private readonly InputAction m_Keyboard_PadUp;
+    private readonly InputAction m_Keyboard_PadDown;
+    private readonly InputAction m_Keyboard_PadLeft;
+    private readonly InputAction m_Keyboard_PadRight;
+    private readonly InputAction m_Keyboard_Newaction;
+    private readonly InputAction m_Keyboard_Newaction1;
     public struct KeyboardActions
     {
         private @INPUT m_Wrapper;
@@ -1176,6 +1553,24 @@ public class @INPUT : IInputActionCollection, IDisposable
         public InputAction @mouse_middle => m_Wrapper.m_Keyboard_mouse_middle;
         public InputAction @wheel => m_Wrapper.m_Keyboard_wheel;
         public InputAction @mouse => m_Wrapper.m_Keyboard_mouse;
+        public InputAction @RightJoystick => m_Wrapper.m_Keyboard_RightJoystick;
+        public InputAction @LeftJoystick => m_Wrapper.m_Keyboard_LeftJoystick;
+        public InputAction @L1 => m_Wrapper.m_Keyboard_L1;
+        public InputAction @L2 => m_Wrapper.m_Keyboard_L2;
+        public InputAction @L3 => m_Wrapper.m_Keyboard_L3;
+        public InputAction @R1 => m_Wrapper.m_Keyboard_R1;
+        public InputAction @R2 => m_Wrapper.m_Keyboard_R2;
+        public InputAction @R3 => m_Wrapper.m_Keyboard_R3;
+        public InputAction @North => m_Wrapper.m_Keyboard_North;
+        public InputAction @South => m_Wrapper.m_Keyboard_South;
+        public InputAction @East => m_Wrapper.m_Keyboard_East;
+        public InputAction @West => m_Wrapper.m_Keyboard_West;
+        public InputAction @PadUp => m_Wrapper.m_Keyboard_PadUp;
+        public InputAction @PadDown => m_Wrapper.m_Keyboard_PadDown;
+        public InputAction @PadLeft => m_Wrapper.m_Keyboard_PadLeft;
+        public InputAction @PadRight => m_Wrapper.m_Keyboard_PadRight;
+        public InputAction @Newaction => m_Wrapper.m_Keyboard_Newaction;
+        public InputAction @Newaction1 => m_Wrapper.m_Keyboard_Newaction1;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1332,6 +1727,60 @@ public class @INPUT : IInputActionCollection, IDisposable
                 @mouse.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
                 @mouse.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
                 @mouse.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @RightJoystick.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnRightJoystick;
+                @RightJoystick.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnRightJoystick;
+                @RightJoystick.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnRightJoystick;
+                @LeftJoystick.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnLeftJoystick;
+                @LeftJoystick.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnLeftJoystick;
+                @LeftJoystick.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnLeftJoystick;
+                @L1.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL1;
+                @L1.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL1;
+                @L1.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL1;
+                @L2.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL2;
+                @L2.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL2;
+                @L2.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL2;
+                @L3.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL3;
+                @L3.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL3;
+                @L3.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnL3;
+                @R1.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR1;
+                @R1.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR1;
+                @R1.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR1;
+                @R2.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR2;
+                @R2.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR2;
+                @R2.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR2;
+                @R3.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR3;
+                @R3.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR3;
+                @R3.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnR3;
+                @North.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNorth;
+                @North.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNorth;
+                @North.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNorth;
+                @South.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnSouth;
+                @South.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnSouth;
+                @South.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnSouth;
+                @East.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnEast;
+                @East.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnEast;
+                @East.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnEast;
+                @West.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnWest;
+                @West.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnWest;
+                @West.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnWest;
+                @PadUp.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadUp;
+                @PadUp.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadUp;
+                @PadUp.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadUp;
+                @PadDown.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadDown;
+                @PadDown.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadDown;
+                @PadDown.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadDown;
+                @PadLeft.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadLeft;
+                @PadLeft.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadLeft;
+                @PadLeft.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadLeft;
+                @PadRight.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadRight;
+                @PadRight.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadRight;
+                @PadRight.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPadRight;
+                @Newaction.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNewaction;
+                @Newaction1.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNewaction1;
+                @Newaction1.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNewaction1;
+                @Newaction1.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnNewaction1;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -1483,6 +1932,60 @@ public class @INPUT : IInputActionCollection, IDisposable
                 @mouse.started += instance.OnMouse;
                 @mouse.performed += instance.OnMouse;
                 @mouse.canceled += instance.OnMouse;
+                @RightJoystick.started += instance.OnRightJoystick;
+                @RightJoystick.performed += instance.OnRightJoystick;
+                @RightJoystick.canceled += instance.OnRightJoystick;
+                @LeftJoystick.started += instance.OnLeftJoystick;
+                @LeftJoystick.performed += instance.OnLeftJoystick;
+                @LeftJoystick.canceled += instance.OnLeftJoystick;
+                @L1.started += instance.OnL1;
+                @L1.performed += instance.OnL1;
+                @L1.canceled += instance.OnL1;
+                @L2.started += instance.OnL2;
+                @L2.performed += instance.OnL2;
+                @L2.canceled += instance.OnL2;
+                @L3.started += instance.OnL3;
+                @L3.performed += instance.OnL3;
+                @L3.canceled += instance.OnL3;
+                @R1.started += instance.OnR1;
+                @R1.performed += instance.OnR1;
+                @R1.canceled += instance.OnR1;
+                @R2.started += instance.OnR2;
+                @R2.performed += instance.OnR2;
+                @R2.canceled += instance.OnR2;
+                @R3.started += instance.OnR3;
+                @R3.performed += instance.OnR3;
+                @R3.canceled += instance.OnR3;
+                @North.started += instance.OnNorth;
+                @North.performed += instance.OnNorth;
+                @North.canceled += instance.OnNorth;
+                @South.started += instance.OnSouth;
+                @South.performed += instance.OnSouth;
+                @South.canceled += instance.OnSouth;
+                @East.started += instance.OnEast;
+                @East.performed += instance.OnEast;
+                @East.canceled += instance.OnEast;
+                @West.started += instance.OnWest;
+                @West.performed += instance.OnWest;
+                @West.canceled += instance.OnWest;
+                @PadUp.started += instance.OnPadUp;
+                @PadUp.performed += instance.OnPadUp;
+                @PadUp.canceled += instance.OnPadUp;
+                @PadDown.started += instance.OnPadDown;
+                @PadDown.performed += instance.OnPadDown;
+                @PadDown.canceled += instance.OnPadDown;
+                @PadLeft.started += instance.OnPadLeft;
+                @PadLeft.performed += instance.OnPadLeft;
+                @PadLeft.canceled += instance.OnPadLeft;
+                @PadRight.started += instance.OnPadRight;
+                @PadRight.performed += instance.OnPadRight;
+                @PadRight.canceled += instance.OnPadRight;
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+                @Newaction1.started += instance.OnNewaction1;
+                @Newaction1.performed += instance.OnNewaction1;
+                @Newaction1.canceled += instance.OnNewaction1;
             }
         }
     }
@@ -1547,5 +2050,23 @@ public class @INPUT : IInputActionCollection, IDisposable
         void OnMouse_middle(InputAction.CallbackContext context);
         void OnWheel(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
+        void OnRightJoystick(InputAction.CallbackContext context);
+        void OnLeftJoystick(InputAction.CallbackContext context);
+        void OnL1(InputAction.CallbackContext context);
+        void OnL2(InputAction.CallbackContext context);
+        void OnL3(InputAction.CallbackContext context);
+        void OnR1(InputAction.CallbackContext context);
+        void OnR2(InputAction.CallbackContext context);
+        void OnR3(InputAction.CallbackContext context);
+        void OnNorth(InputAction.CallbackContext context);
+        void OnSouth(InputAction.CallbackContext context);
+        void OnEast(InputAction.CallbackContext context);
+        void OnWest(InputAction.CallbackContext context);
+        void OnPadUp(InputAction.CallbackContext context);
+        void OnPadDown(InputAction.CallbackContext context);
+        void OnPadLeft(InputAction.CallbackContext context);
+        void OnPadRight(InputAction.CallbackContext context);
+        void OnNewaction(InputAction.CallbackContext context);
+        void OnNewaction1(InputAction.CallbackContext context);
     }
 }

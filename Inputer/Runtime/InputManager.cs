@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
 
     [Header( "Ingame" )]
 
-    public Dictionary<string, InputElement> rawInputs;
+    public Dictionary<KEY, InputElement> rawInputs;
 
     public List<InputElement> gameinputs;
 
@@ -43,69 +43,96 @@ public class InputManager : MonoBehaviour
 
     #region Setup
 
+    [System.Serializable]
+    public enum KEY
+    {
+        A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,LEFTCTRL,RIGHTCTRL,LEFTSHIFT,RIGHTSHIFT,TAB,SPACE,ENTER,ECHAP,MOUSELEFT,MOUSERIGHT,MOUSEMIDDLE,MOUSE,WHEEL,WHEELUP,WHEELDOWN,
+        L1,L2,L3,R1,R2,R3,LEFTJOYSTICK,RIGHTJOYSTICK,NORTH,SOUTH,EAST,WEST,PADUP,PADDOWN,PADLEFT,PADRIGHT
+    }
+
     void SetupInputer ()
     {
         inputActions = new INPUT();
 
-        rawInputs = new Dictionary<string , InputElement>();
+        rawInputs = new Dictionary<KEY , InputElement>();
 
-        inputActions.Keyboard.a.performed += a => Key( "a" ); rawInputs.Add( "a" , false );
-        inputActions.Keyboard.b.performed += b => Key( "b" ); rawInputs.Add( "b" , false );
-        inputActions.Keyboard.c.performed += c => Key( "c" ); rawInputs.Add( "c" , false );
-        inputActions.Keyboard.d.performed += d => Key( "d" ); rawInputs.Add( "d" , false );
-        inputActions.Keyboard.e.performed += e => Key( "e" ); rawInputs.Add( "e" , false );
-        inputActions.Keyboard.f.performed += f => Key( "f" ); rawInputs.Add( "f" , false );
-        inputActions.Keyboard.g.performed += g => Key( "g" ); rawInputs.Add( "g" , false );
-        inputActions.Keyboard.h.performed += h => Key( "h" ); rawInputs.Add( "h" , false );
-        inputActions.Keyboard.i.performed += i => Key( "i" ); rawInputs.Add( "i" , false );
-        inputActions.Keyboard.j.performed += j => Key( "j" ); rawInputs.Add( "j" , false );
-        inputActions.Keyboard.k.performed += k => Key( "k" ); rawInputs.Add( "k" , false );
-        inputActions.Keyboard.l.performed += l => Key( "l" ); rawInputs.Add( "l" , false );
-        inputActions.Keyboard.m.performed += m => Key( "m" ); rawInputs.Add( "m" , false );
-        inputActions.Keyboard.n.performed += n => Key( "n" ); rawInputs.Add( "n" , false );
-        inputActions.Keyboard.o.performed += o => Key( "o" ); rawInputs.Add( "o" , false );
-        inputActions.Keyboard.p.performed += p => Key( "p" ); rawInputs.Add( "p" , false );
-        inputActions.Keyboard.q.performed += q => Key( "q" ); rawInputs.Add( "q" , false );
-        inputActions.Keyboard.r.performed += r => Key( "r" ); rawInputs.Add( "r" , false );
-        inputActions.Keyboard.s.performed += s => Key( "s" ); rawInputs.Add( "s" , false );
-        inputActions.Keyboard.t.performed += t => Key( "t" ); rawInputs.Add( "t" , false );
-        inputActions.Keyboard.u.performed += u => Key( "u" ); rawInputs.Add( "u" , false );
-        inputActions.Keyboard.v.performed += v => Key( "v" ); rawInputs.Add( "v" , false );
-        inputActions.Keyboard.w.performed += w => Key( "w" ); rawInputs.Add( "w" , false );
-        inputActions.Keyboard.x.performed += x => Key( "x" ); rawInputs.Add( "x" , false );
-        inputActions.Keyboard.y.performed += y => Key( "y" ); rawInputs.Add( "y" , false );
-        inputActions.Keyboard.z.performed += z => Key( "z" ); rawInputs.Add( "z" , false );
+        inputActions.Keyboard.a.performed += a => Key( KEY.A ); rawInputs.Add( KEY.A , false );
+        inputActions.Keyboard.b.performed += b => Key( KEY.B ); rawInputs.Add(KEY.B , false );
+        inputActions.Keyboard.c.performed += c => Key( KEY.C ); rawInputs.Add(KEY.C , false );
+        inputActions.Keyboard.d.performed += d => Key( KEY.D); rawInputs.Add( KEY.D, false );
+        inputActions.Keyboard.e.performed += e => Key( KEY.E ); rawInputs.Add(KEY.E, false );
+        inputActions.Keyboard.f.performed += f => Key( KEY.F); rawInputs.Add( KEY.F, false );
+        inputActions.Keyboard.g.performed += g => Key( KEY.G); rawInputs.Add( KEY.G, false );
+        inputActions.Keyboard.h.performed += h => Key( KEY.H); rawInputs.Add( KEY.H, false );
+        inputActions.Keyboard.i.performed += i => Key( KEY.I); rawInputs.Add( KEY.I, false );
+        inputActions.Keyboard.j.performed += j => Key( KEY.J); rawInputs.Add( KEY.J, false );
+        inputActions.Keyboard.k.performed += k => Key( KEY.K); rawInputs.Add( KEY.K, false );
+        inputActions.Keyboard.l.performed += l => Key( KEY.L); rawInputs.Add( KEY.L, false );
+        inputActions.Keyboard.m.performed += m => Key( KEY.M); rawInputs.Add( KEY.M, false );
+        inputActions.Keyboard.n.performed += n => Key( KEY.N); rawInputs.Add( KEY.N, false );
+        inputActions.Keyboard.o.performed += o => Key( KEY.O); rawInputs.Add( KEY.O, false );
+        inputActions.Keyboard.p.performed += p => Key( KEY.P); rawInputs.Add( KEY.P, false );
+        inputActions.Keyboard.q.performed += q => Key( KEY.Q); rawInputs.Add( KEY.Q, false );
+        inputActions.Keyboard.r.performed += r => Key( KEY.R); rawInputs.Add( KEY.R, false );
+        inputActions.Keyboard.s.performed += s => Key( KEY.S); rawInputs.Add( KEY.S, false );
+        inputActions.Keyboard.t.performed += t => Key( KEY.T); rawInputs.Add( KEY.T, false );
+        inputActions.Keyboard.u.performed += u => Key( KEY.U); rawInputs.Add( KEY.U, false );
+        inputActions.Keyboard.v.performed += v => Key( KEY.V); rawInputs.Add( KEY.V, false );
+        inputActions.Keyboard.w.performed += w => Key( KEY.W); rawInputs.Add( KEY.W, false );
+        inputActions.Keyboard.x.performed += x => Key( KEY.X); rawInputs.Add( KEY.X, false );
+        inputActions.Keyboard.y.performed += y => Key( KEY.Y); rawInputs.Add( KEY.Y, false );
+        inputActions.Keyboard.z.performed += z => Key( KEY.Z); rawInputs.Add( KEY.Z, false );
 
-        inputActions.Keyboard._1.performed += _1 => Key( "1" ); rawInputs.Add( "1" , false );
-        inputActions.Keyboard._2.performed += _2 => Key( "2" ); rawInputs.Add( "2" , false );
-        inputActions.Keyboard._3.performed += _3 => Key( "3" ); rawInputs.Add( "3" , false );
-        inputActions.Keyboard._4.performed += _4 => Key( "4" ); rawInputs.Add( "4" , false );
-        inputActions.Keyboard._5.performed += _5 => Key( "5" ); rawInputs.Add( "5" , false );
-        inputActions.Keyboard._6.performed += _6 => Key( "6" ); rawInputs.Add( "6" , false );
-        inputActions.Keyboard._7.performed += _7 => Key( "7" ); rawInputs.Add( "7" , false );
-        inputActions.Keyboard._8.performed += _8 => Key( "8" ); rawInputs.Add( "8" , false );
-        inputActions.Keyboard._9.performed += _9 => Key( "9" ); rawInputs.Add( "9" , false );
-        inputActions.Keyboard._0.performed += _0 => Key( "0" ); rawInputs.Add( "0" , false );
+        inputActions.Keyboard._1.performed += _1 => Key(KEY._1 ); rawInputs.Add( KEY._1 , false );
+        inputActions.Keyboard._2.performed += _2 => Key(KEY._2); rawInputs.Add( KEY._2 , false );
+        inputActions.Keyboard._3.performed += _3 => Key(KEY._3 ); rawInputs.Add( KEY._3 , false );
+        inputActions.Keyboard._4.performed += _4 => Key(KEY._4); rawInputs.Add( KEY._4 , false );
+        inputActions.Keyboard._5.performed += _5 => Key(KEY._5 ); rawInputs.Add( KEY._5 , false );
+        inputActions.Keyboard._6.performed += _6 => Key(KEY._6 ); rawInputs.Add( KEY._6 , false );
+        inputActions.Keyboard._7.performed += _7 => Key(KEY._7 ); rawInputs.Add( KEY._7 , false );
+        inputActions.Keyboard._8.performed += _8 => Key(KEY._8 ); rawInputs.Add( KEY._8 , false );
+        inputActions.Keyboard._9.performed += _9 => Key(KEY._9 ); rawInputs.Add( KEY._9 , false );
+        inputActions.Keyboard._0.performed += _0 => Key( KEY._0 ); rawInputs.Add( KEY._0 , false );
 
-        inputActions.Keyboard.left_ctrl.performed += left_ctrl => Key( "left_ctrl" ); rawInputs.Add( "left_ctrl" , false );
-        inputActions.Keyboard.right_ctrl.performed += right_ctrl => Key( "right_ctrl" ); rawInputs.Add( "right_ctrl" , false );
-        inputActions.Keyboard.left_shift.performed += left_shift => Key( "left_shift" ); rawInputs.Add( "left_shift" , false );
-        inputActions.Keyboard.right_shift.performed += right_shift => Key( "right_shift" ); rawInputs.Add( "right_shift" , false );
-        inputActions.Keyboard.tab.performed += tab => Key( "tab" ); rawInputs.Add( "tab" , false );
-        inputActions.Keyboard.space.performed += space => Key( "space" ); rawInputs.Add( "space" , false );
-        inputActions.Keyboard.enter.performed += enter => Key( "enter" ); rawInputs.Add( "enter" , false );
-        inputActions.Keyboard.echap.performed += echap => Key( "echap" ); rawInputs.Add( "echap" , false );
+        inputActions.Keyboard.left_ctrl.performed += left_ctrl => Key( KEY.LEFTCTRL); rawInputs.Add( KEY.LEFTCTRL, false );
+        inputActions.Keyboard.right_ctrl.performed += right_ctrl => Key( KEY.RIGHTCTRL); rawInputs.Add( KEY.RIGHTCTRL, false );
+        inputActions.Keyboard.left_shift.performed += left_shift => Key( KEY.LEFTSHIFT); rawInputs.Add( KEY.LEFTSHIFT, false );
+        inputActions.Keyboard.right_shift.performed += right_shift => Key( KEY.RIGHTSHIFT ); rawInputs.Add( KEY.RIGHTSHIFT, false );
+        inputActions.Keyboard.tab.performed += tab => Key( KEY.TAB); rawInputs.Add( KEY.TAB , false );
+        inputActions.Keyboard.space.performed += space => Key( KEY.SPACE); rawInputs.Add( KEY.SPACE, false );
+        inputActions.Keyboard.enter.performed += enter => Key( KEY.ENTER); rawInputs.Add( KEY.ENTER , false );
+        inputActions.Keyboard.echap.performed += echap => Key( KEY.ECHAP ); rawInputs.Add( KEY.ECHAP , false );
 
 
-        inputActions.Keyboard.mouse_left.performed += mouse_left => Key( "mouse_left" ); rawInputs.Add( "mouse_left" , false );
-        inputActions.Keyboard.mouse_right.performed += mouse_right => Key( "mouse_right" ); rawInputs.Add( "mouse_right" , false );
-        inputActions.Keyboard.mouse_middle.performed += mouse_left => Key( "mouse_middle" ); rawInputs.Add( "mouse_middle" , false );
+        inputActions.Keyboard.mouse_left.performed += mouse_left => Key( KEY.MOUSELEFT); rawInputs.Add( KEY.MOUSELEFT, false );
+        inputActions.Keyboard.mouse_right.performed += mouse_right => Key( KEY.MOUSERIGHT ); rawInputs.Add( KEY.MOUSERIGHT, false );
+        inputActions.Keyboard.mouse_middle.performed += mouse_left => Key( KEY.MOUSEMIDDLE ); rawInputs.Add( KEY.MOUSEMIDDLE , false );
 
-        inputActions.Keyboard.mouse.performed += mouse => Key( "mouse" , mouse.ReadValue<Vector2>(),true ); rawInputs.Add( "mouse" , Vector2.zero );
+        inputActions.Keyboard.mouse.performed += mouse => Key( KEY.MOUSE, mouse.ReadValue<Vector2>(),true ); rawInputs.Add( KEY.MOUSE , Vector2.zero );
 
-        inputActions.Keyboard.wheel.performed += wheel => Key("wheel", wheel.ReadValue<Vector2>(),true ); rawInputs.Add( "wheel" , Vector2.zero );
-        inputActions.Keyboard.wheel.performed += wheel => Key("wheel_up", wheel.ReadValue<Vector2>().y > 0 , true ); rawInputs.Add( "wheel_up" , Vector2.zero );
-        inputActions.Keyboard.wheel.performed += wheel => Key("wheel_down", wheel.ReadValue<Vector2>().y < 0 , true ); rawInputs.Add( "wheel_down" , Vector2.zero );
+        inputActions.Keyboard.wheel.performed += wheel => Key( KEY.WHEEL, wheel.ReadValue<Vector2>(),true ); rawInputs.Add( KEY.WHEEL , Vector2.zero );
+        inputActions.Keyboard.wheel.performed += wheel => Key( KEY.WHEELUP , wheel.ReadValue<Vector2>().y > 0 , true ); rawInputs.Add( KEY.WHEELUP , Vector2.zero );
+        inputActions.Keyboard.wheel.performed += wheel => Key( KEY.WHEELDOWN , wheel.ReadValue<Vector2>().y < 0 , true ); rawInputs.Add( KEY.WHEELDOWN , Vector2.zero );
+
+        inputActions.Keyboard.L1.performed += L1 => Key( KEY.L1 ); rawInputs.Add( KEY.L1 , false );
+        inputActions.Keyboard.L2.performed += L2 => Key( KEY.L2 ); rawInputs.Add( KEY.L2 , false );
+        inputActions.Keyboard.L3.performed += L3 => Key( KEY.L3 ); rawInputs.Add( KEY.L3 , false );
+        inputActions.Keyboard.R1.performed += R1 => Key( KEY.R1 ); rawInputs.Add( KEY.R1 , false );
+        inputActions.Keyboard.R2.performed += R2 => Key( KEY.R2 ); rawInputs.Add( KEY.R2 , false );
+        inputActions.Keyboard.R3.performed += R3 => Key( KEY.R3 ); rawInputs.Add( KEY.R3 , false );
+
+        inputActions.Keyboard.North.performed += R3 => Key( KEY.NORTH ); rawInputs.Add( KEY.NORTH , false );
+        inputActions.Keyboard.South.performed += R3 => Key( KEY.SOUTH ); rawInputs.Add( KEY.SOUTH , false );
+        inputActions.Keyboard.East.performed += R3 => Key( KEY.EAST ); rawInputs.Add( KEY.EAST , false );
+        inputActions.Keyboard.West.performed += R3 => Key( KEY.WEST ); rawInputs.Add( KEY.WEST , false );
+
+        inputActions.Keyboard.PadDown.performed += R3 => Key( KEY.PADDOWN ); rawInputs.Add( KEY.PADDOWN , false );
+        inputActions.Keyboard.PadUp.performed += R3 => Key( KEY.PADUP ); rawInputs.Add( KEY.PADUP , false );
+        inputActions.Keyboard.PadLeft.performed += R3 => Key( KEY.PADLEFT ); rawInputs.Add( KEY.PADLEFT , false );
+        inputActions.Keyboard.PadRight.performed += R3 => Key( KEY.PADRIGHT ); rawInputs.Add( KEY.PADRIGHT , false );
+
+        inputActions.Keyboard.RightJoystick.performed += lj => Key( KEY.RIGHTJOYSTICK , lj.ReadValue<Vector2>() , true ); rawInputs.Add( KEY.RIGHTJOYSTICK , Vector2.zero );
+        inputActions.Keyboard.LeftJoystick.performed += rj => Key( KEY.LEFTJOYSTICK , rj.ReadValue<Vector2>() , true ); rawInputs.Add( KEY.LEFTJOYSTICK , Vector2.zero );
 
         inputActions.Enable();
     }
@@ -116,6 +143,14 @@ public class InputManager : MonoBehaviour
 
         profile.Setup();
 
+        foreach (Input_Profile.InputElement ie in profile.inputs)
+        {
+            if (!rawInputs.ContainsKey( ie.key )) { continue; }
+
+            gameinputs.Add( new KeyValuePair<string , bool>( ie.name, false ) );
+        }
+
+        /*
         foreach (System.Reflection.FieldInfo field in typeof( Input_Profile ).GetFields())
         {
             if (field.FieldType != typeof( string )) { continue; }
@@ -125,7 +160,7 @@ public class InputManager : MonoBehaviour
             if (!rawInputs.ContainsKey( str )) { continue; }
 
             gameinputs.Add( new KeyValuePair<string , bool>( field.Name , false ) );
-        }
+        }*/
     }
 
     #endregion
@@ -137,6 +172,26 @@ public class InputManager : MonoBehaviour
     }
     void UpdateGameInputs ()
     {
+        foreach (Input_Profile.InputElement ip in profile.inputs)
+        {
+            InputElement ie = InputElement.GetInList(ref gameinputs, ip.name);
+            Vector2 v = Vector2.zero; bool b = false; int t = 0;
+            foreach (KEY k in ip.keys)
+            {
+                if (!rawInputs.ContainsKey( k )) { continue; }
+
+                v = v.magnitude < rawInputs[k].vectorValue.magnitude ? rawInputs[k].vectorValue : v;
+                b = b ? true : rawInputs[k].boolValue;
+                t = t < rawInputs[k].tapCount ? rawInputs[k].tapCount : t;
+
+                if (debug) { print( ie.name + "    binded with :    " + k + "    state :    " + ie.boolValue ); }
+            }
+            ie.Set( b);
+            ie.Set( v);
+            ie.tapCount = t;
+        }
+
+        /*
         foreach (System.Reflection.FieldInfo field in typeof( Input_Profile ).GetFields())
         {
             if (field.FieldType != typeof( string )) { continue; }
@@ -152,30 +207,30 @@ public class InputManager : MonoBehaviour
             ie.tapCount = rawInputs[str].tapCount;
 
             if (debug) { print( ie.name + "    binded with :    " + str + "    state :    " + ie.boolValue); }
-        }
+        }*/
     }
 
     #endregion
 
     #region Methods
 
-    void Key ( string _name , bool disableCoroutine = false )
+    void Key ( KEY _name , bool disableCoroutine = false )
     {
         rawInputs[_name].Set(!rawInputs[_name],this);
         //if (debug) { print( "Toggled : " + _name + " : " + rawInputs[_name].boolValue ); }
-        if (disableCoroutine) { StartCoroutine( DisableCoroutine( rawInputs[name] ) ); }
+        if (disableCoroutine) { StartCoroutine( DisableCoroutine( rawInputs[_name] ) ); }
     }
-    void Key (string name, Vector2 dir, bool disableCoroutine = false )
+    void Key ( KEY _name , Vector2 dir, bool disableCoroutine = false )
     {
-        rawInputs[name].Set(dir);
+        rawInputs[_name].Set(dir);
         //if (debug) { print( "Set : " + name + " : " + rawInputs[name].vectorValue ); }
-        if (disableCoroutine) { StartCoroutine( DisableCoroutine( rawInputs[name] ) ); }
+        if (disableCoroutine) { StartCoroutine( DisableCoroutine( rawInputs[_name] ) ); }
     }
-    void Key ( string name , bool b , bool disableCoroutine = false )
+    void Key ( KEY _name , bool b , bool disableCoroutine = false )
     {
-        rawInputs[name].Set(b,this);
+        rawInputs[_name].Set(b,this);
         //if (debug) { print( "Set : " + name + " : " + rawInputs[name].boolValue ); }
-        if (disableCoroutine) { StartCoroutine( DisableCoroutine( rawInputs[name] ) ); }
+        if (disableCoroutine) { StartCoroutine( DisableCoroutine( rawInputs[_name] ) ); }
     }
 
     public bool Get ( string _key )
@@ -187,7 +242,7 @@ public class InputManager : MonoBehaviour
 
         return false;
     }
-    public Vector2 GetV(string _key )
+    public Vector2 GetV( string _key )
     {
         foreach (InputElement ie in gameinputs)
         {
@@ -197,7 +252,7 @@ public class InputManager : MonoBehaviour
         return Vector2.zero;
     }
 
-    public int GetCount(string _key )
+    public int GetCount( string _key )
     {
         foreach (InputElement ie in gameinputs)
         {
@@ -249,7 +304,7 @@ public class InputManager : MonoBehaviour
 
     public IEnumerator TapCoroutine (InputElement ie, float tapInterval = 0.1f)
     {
-        ie.taps.Add( true );print( ie.name );
+        ie.taps.Add( true );//print( ie.name );
         yield return new WaitForSeconds( tapInterval );
         ie.taps.RemoveAt( 0 );
     }
@@ -259,7 +314,7 @@ public class InputManager : MonoBehaviour
     {
         public string name;
 
-        public string[] names = new string[10];
+        public List<string> names = new List<string>();
 
         public bool boolValue;
 
@@ -299,4 +354,5 @@ public class InputManager : MonoBehaviour
             return null;
         }
     }
+
 }

@@ -1,0 +1,6 @@
+{
+    "name": "unity.phisiks.Editor",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

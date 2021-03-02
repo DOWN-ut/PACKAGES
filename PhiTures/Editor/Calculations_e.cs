@@ -270,18 +270,18 @@ public class AudioElementDrawer : PropertyDrawer
 
         EditorGUI.ObjectField( rect , audio );
 
-        rect.x += rect.width; rect.width = w *0.125f;
+        rect.x += rect.width * 0.8f; rect.width = w *0.2f;
 
         proba.floatValue = EditorGUI.FloatField( rect , proba.floatValue );
 
-        rect.x += rect.width; rect.width = w * 0.2f;
+        rect.x += rect.width * .6f; rect.width = w * 0.4f;
 
         float b = pitchB.floatValue; float t = pitchT.floatValue;
 
         label = new GUIContent(b.ToString("F1")+"<>"+t.ToString("F1"));
         EditorGUI.LabelField( rect , label );
 
-        rect.x += rect.width; rect.width = w * 0.4f;
+        rect.x += rect.width * .5f; rect.width = w * 0.5f;
 
         EditorGUI.MinMaxSlider(rect , ref b , ref t , 0 , 4 );
         pitchB.floatValue = b; pitchT.floatValue = t;

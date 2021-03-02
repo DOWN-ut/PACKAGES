@@ -49,7 +49,7 @@ public class ParametersManager : MonoBehaviour
 
     void Actions ()
     {
-        if (inputManager.rawInputs["echap"]) { if (!echapPressed) { EchapPressed(); echapPressed = true; } }
+        if (inputManager.rawInputs[InputManager.KEY.ECHAP]) { if (!echapPressed) { EchapPressed(); echapPressed = true; } }
         else { echapPressed = false; }
     }
 

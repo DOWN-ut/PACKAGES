@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
-
+using System.IO;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Calculations : MonoBehaviour
 {
@@ -18,6 +21,15 @@ public class Calculations : MonoBehaviour
     };
 
     public static List<string> qwerty_azerty = new List<string>(){"aq","wz",";m"};
+
+    public static float CharSize(char c, float letterLowSize = 1)
+    {
+        if (alphabetUp.Contains( c )) { return letterLowSize * 1.25f; }
+        if (alphabetLow.Contains( c )) { return letterLowSize ; }
+        if (numbers.Contains( c )) { return letterLowSize * 1.25f ; }
+        if(c == ' ') { return letterLowSize * 1.1f; }
+        return letterLowSize * .5f;
+    }
 
     public static float Formula ( string formula , float x )
     {
@@ -205,6 +217,21 @@ public class Calculations : MonoBehaviour
         }
 
         return lst;
+    }
+
+    public static char LowToUpChar(char c )
+    {
+        return alphabetLow.Contains(c) ? alphabetUp[alphabetLow.IndexOf( c )] : c;
+    }
+
+    public static string Capitalize(string str )
+    {
+        string n = LowToUpChar(str[0]).ToString();
+        for(int i = 1 ; i < str.Length ; i++)
+        {
+            n += str[i];
+        }
+        return n;
     }
 
     public static int StringHeight ( string str , char returnChar = '\n' )
@@ -642,6 +669,59 @@ public class Calculations : MonoBehaviour
     }
 }
 
+public static class TextFile
+{
+    public static bool Write ( string path , string content )
+    {
+        StreamWriter writer = new StreamWriter(path, false);
+        writer.Write( content );
+        writer.Close();
+        return true;
+    }
+
+    public static string GetLine(StreamReader reader )
+    {
+        return reader.ReadLine();
+    }
+
+    public static bool EOF(StreamReader reader )
+    {
+        return reader.EndOfStream;
+    }
+
+    public static string Read ( string path )
+    {
+        return File.ReadAllText( path );
+    }
+
+    public static StreamReader GetReader(string path)
+    {
+        return new StreamReader(path);
+    }
+
+
+    public static void CloseReader(StreamReader reader ) { reader.Close(); }
+
+#if UNITY_EDITOR    
+    public static FileStream Create ( string path )
+    {
+        return Create( path , "" );
+    }
+    public static FileStream Create ( string path , string content )
+    {
+        FileStream file = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        StreamWriter writer = new StreamWriter(file);
+        writer.Write( content );
+        return file;
+    }
+
+    public static bool Exists(string path )
+    {
+        return File.Exists( path );
+    }
+#endif
+}
+
 public static class PlayerData
 {
     public static string cacheColorName;
@@ -679,53 +759,52 @@ public static class PlayerData
 }
 
 [System.Serializable]
-public struct IColor
+public struct writing
 {
-    public Color color;
-    public float intensity;
-
-    public int priority;
-
-    public static implicit operator IColor ( Color a )
+    [SerializeField] private string[] strings;
+    private int languageCount
     {
-        return new IColor( a,1 );
-    }
-    public static implicit operator Color ( IColor a )
-    {
-        return a.color;
-    }
-
-    public static Color none { get { return new Color( 0 , 0 , 0 , 0 ); } }
-
-    public static IColor Blend( IColor[] colors )
-    {
-        int p = 0; IColor r = colors[0];
-        foreach(IColor c in colors)
+        get { return ( strings != null ? strings.Length : 0 ); }
+        set
         {
-            if(c.priority > p)
+            if (strings == null)
             {
-                r = c;
-                p = c.priority;
+                strings = new string[value];
+            }
+            else
+            {
+                string[] strs = new string[value];
+                for (int i = 0 ; i < value ; i++) { strs[i] = strings[i]; }
+                strings = strs;
             }
         }
-
-        return r;
     }
 
-    public IColor ( Color colo , float intens , int _priority = 0)
+    private static int language { get { if (PlayerPrefs.HasKey( "language" )) { return PlayerPrefs.GetInt( "language" ); } else { PlayerPrefs.SetInt( "language" , 0 ); return 0; } } }
+
+    public writing ( string str , int _languageIndex = 0, int _languageCount = 4 )
     {
-        color = colo;
-        intensity = intens;
-        priority = _priority;
+        _languageCount = Mathf.Max( _languageCount , 0 );
+        _languageIndex = Mathf.Min( _languageCount , _languageIndex );
+
+        strings = new string[_languageCount];
+        strings[_languageIndex] = str;
     }
-    public IColor(float r,float g,float b,float a,float intens, int _priority = 0 )
+
+    public writing (params string[] strs )
     {
-        color = new Color(r,g,b,a);
-        intensity = intens;
-        priority = _priority;
+        strings = strs;
+    }
+
+    public static implicit operator string ( writing a )
+    {
+        return a.strings[language];
+    }
+    public static implicit operator writing ( string a )
+    {
+        return new writing( a );
     }
 }
-
 
 [System.Serializable]
 public class CList<T>
@@ -1155,19 +1234,13 @@ public struct AudioElement
     public static implicit operator float ( AudioElement a ) { return a.probability; }
     public static implicit operator interval ( AudioElement a ) { return a.pitch; }
 
-    public static AudioClip GetRandom(AudioElement[] audioElements )
+    public static AudioElement GetRandom (AudioElement[] audioElements )
     {
-        List<AudioClip> list = new List<AudioClip>();
+        ObjectProbalized<AudioElement>[] list = new  ObjectProbalized<AudioElement>[audioElements.Length];
 
-        foreach(AudioElement ae in audioElements)
-        {
-            for(int i = 0 ; i < ae * 10 ; i++)
-            {
-                list.Add( ae );
-            }
-        }
+        for(int i = 0 ;i < audioElements.Length ; i++) { list[i] = new ObjectProbalized<AudioElement>(audioElements[i],audioElements[i].probability); }
 
-        return list[Random.Range( 0 , list.Count - 1 )];
+        return ObjectProbalized<AudioElement>.Get( list );
     }
 }
 [System.Serializable]
@@ -1197,11 +1270,11 @@ public class ObjectProbalized<T> : ObjectProbalize
         ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr , 0 );
         if(Sum(_arr) > 1) { Flatten( ref _arr ); }
 
-        Debug.Log( _arr.Length );
+        //Debug.Log( _arr.Length );
         float bottom= 0; int id = 0;
         foreach (ObjectProbalized<T> obj in array) 
         {
-            Debug.Log( bottom.ToString("F2") + " | " + _arr[id].probability.ToString("F2") + " or " + obj.probability.ToString("F2"));
+            //Debug.Log( bottom.ToString("F2") + " | " + _arr[id].probability.ToString("F2") + " or " + obj.probability.ToString("F2"));
 
             obj.interval = interval.CreateFromBottom( bottom , _arr[id].probability );
             bottom += _arr[id].probability;

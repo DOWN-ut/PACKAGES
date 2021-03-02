@@ -1,0 +1,6 @@
+{
+    "name": "unity.fpis.Editor",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

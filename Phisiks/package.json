@@ -1,15 +1,15 @@
 {
-  "name": "com.downun-inputer",
+  "name": "com.downun-phisiks",
   "version": "1.0.0",
-  "displayName": "Inputer",
-  "description": "This package is an extension to the Input System.",
+  "displayName": "Phisiks",
+  "description": "Extension to Unity's physic system.",
   "unity": "2019.1",
   "unityRelease": "0b5",
   "dependencies":{
-	"com.unity.inputsystem":"1.0.0"
+	"com.downun-phitures":"1.0.0"
   },
   "keywords": [
-    "input"
+    "physics"
   ],
   "author": {
     "name": "Saint-Val Yahnis",
@@ -18,7 +18,7 @@
   "hideInEditor": false,
    "dependencies":
           {
-            "com.unity.inputsystem": "1.0.1"
+            "com.downun-phitures": "1.0.1"
           },
- "testables" : [ "com.unity.inputsystem" ]
+ "testables" : [ "com.downun-phitures" ]
 }

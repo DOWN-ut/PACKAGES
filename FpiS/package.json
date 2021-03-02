@@ -1,0 +1,24 @@
+{
+  "name": "com.downun-fpis",
+  "version": "1.0.0",
+  "displayName": "F-Pi-S",
+  "description": "This package contains basic scripts for fps, like a full weapon-system",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "dependencies":{
+	"com.downun-phitures":"1.0.0"
+  },
+  "keywords": [
+    "fps"
+  ],
+  "author": {
+    "name": "Saint-Val Yahnis",
+    "email": "xynhay0@gmail.com"
+  },
+  "hideInEditor": false,
+   "dependencies":
+          {
+            "com.downun-phitures": "1.0.1"
+          },
+ "testables" : [ "com.downun-phitures" ]
+}

@@ -138,7 +138,7 @@ public static class GUING
 {
     static Color backgroundColorStorer;
 
-    public static void BackgroundColor ( Color color , bool set = true )
+    public static void BackgroundColor ( Color color  = default, bool set = true )
     {
         if (set)
         {
@@ -147,6 +147,7 @@ public static class GUING
         }
         else
         {
+            backgroundColorStorer = GUI.backgroundColor;
             GUI.backgroundColor = backgroundColorStorer;
         }
     }
@@ -218,10 +219,10 @@ public static class GUING
         value = EditorGUILayout.FloatField( value , GUILayout.Width( valueWidth ) , GUILayout.Height( labelHeight ) );
         EditorGUILayout.EndHorizontal();
     }
-    public static void Vector3Field ( ref Vector3 value , string label , float valueWidth , float labelWidth , float labelHeight )
+    public static void Vector3Field ( ref Vector3 value , string label , float valueWidth , float labelWidth , float labelHeight, GUIStyle labelStyle= null )
     {
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField( label , GUILayout.Width( labelWidth ) , GUILayout.Height( labelHeight ) );
+        EditorGUILayout.LabelField( label, labelStyle != null ? labelStyle : GUIStyle.none , GUILayout.Width( labelWidth ) , GUILayout.Height( labelHeight ) );
         value = EditorGUILayout.Vector3Field("", value , GUILayout.Width( valueWidth ) , GUILayout.Height( labelHeight ) );
         EditorGUILayout.EndHorizontal();
     }

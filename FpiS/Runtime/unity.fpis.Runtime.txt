@@ -1,0 +1,6 @@
+{
+    "name": "unity.fpis.Runtime",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}
