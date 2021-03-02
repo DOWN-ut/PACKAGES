@@ -11,4 +11,8 @@ public class PhysicManager : MonoBehaviour
     [SerializeField]
     private float _gravityForce = 10;
     public Vector3 gravity { get { return _gravityDirection.normalized * _gravityForce; } set { _gravityDirection = value.normalized; _gravityForce = value.magnitude; } }
+
+    //[Header("Ingame")]
+
+
 }
