@@ -30,14 +30,23 @@ public class GravityField : MonoBehaviour
     public Vector3 center { get { return transform.position + _center; } set { _center = value; } }
     public Vector2 intensity { get { return _intensities; } set { _intensities = value; } }
     #region Corners
-    public Vector3 corner0 { get { return center + new Vector3(_width*.5f,_range*.5f,_lenght*0.5f); } }
-    public Vector3 corner1 { get { return center + new Vector3(-_width*.5f,_range*.5f,_lenght*0.5f); } }
-    public Vector3 corner2 { get { return center + new Vector3(-_width*.5f,-_range*.5f,_lenght*0.5f); } }
-    public Vector3 corner3 { get { return center + new Vector3(_width*.5f,-_range*.5f,_lenght*0.5f); } }
-    public Vector3 corner4 { get { return center + new Vector3( _width * .5f , _range * .5f , -_lenght * 0.5f ); } }
-    public Vector3 corner5 { get { return center + new Vector3( -_width * .5f , _range * .5f , -_lenght * 0.5f ); } }
-    public Vector3 corner6 { get { return center + new Vector3( -_width * .5f , -_range * .5f , -_lenght * 0.5f ); } }
-    public Vector3 corner7 { get { return center + new Vector3( _width * .5f , -_range * .5f , -_lenght * 0.5f ); } }
+    //public Vector3 corner0 { get { return center + new Vector3(_width*.5f,_range*.5f,_lenght*0.5f); } }    
+    //public Vector3 corner1 { get { return center + new Vector3(-_width*.5f,_range*.5f,_lenght*0.5f); } }
+    //public Vector3 corner2 { get { return center + new Vector3( -_width * .5f , -_range * .5f , _lenght * 0.5f ); } }
+    //public Vector3 corner3 { get { return center + new Vector3( _width * .5f , -_range * .5f , _lenght * 0.5f ); } }
+   // public Vector3 corner4 { get { return center + new Vector3( _width * .5f , _range * .5f , -_lenght * 0.5f ); } }
+   // public Vector3 corner5 { get { return center + new Vector3( -_width * .5f , _range * .5f , -_lenght * 0.5f ); } }
+    //public Vector3 corner6 { get { return center + new Vector3( -_width * .5f , -_range * .5f , -_lenght * 0.5f ); } }
+   // public Vector3 corner7 { get { return center + new Vector3( _width * .5f , -_range * .5f , -_lenght * 0.5f ); } }
+    public Vector3 corner0 { get { return center + ( transform.right * _width * .5f ) + ( transform.up * _range * .5f )+ ( transform.forward * lenght * .5f ); } }
+    public Vector3 corner1 { get { return center + ( -transform.right * _width * .5f ) + ( transform.up * _range * .5f )+ ( transform.forward * lenght * .5f ); } }
+    public Vector3 corner2 { get { return center + ( -transform.right * _width * .5f ) + ( -transform.up * _range * .5f )+ ( transform.forward * lenght * .5f ); } }
+    public Vector3 corner3 { get { return center + ( transform.right * _width * .5f ) + ( -transform.up * _range * .5f )+ ( transform.forward * lenght * .5f ); } }
+    public Vector3 corner4 { get { return center + ( transform.right * _width * .5f ) + ( transform.up * _range * .5f )+ ( -transform.forward * lenght * .5f ); } }
+    public Vector3 corner5 { get { return center + ( -transform.right * _width * .5f ) + ( transform.up * _range * .5f )+ ( -transform.forward * lenght * .5f ); } }
+    public Vector3 corner6 { get { return center + ( -transform.right * _width * .5f ) + ( -transform.up * _range * .5f )+ ( -transform.forward * lenght * .5f ); } }
+    public Vector3 corner7 { get { return center + ( transform.right * _width * .5f ) + ( -transform.up * _range * .5f )+ ( -transform.forward * lenght * .5f ); } }
+
     #endregion
     public Vector3 size { get { return new Vector3(_width , _range , _lenght ); } set { _width = value.x; _range = value.y;_lenght = value.z; } }
     public float range { get { return _range; } set { _range = value; } } public float lenght { get { return _lenght; } set { _lenght = value; } } public float width { get { return _width; } set { _width = value; } }  public float groundHeigh { get { return _groundHeigh; } set { _groundHeigh = value; } }
@@ -93,9 +102,21 @@ public class GravityField : MonoBehaviour
                 Gizmos.DrawSphere( center , totalRange );
                 break;
             case Type.Flat:
-                Gizmos.DrawCube( center , size );
+                //Gizmos.DrawCube( center , size );
                 Gizmos.color = Color.green;
-                Gizmos.DrawLine( center,center + GravityAt(center) );
+                Gizmos.DrawLine( center,center + (GravityAt(center).normalized * range * .5f) );
+                Gizmos.DrawLine( corner0,  corner1 );
+                Gizmos.DrawLine( corner0,  corner4 );
+                Gizmos.DrawLine( corner0,  corner3 );
+                Gizmos.DrawLine( corner1,  corner5 );
+                Gizmos.DrawLine( corner5,  corner4 );
+                Gizmos.DrawLine( corner5,  corner6 );
+                Gizmos.DrawLine( corner3,  corner7 );
+                Gizmos.DrawLine( corner4,  corner7 );
+                Gizmos.DrawLine( corner2,  corner6 );
+                Gizmos.DrawLine( corner2,  corner1 );
+                Gizmos.DrawLine( corner2,  corner3 );
+                Gizmos.DrawLine( corner6,  corner7 );
                 break;
         }        
     }
