@@ -26,13 +26,14 @@ public class PhysicManager : MonoBehaviour
         gravityFields = new List<GravityField>( FindObjectsOfType<GravityField>() );
     }
 
-    public Vector3 GravityAt ( Vector3 position )
+    public Vector3 GravityAt ( Vector3 position, bool debugLocalP = false)
     {
         Vector3 g = Vector3.zero;
 
         foreach (GravityField gf in gravityFields)
         {
-            g += gf.GravityAt( position );
+            if (!gf.gameObject.activeSelf) { continue; }
+            g += gf.GravityAt( position, debugLocalP );
         }
 
         return g;

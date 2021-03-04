@@ -47,12 +47,12 @@ public class GravityField : MonoBehaviour
         return _lerper == 0 ? _intens.x : Mathf.Lerp( _intens.x , _intens.y , Mathf.Pow( ( _dist - gheight ) / ( _rang - gheight ) , _lerper ));
     }
 
-    public Vector3 GravityAt(Vector3 _position )
+    public Vector3 GravityAt(Vector3 _position,bool debugLocalP = false )
     {
         Vector3 g = Vector3.zero;
         Vector3 d = (center - _position);
         Vector3 p = transform.InverseTransformPoint(_position);
-        bool tooFar = Mathf.Abs(_position.x) > center.x + width || Mathf.Abs( _position.y ) > center.y + range || Mathf.Abs( _position.z ) > center.z + lenght;
+        bool tooFar = Mathf.Abs(p.x) > width * .5f|| Mathf.Abs( p.y ) > range *.5f || Mathf.Abs( p.z )  > lenght *.5f;
         float dist = 0;
         float inte = 0;
 
@@ -94,6 +94,8 @@ public class GravityField : MonoBehaviour
                 break;
             case Type.Flat:
                 Gizmos.DrawCube( center , size );
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine( center,center + GravityAt(center) );
                 break;
         }        
     }

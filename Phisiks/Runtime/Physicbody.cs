@@ -41,7 +41,7 @@ public class Physicbody : MonoBehaviour
     public Vector3 gravity { 
         get { return useGravity ? 
                 localGravity ? (_gravityDirection.normalized * _gravityForce) : 
-                physicManager.GravityAt(transform.position) : 
+                physicManager.GravityAt(transform.position,debugGFieldLocalP) : 
                 Vector3.zero; } 
         set { _gravityForce = value.magnitude; _gravityDirection = value.normalized; } }
 
@@ -57,6 +57,8 @@ public class Physicbody : MonoBehaviour
     public Rigidbody rigidbody { get { return GetComponent<Rigidbody>(); } }
     [HideInInspector]
     public Collider collider { get { return GetComponent<Collider>(); } }
+    [Header("Debug")]
+    public bool debugGFieldLocalP = false;
 
     #endregion
 
