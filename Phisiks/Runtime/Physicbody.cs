@@ -53,7 +53,7 @@ public class Physicbody : MonoBehaviour
 
     [Header( "References" )]
     [HideInInspector]
-    private PhysicManager physicManager;
+    public PhysicManager physicManager;
     public Rigidbody rigidbody { get { return GetComponent<Rigidbody>(); } }
     [HideInInspector]
     public Collider collider { get { return GetComponent<Collider>(); } }
