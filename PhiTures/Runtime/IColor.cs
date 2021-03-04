@@ -44,6 +44,14 @@ public struct IColor
         intensity = intens;
         priority = _priority;
     }
+    public IColor ( Color colo, float alpha , float intens , int _priority = 0 )
+    {
+        color = colo;
+        color.a = alpha;
+        intensity = intens;
+        priority = _priority;
+    }
+
     public IColor ( float r , float g , float b , float a , float intens , int _priority = 0 )
     {
         color = new Color( r , g , b , a );

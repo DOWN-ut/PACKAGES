@@ -38,14 +38,14 @@ public class Physicbody : MonoBehaviour
     public bool useGravity = true;
 
     private PhysicMaterial physicMaterial;
-    public Vector3 gravity { get { return useGravity ? localGravity ? (_gravityDirection.normalized * _gravityForce) : physicManager.gravity : Vector3.zero; } set { _gravityForce = value.magnitude; _gravityDirection = value.normalized; } }
+    public Vector3 gravity { 
+        get { return useGravity ? 
+                localGravity ? (_gravityDirection.normalized * _gravityForce) : 
+                physicManager.GravityAt(transform.position) : 
+                Vector3.zero; } 
+        set { _gravityForce = value.magnitude; _gravityDirection = value.normalized; } }
 
-    private Vector3 velocity;
-
-    private Vector3 referencielVelocity { get { return VelocityOf( referenciel ); } }
-    private Vector3 globalVelocity { get {return velocity + referencielVelocity; } }
-
-    private GameObject referenciel;
+    public Vector3 velocity { get { return rigidbody.velocity; } set { rigidbody.velocity = value; } }
 
     #endregion
 
@@ -73,7 +73,6 @@ public class Physicbody : MonoBehaviour
     {
         ApplyGravity();
         Material();
-        Velocity();
     }
     #endregion
 
@@ -93,11 +92,6 @@ public class Physicbody : MonoBehaviour
         collider.material = physicMaterial;
     }
 
-    void Velocity ()
-    {
-        rigidbody.velocity = globalVelocity;
-    }
-
     #endregion
 
     #region Setup
@@ -105,6 +99,7 @@ public class Physicbody : MonoBehaviour
     {     
         if (physicManager == null) { physicManager = FindObjectOfType<PhysicManager>(); }
 
+        rigidbody.useGravity = false;
         physicMaterial = new PhysicMaterial();
         mass = _mass;
     }
@@ -135,13 +130,16 @@ public class Physicbody : MonoBehaviour
 
     public static Physicbody PhysicbodyOf(GameObject g )
     {
-        if(g.GetComponent<Physicbody>() != null) { return g.GetComponent<Physicbody>(); }
+        if(g == null) { return null; }
+        else if(g.GetComponent<Physicbody>() != null) { return g.GetComponent<Physicbody>(); }
         else if(g.transform.parent != null) { return PhysicbodyOf( g.transform.parent.gameObject ); }
         else { return null; }
     }
 
     public static Vector3 VelocityOf(GameObject g )
     {
+        if(g == null) { return Vector3.zero; }
+
         Physicbody p = PhysicbodyOf(g);
 
         return p == null ? Vector3.zero : VelocityOf( p );
@@ -149,7 +147,9 @@ public class Physicbody : MonoBehaviour
 
     public static Vector3 VelocityOf(Physicbody p )
     {
-        return p.referenciel == null ? p.velocity : p.velocity + VelocityOf( p.referenciel );
+        if (p == null) { return Vector3.zero; }
+
+        return p.velocity;
     }
 
     #endregion

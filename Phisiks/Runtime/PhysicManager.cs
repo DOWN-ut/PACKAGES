@@ -12,7 +12,29 @@ public class PhysicManager : MonoBehaviour
     private float _gravityForce = 10;
     public Vector3 gravity { get { return _gravityDirection.normalized * _gravityForce; } set { _gravityDirection = value.normalized; _gravityForce = value.magnitude; } }
 
-    //[Header("Ingame")]
+    [Header("Ingame")]
 
+    private List<GravityField> gravityFields;
 
+    private void Awake ()
+    {
+        Setup();
+    }
+
+    void Setup ()
+    {
+        gravityFields = new List<GravityField>( FindObjectsOfType<GravityField>() );
+    }
+
+    public Vector3 GravityAt ( Vector3 position )
+    {
+        Vector3 g = Vector3.zero;
+
+        foreach (GravityField gf in gravityFields)
+        {
+            g += gf.GravityAt( position );
+        }
+
+        return g;
+    }
 }
