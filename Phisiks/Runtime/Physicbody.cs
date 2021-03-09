@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [RequireComponent(typeof(Rigidbody))]
 public class Physicbody : MonoBehaviour
@@ -26,10 +29,15 @@ public class Physicbody : MonoBehaviour
 
     public PhysicMaterialCombine frictionCombine = PhysicMaterialCombine.Average;
 
+    [Space(3)]
+
+    public int velocityRecorderCount = 2;
+
     #endregion
 
     #region Ingame
 
+    [Space(10)]
     [Header("Ingame")]
 
     private Vector3 _gravityDirection;
@@ -45,13 +53,17 @@ public class Physicbody : MonoBehaviour
                 Vector3.zero; } 
         set { _gravityForce = value.magnitude; _gravityDirection = value.normalized; } }
 
-    public Vector3 velocity { get { return rigidbody.velocity; } set { rigidbody.velocity = value; } }
+    public Vector3 velocity { get { return rigidbody.velocity; } set { rigidbody.velocity = value; } } public float velocityMagnitude { get { return velocity.magnitude; } }
+    public Vector3[] velocities;
+    public Vector3 acceleration { get { return velocities.Length >= 2 ? velocities[0] - velocities[1] : Vector3.zero; } } public float accelerationMagnitude { get { return acceleration.magnitude; } }
+
+    public float kineticEnergy { get { return velocityMagnitude * mass; } }
 
     #endregion
 
-    #region References
+        #region References
 
-    [Header( "References" )]
+        [Header( "References" )]
     [HideInInspector]
     public PhysicManager physicManager;
     public Rigidbody rigidbody { get { return GetComponent<Rigidbody>(); } }
@@ -75,6 +87,7 @@ public class Physicbody : MonoBehaviour
     {
         ApplyGravity();
         Material();
+        GetInfos();
     }
     #endregion
 
@@ -93,6 +106,14 @@ public class Physicbody : MonoBehaviour
 
         collider.material = physicMaterial;
     }
+    void GetInfos ()
+    {
+        for(int i = velocities.Length - 1 ; i > 0; i--)
+        {
+            velocities[i] = velocities[i - 1];
+        }
+        velocities[0] = velocity;
+    }
 
     #endregion
 
@@ -104,6 +125,8 @@ public class Physicbody : MonoBehaviour
         rigidbody.useGravity = false;
         physicMaterial = new PhysicMaterial();
         mass = _mass;
+
+        velocities = new Vector3[velocityRecorderCount];
     }
 #endregion
 
@@ -156,3 +179,65 @@ public class Physicbody : MonoBehaviour
 
     #endregion
 }
+
+#if UNITY_EDITOR
+
+[CustomEditor( typeof( Physicbody ) )]
+[CanEditMultipleObjects]
+public class PhysicbodyEditor : Editor
+{
+    GUIStyle titleStyle;
+    float titleHeight = 50; int titleFontSize = 25;
+
+    GUIStyle enumStyle;
+    float enumHeight = 20; int enumFontSize = 25;
+
+    GUIStyle arrowStyle;
+    int arrowFontSize = 40;
+
+    GUIStyle infoStyle;
+    int infoFontSize = 11;    
+    GUIStyle infoTitleStyle;
+    int infoTitleFontSize = 15;
+
+    bool displayInfos;
+
+    void Styles ()
+    {
+        titleStyle = GUI.skin.label; titleStyle.alignment = TextAnchor.MiddleCenter; titleStyle.fontStyle = FontStyle.Bold; titleStyle.fontSize = titleFontSize;
+        arrowStyle = GUI.skin.label; arrowStyle.alignment = TextAnchor.MiddleCenter; arrowStyle.fontStyle = FontStyle.Bold; arrowStyle.fontSize = arrowFontSize;
+        enumStyle = GUI.skin.label; enumStyle.alignment = TextAnchor.MiddleCenter; enumStyle.fontStyle = FontStyle.Normal; enumStyle.fontSize = enumFontSize;
+
+        infoStyle = GUI.skin.label; infoStyle.alignment = TextAnchor.MiddleCenter; infoStyle.fontStyle = FontStyle.Bold; infoStyle.fontSize = infoFontSize;
+        infoTitleStyle = GUI.skin.box; infoTitleStyle.alignment = TextAnchor.MiddleCenter; infoTitleStyle.fontStyle = FontStyle.Bold; infoTitleStyle.fontSize = infoTitleFontSize;
+    }
+
+    public override void OnInspectorGUI ()
+    {
+        float width = EditorGUIUtility.currentViewWidth;
+        Physicbody physicbody = target as Physicbody;
+
+        Styles();
+
+        serializedObject.Update();
+
+        if(GUILayout.Button(displayInfos ? "Fold" : "Unfold" )) { displayInfos = !displayInfos; }
+
+        if (displayInfos)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField( "Acceleration : " ,infoTitleStyle,GUILayout.Height(20),GUILayout.Width(width * .4f));
+            EditorGUILayout.LabelField( physicbody.accelerationMagnitude.ToString("F1"), infoStyle , GUILayout.Height( 20 ) , GUILayout.Width( width * .1f ) );
+            EditorGUILayout.LabelField( physicbody.acceleration.ToString("F1"), infoStyle , GUILayout.Height( 20 ) , GUILayout.Width( width * .5f ) );
+            EditorGUILayout.EndHorizontal();
+        }
+
+        GUING.Line( 1 , 5 );
+
+        DrawDefaultInspector();
+
+        serializedObject.ApplyModifiedProperties();
+    }
+}
+
+#endif

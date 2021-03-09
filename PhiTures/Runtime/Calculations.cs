@@ -1213,6 +1213,17 @@ public struct interval
         return _bottom.ToString( F ) + " | " + _top.ToString( F );
     }
 
+    public float GetRatio(float v,bool crop = false )
+    {
+        float r = ( v - bottom ) / ( top - bottom );
+        return !crop ? r : ( r < 0 ? 0 : r > 1 ? 1 : r );
+    }
+
+    public float Get(float r )
+    {
+        return Mathf.Lerp( bottom , top , r );
+    }
+
     public static implicit operator float (interval i ) { return i.random; }
 }
 
@@ -1229,6 +1240,11 @@ public struct AudioElement
     public AudioElement(AudioClip _clip, float _p) { clip = _clip; probability = _p; pitch = new interval( 1 , 1 ); }
     public AudioElement(AudioClip _clip, float _p , interval _pitch) { clip = _clip; probability = _p; pitch = _pitch; }
 
+    public static void SetupAudioSource(AudioSource a, AudioElement ae, float _pitch = -1 )
+    {
+        a.clip = ae.clip;
+        a.pitch = _pitch < 0 ? ae.pitch : _pitch;
+    }
 
     public static implicit operator AudioClip ( AudioElement a ) { return a.clip; }
     public static implicit operator float ( AudioElement a ) { return a.probability; }

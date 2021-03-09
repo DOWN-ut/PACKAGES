@@ -210,16 +210,16 @@ public class IntervalDrawer : PropertyDrawer
         amplitude = Mathf.Max( amplitude , 10);
 
         nameD = name + "    " + _bottom.ToString( "F1" ) + " <> " + _top.ToString( "F1" );
-        float w =nameD.Length * 7.5f;
+        float w =nameD.Length * 7f;
 
         EditorGUI.BeginProperty( position , label , property );
 
-        //EditorGUI.LabelField( new Rect( 19 , position.position.y , w, position.height ) , nameD );
+        EditorGUI.LabelField( new Rect( 19 , position.position.y , w, position.height ) , nameD );
 
-        //position.x = w;
-        //position.width -= position.x;
+        position.x = w;
+        position.width -= position.x;
 
-        EditorGUI.MinMaxSlider( position,nameD  , ref _bottom , ref _top ,Mathf.RoundToInt(_bottom - amplitude) , Mathf.RoundToInt( _top + amplitude ) );
+        EditorGUI.MinMaxSlider( position,""  , ref _bottom , ref _top ,Mathf.RoundToInt(_bottom - amplitude) , Mathf.RoundToInt( _top + amplitude ) );
 
         top.floatValue = _top;bottom.floatValue= _bottom;
 
@@ -266,22 +266,22 @@ public class AudioElementDrawer : PropertyDrawer
 
         position.x = -w * 0.3f;
 
-        Rect rect = position; rect.width = w * 0.6f;
+        Rect rect = position; rect.width = w * 0.7f;
 
         EditorGUI.ObjectField( rect , audio );
 
-        rect.x += rect.width * 0.8f; rect.width = w *0.2f;
+        rect.x += rect.width * 1.05f; rect.width = w *0.075f;
 
         proba.floatValue = EditorGUI.FloatField( rect , proba.floatValue );
 
-        rect.x += rect.width * .6f; rect.width = w * 0.4f;
+        rect.x += rect.width * 1.1f; rect.width = w * 0.4f;
 
         float b = pitchB.floatValue; float t = pitchT.floatValue;
 
         label = new GUIContent(b.ToString("F1")+"<>"+t.ToString("F1"));
         EditorGUI.LabelField( rect , label );
 
-        rect.x += rect.width * .5f; rect.width = w * 0.5f;
+        rect.x += rect.width * .45f; rect.width = w * 0.4f;
 
         EditorGUI.MinMaxSlider(rect , ref b , ref t , 0 , 4 );
         pitchB.floatValue = b; pitchT.floatValue = t;
