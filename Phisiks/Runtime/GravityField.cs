@@ -191,6 +191,7 @@ public class GravityFieldEditor : Editor
         var ground = serializedObject.FindProperty( "_groundHeigh" );
         var distancePow = serializedObject.FindProperty( "_distancePow" );
         var distanceLerp = serializedObject.FindProperty( "_distanceLerper" );
+        var center = serializedObject.FindProperty( "_center" );
 
         EditorGUILayout.BeginHorizontal();
 
@@ -209,6 +210,8 @@ public class GravityFieldEditor : Editor
         intensity.vector2Value = EditorGUILayout.Vector2Field( "Intensity : " , intensity.vector2Value );
         distancePow.floatValue = EditorGUILayout.FloatField( "Distance Pow : " , distancePow.floatValue );
         distanceLerp.floatValue = EditorGUILayout.FloatField( "Distance Lerp Pow : " , distanceLerp.floatValue );
+
+        center.vector3Value = EditorGUILayout.Vector3Field( "Center : " , center.vector3Value );
 
         switch ((GravityField.Type)typeIndex)
         {
