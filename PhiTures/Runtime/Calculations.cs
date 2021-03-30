@@ -22,12 +22,12 @@ public class Calculations : MonoBehaviour
 
     public static List<string> qwerty_azerty = new List<string>(){"aq","wz",";m"};
 
-    public static float CharSize(char c, float letterLowSize = 1)
+    public static float CharSize ( char c , float letterLowSize = 1 )
     {
         if (alphabetUp.Contains( c )) { return letterLowSize * 1.25f; }
-        if (alphabetLow.Contains( c )) { return letterLowSize ; }
-        if (numbers.Contains( c )) { return letterLowSize * 1.25f ; }
-        if(c == ' ') { return letterLowSize * 1.1f; }
+        if (alphabetLow.Contains( c )) { return letterLowSize; }
+        if (numbers.Contains( c )) { return letterLowSize * 1.25f; }
+        if (c == ' ') { return letterLowSize * 1.1f; }
         return letterLowSize * .5f;
     }
 
@@ -70,8 +70,8 @@ public class Calculations : MonoBehaviour
 
         return x;
     }
-    
-    public static string Command(string command, out string steps)
+
+    public static string Command ( string command , out string steps )
     {
         string str = ""; steps = "";
 
@@ -104,7 +104,8 @@ public class Calculations : MonoBehaviour
             float x=0; float y = 0; string s = ""; int i = 0;
 
             trilean b = true;
-            while (b) {
+            while (b)
+            {
                 i++;
                 if (i < parts.Count) { if (priorities[priority].Contains( parts[i][0] )) { b = false; } }
                 else { b = trilean.Null; }
@@ -219,15 +220,15 @@ public class Calculations : MonoBehaviour
         return lst;
     }
 
-    public static char LowToUpChar(char c )
+    public static char LowToUpChar ( char c )
     {
-        return alphabetLow.Contains(c) ? alphabetUp[alphabetLow.IndexOf( c )] : c;
+        return alphabetLow.Contains( c ) ? alphabetUp[alphabetLow.IndexOf( c )] : c;
     }
 
-    public static string Capitalize(string str )
+    public static string Capitalize ( string str )
     {
         string n = LowToUpChar(str[0]).ToString();
-        for(int i = 1 ; i < str.Length ; i++)
+        for (int i = 1 ; i < str.Length ; i++)
         {
             n += str[i];
         }
@@ -373,40 +374,40 @@ public class Calculations : MonoBehaviour
     /// <param name="cursor">A value between 0 and 1 that is used to lerp between the colors.</param>
     /// <param name="colors">The list of the colors to lerp between.</param>
     /// <returns></returns>
-    public static Color LerpBetweenColors (float cursor,params Color[] colors)
+    public static Color LerpBetweenColors ( float cursor , params Color[] colors )
     {
-        if(colors.Length <= 0) { return Color.white; }
-        if(cursor >= 1) { return colors[colors.Length - 1]; }
-        if(cursor <= 0) { return colors[0]; }
+        if (colors.Length <= 0) { return Color.white; }
+        if (cursor >= 1) { return colors[colors.Length - 1]; }
+        if (cursor <= 0) { return colors[0]; }
 
         float unit = 1f / colors.Length;
         int id = (int)Mathf.Floor( cursor / unit);
 
-        cursor = (cursor - (id*unit));
+        cursor = ( cursor - ( id * unit ) );
 
-        return Calculations.LerpColor( colors[id] , colors[id + 1] , cursor ) ;
+        return Calculations.LerpColor( colors[id] , colors[id + 1] , cursor );
     }
-    public static Color ColorFromVector(Vector4 vector )
+    public static Color ColorFromVector ( Vector4 vector )
     {
         return new Color( vector.x , vector.y , vector.z , vector.w );
     }
 
-    public static Vector4 VectorFromColor(Color color )
+    public static Vector4 VectorFromColor ( Color color )
     {
         return new Vector4( color.r , color.g , color.b , color.a );
     }
 
-    public static Vector3 RandomVector3 ( Vector3 min, Vector3 max )
+    public static Vector3 RandomVector3 ( Vector3 min , Vector3 max )
     {
         return new Vector3( Random.Range( min.x , max.x ) , Random.Range( min.y , max.y ) , Random.Range( min.z , max.z ) );
     }
 
-    public static void ValueTowards(ref float value, float to,float speed )
+    public static void ValueTowards ( ref float value , float to , float speed )
     {
         value = Mathf.MoveTowards( value , to , speed );
     }
 
-    public static void RecordingArray<T>(ref T[] array, T newValue )
+    public static void RecordingArray<T> ( ref T[] array , T newValue )
     {
         for (int i = array.Length - 1 ; i > 0 ; i--)
         {
@@ -415,24 +416,24 @@ public class Calculations : MonoBehaviour
         array[array.Length - 1] = newValue;
     }
 
-    public static Vector4 VectorPower(Vector4 vector, float power )
+    public static Vector4 VectorPower ( Vector4 vector , float power )
     {
-        return new Vector4( Mathf.Pow(vector.x,power) , Mathf.Pow( vector.y , power ) , Mathf.Pow( vector.z , power ) , Mathf.Pow( vector.w , power ) );
+        return new Vector4( Mathf.Pow( vector.x , power ) , Mathf.Pow( vector.y , power ) , Mathf.Pow( vector.z , power ) , Mathf.Pow( vector.w , power ) );
     }
 
     /// <summary>
     /// Return the index of the first true-bool in the given ones. -1 if none are.
     /// </summary>
-    public static int BoolsToIndex(params bool[] bools )
+    public static int BoolsToIndex ( params bool[] bools )
     {
-        for(int i = 0 ;i<bools.Length ; i++)
+        for (int i = 0 ; i < bools.Length ; i++)
         {
             if (bools[i]) { return i; }
         }
         return -1;
     }
 
-    public static float FloatTransfert(ref float from,ref float to )
+    public static float FloatTransfert ( ref float from , ref float to )
     {
         float to0 = to;
         to += from;
@@ -444,7 +445,7 @@ public class Calculations : MonoBehaviour
 
     public static Vector2 vector2up = Vector2.up;
 
-    public static object RandomObject<T>( int[] baseProbabilities,T[] objects)
+    public static object RandomObject<T> ( int[] baseProbabilities , T[] objects )
     {
         List<T> selector = new List<T>();
         for (int i = 0 ; i < objects.Length ; i++)
@@ -458,11 +459,11 @@ public class Calculations : MonoBehaviour
         return selector[Random.Range( 0 , selector.Count - 1 )];
     }
 
-    public static float ConcatFloats(params float[] f )
+    public static float ConcatFloats ( params float[] f )
     {
         float r = 0;
 
-        for(int i = 0 ; i < f.Length ; i++)
+        for (int i = 0 ; i < f.Length ; i++)
         {
             r += Mathf.Pow( 10 , i ) * f[i];
         }
@@ -470,28 +471,28 @@ public class Calculations : MonoBehaviour
         return r;
     }
 
-    public static float Restric(float value, float max,float min )
+    public static float Restric ( float value , float max , float min )
     {
         return value > max ? max : value < min ? min : value;
     }
-    
-    public static float ListSum(object[] list, string varName)
-    { 
+
+    public static float ListSum ( object[] list , string varName )
+    {
         float r = 0;
-        if(list.Length < 1) { return 0; }
+        if (list.Length < 1) { return 0; }
         System.Type type = list[0].GetType();
 
         foreach (var f in list)
         {
-            r += (float)( type.GetField( varName ).GetValue( f) );
+            r += (float)( type.GetField( varName ).GetValue( f ) );
         }
 
-        if(float.IsNaN(r) || float.IsInfinity( r )) { r = 0; }
+        if (float.IsNaN( r ) || float.IsInfinity( r )) { r = 0; }
 
-        return r ;
+        return r;
     }
 
-    public static List<object> ConcatFieldsInList(object[] list , string varName )
+    public static List<object> ConcatFieldsInList ( object[] list , string varName )
     {
         List<object> nl = new List<object>();
 
@@ -501,18 +502,18 @@ public class Calculations : MonoBehaviour
 
         foreach (var f in list)
         {
-            nl.AddRange ( (object[])type.GetField( varName ).GetValue( f ) );
+            nl.AddRange( (object[])type.GetField( varName ).GetValue( f ) );
         }
 
         return nl;
     }
 
-    public static float ListMax(float[] list, out int index )
+    public static float ListMax ( float[] list , out int index )
     {
         float max = 0; int i = 0; index = 0;
-        foreach(float f in list)
+        foreach (float f in list)
         {
-            if(f > max)
+            if (f > max)
             {
                 index = i;
                 max = f;
@@ -543,7 +544,7 @@ public class Calculations : MonoBehaviour
     {
         int azerty=0,qwerty=1;
 
-        foreach(string s in qwerty_azerty)
+        foreach (string s in qwerty_azerty)
         {
             if (s[azerty].ToString() == c)
             {
@@ -568,46 +569,47 @@ public class Calculations : MonoBehaviour
         return 1 - ( ( r + g + b + ( ignoreOpacity ? 0 : a ) ) / ( ignoreOpacity ? 3 : 4 ) );
     }
 
-    public static bool ContainSimilarColor(Color[] arr,Color color, float threshold, bool ignoreOpacity = true)
+    public static bool ContainSimilarColor ( Color[] arr , Color color , float threshold , bool ignoreOpacity = true )
     {
-        foreach(Color c in arr)
+        foreach (Color c in arr)
         {
-            if (ColorSimilarity( color , c,ignoreOpacity ) >= threshold) { return true; }
+            if (ColorSimilarity( color , c , ignoreOpacity ) >= threshold) { return true; }
         }
 
         return false;
     }
 
-    public static string IntToString(int n, int charCount = 1 )
+    public static string IntToString ( int n , int charCount = 1 )
     {
-        for(float N = n ; N >= 10 ; N /= 10f) { charCount--; }
+        for (float N = n ; N >= 10 ; N /= 10f) { charCount--; }
 
         string str = charCount > 0?  RepeatString( "0" , charCount ) : "";
 
         return str + n.ToString( "F0" );
     }
 
-    public static string RepeatString(string str, int count)
+    public static string RepeatString ( string str , int count )
     {
-        while(count > 0) { str += str; count--; } return str;
+        while (count > 0) { str += str; count--; }
+        return str;
     }
 
-    public static Color CleanColor( Color c )
+    public static Color CleanColor ( Color c )
     {
         float coef = 3f/(c.r+c.g+c.b);
 
         return new Color( c.r * coef , c.g * coef , c.b * coef );
     }
-    public static T RandomFromArray<T> ( T[] array, out int index )
+    public static T RandomFromArray<T> ( T[] array , out int index )
     {
         index = Random.Range( 0 , array.Length );
         return array[index];
     }
 
-    public static T RandomFromArray<T>( T[] array )
+    public static T RandomFromArray<T> ( T[] array )
     {
         int i;
-        return RandomFromArray( array, out i );
+        return RandomFromArray( array , out i );
     }
 
     public static T[] GetTransformChilds<T> ( Transform transform )
@@ -628,7 +630,7 @@ public class Calculations : MonoBehaviour
         return c;
     }
 
-    public static Gradient GradientFromColor(Color color )
+    public static Gradient GradientFromColor ( Color color )
     {
         Gradient gradient = new Gradient();
 
@@ -638,24 +640,24 @@ public class Calculations : MonoBehaviour
         return gradient;
     }
 
-    public static void AddToArray<T>(ref T[] array, T add)
+    public static void AddToArray<T> ( ref T[] array , T add )
     {
         List<T> list = new List<T>(array);
         list.Add( add );
         array = list.ToArray();
     }
-    public static void RemoveFromArray<T> ( ref T[] array, int index )
+    public static void RemoveFromArray<T> ( ref T[] array , int index )
     {
-        if(array.Length <= 0) { return; }
+        if (array.Length <= 0) { return; }
         index = index < 0 ? 0 : index >= array.Length ? array.Length - 1 : index;
         List<T> list = new List<T>(array);
         list.RemoveAt( index );
         array = list.ToArray();
     }
 
-    public static int ToLinearArrayID(int[] ids, int[] lenghts )
+    public static int ToLinearArrayID ( int[] ids , int[] lenghts )
     {
-        if(ids.Length <= 0) { return ids[0]; }
+        if (ids.Length <= 0) { return ids[0]; }
 
         int r =  ids[0];
         int max = Mathf.Min(ids.Length,lenghts.Length);
@@ -667,8 +669,35 @@ public class Calculations : MonoBehaviour
 
         return r;
     }
-}
 
+    public static Vector2 WorldToScreen ( Vector3 position , Camera camera , Vector2 screenSize = default )
+    {
+        return WorldToScreen( position , camera.transform.position , camera.transform.forward , camera.transform.right , camera.transform.up , camera.fieldOfView , screenSize );
+    }
+
+    public static Vector2 WorldToScreen ( Vector3 position , Vector3 cameraPosition , Vector3 cameraForward , Vector3 cameraRight , Vector3 cameraUp , float fieldOfView = 60 , Vector2 screenSize = default )
+    {
+        if (screenSize == default) { screenSize = defaultScreenSize; }
+
+        Vector3 direction = (position - cameraPosition);
+
+        Vector2 angles = new Vector2(
+            Vector3.SignedAngle(cameraForward.normalized,direction.normalized,cameraUp) / fieldOfView,
+            Vector3.SignedAngle(cameraForward.normalized,direction.normalized,cameraRight) / fieldOfView);
+
+        return new Vector2(
+            Mathf.Lerp( -screenSize.x * .5f , screenSize.x * .5f , angles.x ) ,
+            Mathf.Lerp( -screenSize.y * .5f , screenSize.y * .5f , angles.y )
+            );
+    }
+
+    public const float defaultScreenSizeX = 1920;
+    public const float defaultScreenSizeY = 1080;
+    public static Vector2 defaultScreenSize
+    {
+        get { return new Vector2( defaultScreenSizeX , defaultScreenSizeY ); }
+    }
+}
 public static class TextFile
 {
     public static bool Write ( string path , string content )
@@ -1402,6 +1431,72 @@ public struct RandomScalar
         return Mathf.Pow( 1f / curve ,
             Random.Range( 
                 Mathf.Pow( min , curve ) , Mathf.Pow( max , curve ) ) );
+    }
+}
+
+[System.Serializable]
+public class toggler
+{
+    private List<bool> toggles;
+    private Type type;
+
+    public bool Get ()
+    {
+        if(toggles.Count <= 0) { return false; }
+        switch (type)
+        {
+            default: goto case Type.AND;
+            case Type.AND:
+                foreach(bool b in toggles) { if (!b) { return false; } } return true;
+            case Type.OR:
+                foreach (bool b in toggles) { if (b) { return true; } } return false;
+        }
+    }
+
+    public int Set(bool b = true, int i = -1)
+    {
+        if(i < 0 || i >= toggles.Count)
+        {
+            toggles.Add( b ); return toggles.Count - 1;
+        }
+        else
+        {
+            toggles[i] = b; return i;
+        }
+    }
+
+    public void Remove ( int id ) { if (id >= 0 && id < toggles.Count) { toggles.RemoveAt( id ); } }
+
+    public toggler (Type t,params bool[] b) 
+    {
+        type = t;
+        toggles = new List<bool>(b); 
+    }
+    public static toggler OR { get { return new toggler( Type.OR ); } }
+    public static toggler AND { get { return new toggler( Type.AND ); } }
+
+    public static implicit operator bool ( toggler t) { return t.Get(); }
+
+    [System.Serializable]
+    public struct actor
+    {
+        private toggler toggle;
+        private int id;
+
+        public actor(toggler t) { toggle = t; id = toggle.Set( false ); }
+
+        public bool Get () { return toggle; }
+        public void Yes()   { toggle.Set( true , id ); }
+        public void No()   { toggle.Set( false , id ); }
+        public void Release()   { toggle.Remove( id ); }
+
+        public static implicit operator bool ( actor t ) { return t.Get(); }
+    }
+
+    public enum Type
+    {
+        AND,
+        OR
     }
 }
 

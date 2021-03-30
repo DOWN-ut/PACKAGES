@@ -23,6 +23,7 @@ public class PhysicManager : MonoBehaviour
 
     void Setup ()
     {
+        physicManager = this;
         gravityFields = new List<GravityField>( FindObjectsOfType<GravityField>() );
     }
 
@@ -38,4 +39,6 @@ public class PhysicManager : MonoBehaviour
 
         return g;
     }
+
+    public static PhysicManager physicManager;
 }
