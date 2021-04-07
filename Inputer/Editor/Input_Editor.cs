@@ -137,14 +137,16 @@ public class InputElementInspector : PropertyDrawer
             //EditorGUI.indentLevel += 1;
             contentPosition = EditorGUI.IndentedRect( position );
             //contentPosition.y += 18f;
-            contentPosition.x += 150f;
+            contentPosition.x += 0;
         }
 
         GUI.skin.label.padding = new RectOffset( 3 , 3 , 6 , 6 );
 
         //show the X and Y from the point
         EditorGUIUtility.labelWidth = 14f;
-        contentPosition.width = 110f;
+
+        contentPosition.width = 90;
+
         //EditorGUI.indentLevel = 0;
 
         // Begin/end property & change check make each field
@@ -153,9 +155,7 @@ public class InputElementInspector : PropertyDrawer
 
         EditorGUI.PropertyField( contentPosition , NAME );
 
-        contentPosition.width = 110;
-
-        contentPosition.x += 110;
+        contentPosition.x += contentPosition.width;
 
         EditorGUILayout.BeginHorizontal();
         for (int i = 0 ; i < KEY.arraySize ; i++)

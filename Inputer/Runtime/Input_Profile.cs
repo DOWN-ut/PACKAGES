@@ -43,7 +43,7 @@ public class Input_Profile : MonoBehaviour
         {
             if (field.FieldType == typeof( string ))
             {
-                field.SetValue( this , Calculations.QwertyAzerty( (string)field.GetValue( this ) ) );
+                field.SetValue( this , StringProcess.QwertyAzerty( (string)field.GetValue( this ) ) );
             }
         }
     }

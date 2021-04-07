@@ -414,7 +414,7 @@ public class @INPUT : IInputActionCollection, IDisposable
                     ""name"": ""RightJoystick"",
                     ""type"": ""Value"",
                     ""id"": ""5efd7c9e-1e61-44aa-8297-d1b531acbdf0"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Stick"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -422,7 +422,7 @@ public class @INPUT : IInputActionCollection, IDisposable
                     ""name"": ""LeftJoystick"",
                     ""type"": ""Value"",
                     ""id"": ""39fd1716-8caa-438c-8fed-07bcc41d3332"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Stick"",
                     ""processors"": """",
                     ""interactions"": """"
                 },

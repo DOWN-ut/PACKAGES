@@ -7,6 +7,9 @@ using System.IO;
 using UnityEditor;
 #endif
 
+/// <summary>
+/// Miscelaneous calculus and operation functions
+/// </summary>
 public class Calculations : MonoBehaviour
 {
     public static List<List<char>> priorities = new List<List<char>>(3)
@@ -16,20 +19,13 @@ public class Calculations : MonoBehaviour
  new List<char>() { '^'}
     };
 
-    public static Vector3 RandomVector3 ( Vector3 min, Vector3 max )
-    {
-        return new Vector3( Random.Range( min.x , max.x ) , Random.Range( min.y , max.y ) , Random.Range( min.z , max.z ) );
-    }
 
     public static void ValueTowards(ref float value, float to,float speed )
     {
         value = Mathf.MoveTowards( value , to , speed );
     }
 
-    public static Vector4 VectorPower(Vector4 vector, float power )
-    {
-        return new Vector4( Mathf.Pow(vector.x,power) , Mathf.Pow( vector.y , power ) , Mathf.Pow( vector.z , power ) , Mathf.Pow( vector.w , power ) );
-    }
+
 
     /// <summary>
     /// Return the index of the first true-bool in the given ones. -1 if none are.
@@ -53,7 +49,7 @@ public class Calculations : MonoBehaviour
         return t;
     }
 
-    public static Vector2 vector2up = Vector2.up;
+
 
     public static float ConcatFloats(params float[] f )
     {
@@ -88,48 +84,7 @@ public class Calculations : MonoBehaviour
         return nl;
     }
 
-    public static T[] GetTransformChilds<T> ( Transform transform )
-    {
-        T[] c = new T[transform.childCount];
 
-        for (int i = 0 ; i < transform.childCount ; i++) { c[i] = transform.GetChild( i ).GetComponent<T>(); }
-
-        return c;
-    }
-
-    public static Transform[] GetTransformChilds ( Transform transform )
-    {
-        Transform[] c = new Transform[transform.childCount];
-
-        for (int i = 0 ; i < transform.childCount ; i++) { c[i] = transform.GetChild( i ); }
-
-        return c;
-    }
-
-}
-
-public class StringProcess
-{
-    public static List<char> numbers = new List<char>(10) { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',',','-' };
-    public static List<char> alphabetUp = new List<char>() { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-    public static List<char> alphabetLow = new List<char>() { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', };
-    public static List<char> signs = new List<char>() { ' '};
-    public static List<string> qwerty_azerty = new List<string>(){"aq","wz",";m"};
-
-    /// <summary>
-    /// Gives the display size of the given char
-    /// </summary>
-    /// <param name="c"></param>
-    /// <param name="letterLowSize"></param>
-    /// <returns></returns>
-    public static float CharSize ( char c , float letterLowSize = 1 )
-    {
-        if (alphabetUp.Contains( c )) { return letterLowSize * 1.25f; }
-        if (alphabetLow.Contains( c )) { return letterLowSize; }
-        if (numbers.Contains( c )) { return letterLowSize * 1.25f; }
-        if (c == ' ') { return letterLowSize * 1.1f; }
-        return letterLowSize * .5f;
-    }
     /// <summary>
     /// Applies the given formula to the given value
     /// </summary>
@@ -144,7 +99,7 @@ public class StringProcess
             string n = "";
 
             int o = i + 1;
-            while (o < formula.Length && numbers.Contains( formula[o] ))
+            while (o < formula.Length && StringProcess.numbers.Contains( formula[o] ))
             {
                 n += formula[o];
                 o++;
@@ -185,14 +140,14 @@ public class StringProcess
         {
             string n = "";
 
-            bool isN = numbers.Contains( command[i] );
+            bool isN = StringProcess.numbers.Contains( command[i] );
 
             i--; bool b = true;
             while (b)
             {
                 i++;
 
-                b = ( i < command.Length ) ? numbers.Contains( command[i] ) == isN : false;
+                b = ( i < command.Length ) ? StringProcess.numbers.Contains( command[i] ) == isN : false;
 
                 if (b) { n += command[i]; }
             }
@@ -224,7 +179,7 @@ public class StringProcess
                 s = parts[i];
                 y = float.Parse( parts[i + 1] );
 
-                steps += ( ListToString( chars ) + "  : " + x.ToString( "F2" ) + " " + s + " " + y.ToString( "F2" ) + '\n' );
+                steps += (StringProcess.ListToString( chars ) + "  : " + x.ToString( "F2" ) + " " + s + " " + y.ToString( "F2" ) + '\n' );
 
                 x = Formula( s + y.ToString() , x );
 
@@ -239,6 +194,117 @@ public class StringProcess
         str = result.ToString( "F3" );
 
         return str;
+    }
+}
+/// <summary>
+/// Transform and Vector functions
+/// </summary>
+public class TransformProcess
+{
+    public static Vector2 vector2up = Vector2.up;
+    public static Vector3 RandomVector3 ( Vector3 min , Vector3 max )
+    {
+        return new Vector3( Random.Range( min.x , max.x ) , Random.Range( min.y , max.y ) , Random.Range( min.z , max.z ) );
+    }
+    public static Vector4 VectorPower ( Vector4 vector , float power )
+    {
+        return new Vector4( Mathf.Pow( vector.x , power ) , Mathf.Pow( vector.y , power ) , Mathf.Pow( vector.z , power ) , Mathf.Pow( vector.w , power ) );
+    }
+    public static T[] GetTransformChilds<T> ( Transform transform )
+    {
+        T[] c = new T[transform.childCount];
+
+        for (int i = 0 ; i < transform.childCount ; i++) { c[i] = transform.GetChild( i ).GetComponent<T>(); }
+
+        return c;
+    }
+    public static Transform[] GetTransformChilds ( Transform transform )
+    {
+        Transform[] c = new Transform[transform.childCount];
+
+        for (int i = 0 ; i < transform.childCount ; i++) { c[i] = transform.GetChild( i ); }
+
+        return c;
+    }
+    public static Vector3 AveragePosition(params Transform[] t )
+    {
+        return AveragePosition( PositionsOf( t ) );
+    }
+    public static Vector3 AveragePosition(params Vector3[] v)
+    {
+        if(v.Length <= 0) { return default; }
+        if(v.Length == 1) { return v[0]; }
+
+        Vector3 r = Vector3.zero;
+
+        foreach(Vector3 a in v)
+        {
+            r += a;
+        }
+
+        return r/v.Length;
+    }
+    public static Vector3[] PositionsOf(params Transform[] t )
+    {
+        if (t.Length <= 0) { return default; }
+
+        Vector3[] v = new Vector3[t.Length];
+        for(int i = 0 ; i<v.Length ; i++) { v[i] = t[i].position; }
+
+        return v;
+    }
+    public static void MoveTowards ( Transform transfor , Vector3 position , float speed )
+    {
+        MoveTowards( transfor , position , speed , speed , 0 );
+    }
+    public static void MoveTowards(Transform transfor, Vector3 position, float speed, float maxSpeed , float distancePow )
+    {
+        if (distancePow != 0)
+        {
+            float d = Mathf.Pow( Mathf.Max( (position-transfor.position).magnitude , 1 ) ,distancePow) ;
+            transfor.position = Vector3.MoveTowards( transfor.position , position , Mathf.Min( speed * d , maxSpeed));
+        }
+        else
+        {
+            transfor.position = Vector3.MoveTowards( transfor.position , position , speed );
+        }
+    }
+
+    public static Vector3 Average(params Vector3[] p)
+    {
+        Vector3 r = Vector3.zero;
+
+        if(p.Length <= 0) { return r; }
+
+        foreach(Vector3 l in p) { r += l; }
+
+        return r / p.Length;
+    }
+}
+/// <summary>
+/// String functions
+/// </summary>
+public class StringProcess
+{
+    public static List<char> numbers = new List<char>(10) { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',',','-' };
+    public static List<char> alphabetUp = new List<char>() { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+    public static List<char> alphabetLow = new List<char>() { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', };
+    public static List<char> signs = new List<char>() { ' '};
+    public static List<string> qwerty_azerty = new List<string>(){"aq","wz",";m"};
+
+    /// <summary>
+    /// Gives the display size of the given char
+    /// </summary>
+    /// <param name="c"></param>
+    /// <param name="letterLowSize"></param>
+    /// <returns></returns>
+    public static float CharSize ( char c , float letterLowSize = 1 )
+    {
+        if (alphabetUp.Contains( c )) { return letterLowSize * 1.25f; }
+        if (alphabetLow.Contains( c )) { return letterLowSize; }
+        if (numbers.Contains( c )) { return letterLowSize * 1.25f; }
+        if (c == ' ') { return letterLowSize * 1.1f; }
+        return letterLowSize * .5f;
     }
     /// <summary>
     /// Capitalize the given char
@@ -384,7 +450,7 @@ public class StringProcess
 
         for (int i = 0 ; i < list.Length ; i++)
         {
-            str += list[i] + ( i < list.Length - 1 ? returnChar : " " );
+            str += list[i] + ( i < list.Length - 1 ? returnChar.ToString() : " " );
         }
 
         return str;
@@ -451,7 +517,7 @@ public class StringProcess
         int minutes = _minutes % 60;
         int hours = (60 > _minutes) ? Mathf.RoundToInt((_minutes - minutes) / 60) : 0;
 
-        return TimeToString( seconds , minutes , hours );
+        return TimeToString( (int)seconds , minutes , hours, secondMinutesSeparator,minutesHoursSeparator );
     }
     /// <summary>
     /// Generates a correctly-formated string the represents the given seconds-minutes-hours
@@ -464,11 +530,11 @@ public class StringProcess
     /// <returns></returns>
     public static string TimeToString ( int _seconds , int _minutes = 0 , int _hours = 0 , string secondMinutesSeparator = ":" , string minutesHoursSeparator = ":" )
     {
-        return hours.ToString() + minutesHoursSeparator +
-     ( minutes >= 10 ? "" : "0" ) +
-     minutes.ToString() + secondMinutesSeparator +
-     ( seconds >= 10 ? "" : "0" ) +
-     seconds.ToString( "F0" );
+        return _hours.ToString() + minutesHoursSeparator +
+     ( _minutes >= 10 ? "" : "0" ) +
+     _minutes.ToString() + secondMinutesSeparator +
+     ( _seconds >= 10 ? "" : "0" ) +
+     _seconds.ToString( "F0" );
     }
     /// <summary>
     /// Converts qwuertys to azerys and azertys to qwertys
@@ -519,7 +585,9 @@ public class StringProcess
         return str;
     }
 }
-
+/// <summary>
+/// Array and List functions
+/// </summary>
 public class ArrayProcess
 {
     /// <summary>
@@ -592,37 +660,34 @@ public class ArrayProcess
     /// <returns></returns>
     public static List<float> ListSorter ( List<float> toSort , out List<int> order)
     {
-        List<float> output = new List<float>();
         List<int> nums = new List<int>();
-        List<float> ne = new List<float>() ;
-        order = new List<float>() ;
+        order = new List<int>();
+        List<float> n2 = new List<float>() ;
 
         int i = 0;
         while (i < toSort.Count)
         {
-            ne.Add( toSort[i] );
             nums.Add( i );
             i++;
         }
 
-
-        i = 0; int m = ne.Count;
-        while (ne.Count > 0 && i < m)
+        i = 0; int m = toSort.Count;
+        while (toSort.Count > 0 && i < m)
         {
             float min = float.MaxValue; int minId = 0;
             int o = 0;
-            while (o < ne.Count)
+            while (o < toSort.Count)
             {
-                if (ne[o] < min)
+                if (toSort[o] < min)
                 {
-                    min = ne[o];
+                    min = toSort[o];
                     minId = o;
                 }
                 o++;
             }
-            output.Add( nums[minId] );
-            order.Add( ne[minId] );
-            ne.RemoveAt( minId );
+            order.Add( nums[minId] );
+            n2.Add( toSort[minId] );
+            toSort.RemoveAt( minId );
             nums.RemoveAt( minId );
             i++;
         }
@@ -640,6 +705,32 @@ public class ArrayProcess
         }
 
         return ne;
+    }
+
+    public static T[] ConcatElementToArrays<T>(T p, params T[][] arr )
+    {
+        List<T> l = new List<T>();
+        if (p != null) { l.Add( p ); }
+
+        foreach (T[] os in arr)
+        {
+            foreach (T o in os)
+            {
+                l.Add( o );
+            }
+        }
+
+        return l.ToArray();
+    }
+
+    public static T[] ConcatElements<T> ( params T[] p )
+    {
+        return p;
+    }
+
+    public static T[] ConcatArrays<T> ( params T[][] arr )
+    {
+        return ConcatElementToArrays<T>( default(T) , arr );
     }
 
     public static void RecordingArray<T> ( ref T[] array , T newValue )
@@ -691,7 +782,9 @@ public class ArrayProcess
         return r;
     }
 }
-
+/// <summary>
+/// Color functions
+/// </summary>
 public class ColorProcess
 {
     public static float ColorSimilarity ( Color c1 , Color c2 , bool ignoreOpacity = true )
@@ -767,7 +860,7 @@ public class ColorProcess
 
         cursor = ( cursor - ( id * unit ) );
 
-        return Calculations.LerpColor( colors[id] , colors[id + 1] , cursor );
+        return LerpColor( colors[id] , colors[id + 1] , cursor );
     }
     public static Color ColorFromVector ( Vector4 vector )
     {
@@ -780,740 +873,987 @@ public class ColorProcess
     }
 
 }
+/// <summary>
+///HUD and UI functions
+/// </summary>
+public class HUDProcess
+{
+    public static Vector2 WorldToScreen ( Vector3 worldPosition , Camera camera, Vector2 screenSize = default )
+    {
+        Vector2 a;
+        return WorldToScreen( worldPosition , camera , out a , screenSize );
+    }
+    public static Vector2 WorldToScreen ( Vector3 worldPosition , Camera camera, out Vector2 angles , Vector2 screenSize = default )
+    {
+        screenSize = screenSize == default ? defaultScreen : screenSize;
+
+        Vector3 d = worldPosition - camera.transform.position;
+
+        angles = new Vector2(
+            Vector3.SignedAngle(camera.transform.forward,d.normalized,camera.transform.up) ,/// Camera.VerticalToHorizontalFieldOfView(camera.fieldOfView,defaultRatio),
+            Vector3.SignedAngle(camera.transform.forward,d.normalized,camera.transform.right) /// camera.fieldOfView
+            );
+
+        return new Vector2(
+            ( -screenSize.y / 2 ) + ( screenSize.y * angles.y ) ,
+            ( -screenSize.x / 2 ) + ( screenSize.x * angles.x )
+            );
+    }
+
+    public static Vector2 defaultScreen = new Vector2(1920,1080);
+    public static float defaultRatio = defaultScreen.x / defaultScreen.y;
+}
 
 public static class TextFile
-{
-    public static bool Write ( string path , string content )
     {
-        StreamWriter writer = new StreamWriter(path, false);
-        writer.Write( content );
-        writer.Close();
-        return true;
-    }
+        public static bool Write ( string path , string content )
+        {
+            StreamWriter writer = new StreamWriter(path, false);
+            writer.Write( content );
+            writer.Close();
+            return true;
+        }
 
-    public static string GetLine(StreamReader reader )
-    {
-        return reader.ReadLine();
-    }
+        public static string GetLine ( StreamReader reader )
+        {
+            return reader.ReadLine();
+        }
 
-    public static bool EOF(StreamReader reader )
-    {
-        return reader.EndOfStream;
-    }
+        public static bool EOF ( StreamReader reader )
+        {
+            return reader.EndOfStream;
+        }
 
-    public static string Read ( string path )
-    {
-        return File.ReadAllText( path );
-    }
+        public static string Read ( string path )
+        {
+            return File.ReadAllText( path );
+        }
 
-    public static StreamReader GetReader(string path)
-    {
-        return new StreamReader(path);
-    }
+        public static StreamReader GetReader ( string path )
+        {
+            return new StreamReader( path );
+        }
 
 
-    public static void CloseReader(StreamReader reader ) { reader.Close(); }
+        public static void CloseReader ( StreamReader reader ) { reader.Close(); }
 
-#if UNITY_EDITOR    
-    public static FileStream Create ( string path )
-    {
-        return Create( path , "" );
-    }
-    public static FileStream Create ( string path , string content )
-    {
-        FileStream file = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-        StreamWriter writer = new StreamWriter(file);
-        writer.Write( content );
-        return file;
-    }
+#if UNITY_EDITOR
+        public static FileStream Create ( string path )
+        {
+            return Create( path , "" );
+        }
+        public static FileStream Create ( string path , string content )
+        {
+            FileStream file = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            StreamWriter writer = new StreamWriter(file);
+            writer.Write( content );
+            return file;
+        }
 
-    public static bool Exists(string path )
-    {
-        return File.Exists( path );
-    }
+        public static bool Exists ( string path )
+        {
+            return File.Exists( path );
+        }
 #endif
-}
+    }
 
 public static class PlayerData
-{
-    public static string cacheColorName;
-
-    public static void SetColor ( string name , Color color )
     {
-        PlayerPrefs.SetFloat( name + ".r" , color.r );
-        PlayerPrefs.SetFloat( name + ".g" , color.g );
-        PlayerPrefs.SetFloat( name + ".b" , color.b );
-        PlayerPrefs.SetFloat( name + ".a" , color.a );
-    }
+        public static string cacheColorName;
 
-    public static Color GetColor ( string name )
-    {
-        if (PlayerPrefs.HasKey( name + ".r" ))
+        public static void SetColor ( string name , Color color )
         {
-            return new Color(
-                PlayerPrefs.GetFloat( name + ".r" ) ,
-                PlayerPrefs.GetFloat( name + ".g" ) ,
-                PlayerPrefs.GetFloat( name + ".b" ) ,
-                PlayerPrefs.GetFloat( name + ".a" )
-                );
+            PlayerPrefs.SetFloat( name + ".r" , color.r );
+            PlayerPrefs.SetFloat( name + ".g" , color.g );
+            PlayerPrefs.SetFloat( name + ".b" , color.b );
+            PlayerPrefs.SetFloat( name + ".a" , color.a );
         }
-        else
-        {
-            return Color.black;
-        }
-    }
 
-    public static Color GetCacheColor ()
-    {
-        string t = cacheColorName; cacheColorName = "";
-        return GetColor(t);
-    }
-}
-
-[System.Serializable]
-public struct writing
-{
-    [SerializeField] private string[] strings;
-    private int languageCount
-    {
-        get { return ( strings != null ? strings.Length : 0 ); }
-        set
+        public static Color GetColor ( string name )
         {
-            if (strings == null)
+            if (PlayerPrefs.HasKey( name + ".r" ))
             {
-                strings = new string[value];
+                return new Color(
+                    PlayerPrefs.GetFloat( name + ".r" ) ,
+                    PlayerPrefs.GetFloat( name + ".g" ) ,
+                    PlayerPrefs.GetFloat( name + ".b" ) ,
+                    PlayerPrefs.GetFloat( name + ".a" )
+                    );
             }
             else
             {
-                string[] strs = new string[value];
-                for (int i = 0 ; i < value ; i++) { strs[i] = strings[i]; }
-                strings = strs;
+                return Color.black;
             }
         }
-    }
 
-    private static int language { get { if (PlayerPrefs.HasKey( "language" )) { return PlayerPrefs.GetInt( "language" ); } else { PlayerPrefs.SetInt( "language" , 0 ); return 0; } } }
-
-    public writing ( string str , int _languageIndex = 0, int _languageCount = 4 )
-    {
-        _languageCount = Mathf.Max( _languageCount , 0 );
-        _languageIndex = Mathf.Min( _languageCount , _languageIndex );
-
-        strings = new string[_languageCount];
-        strings[_languageIndex] = str;
+        public static Color GetCacheColor ()
+        {
+            string t = cacheColorName; cacheColorName = "";
+            return GetColor( t );
+        }
     }
-
-    public writing (params string[] strs )
-    {
-        strings = strs;
-    }
-
-    public static implicit operator string ( writing a )
-    {
-        return a.strings[language];
-    }
-    public static implicit operator writing ( string a )
-    {
-        return new writing( a );
-    }
-}
 
 [System.Serializable]
-public class CList<T>
-{
-    [SerializeField]
-    public List<CList_Category<T>> categories = new List<CList_Category<T>> ();
-    [SerializeField]
-    public List<T> list = new List<T>();
-
-    //Methods
-
-    public bool Contains(T obj, out CList_Category<T> category ) { category = CList_CategoryOf( obj ); return list.Contains( obj ); }
-
-    public bool Remove ( T obj )
+public struct writing
     {
-        foreach(CList_Category<T> c in categories)
+        [SerializeField] private string[] strings;
+        private int languageCount
         {
-            if (c.list.Contains( obj )) { c.list.Remove( obj ); list.Remove( obj ); return true; }
+            get { return ( strings != null ? strings.Length : 0 ); }
+            set
+            {
+                if (strings == null)
+                {
+                    strings = new string[value];
+                }
+                else
+                {
+                    string[] strs = new string[value];
+                    for (int i = 0 ; i < value ; i++) { strs[i] = strings[i]; }
+                    strings = strs;
+                }
+            }
         }
 
-        return false;
+        private static int language { get { if (PlayerPrefs.HasKey( "language" )) { return PlayerPrefs.GetInt( "language" ); } else { PlayerPrefs.SetInt( "language" , 0 ); return 0; } } }
+
+        public writing ( string str , int _languageIndex = 0 , int _languageCount = 4 )
+        {
+            _languageCount = Mathf.Max( _languageCount , 0 );
+            _languageIndex = Mathf.Min( _languageCount , _languageIndex );
+
+            strings = new string[_languageCount];
+            strings[_languageIndex] = str;
+        }
+
+        public writing ( params string[] strs )
+        {
+            strings = strs;
+        }
+
+        public static implicit operator string ( writing a )
+        {
+            return a.strings[language];
+        }
+        public static implicit operator writing ( string a )
+        {
+            return new writing( a );
+        }
     }
 
-    public bool Add ( T obj, string category , int createCategoryCapacity = 0)
+[System.Serializable]
+    public class CList<T>
     {
-        bool b = false; int index = 0; int i = 0;
-       foreach(CList_Category<T> c in categories) { if (c.name == category) { b = true; index = i;  break; }i++; }
+        [SerializeField]
+        public List<CList_Category<T>> categories = new List<CList_Category<T>> ();
+        [SerializeField]
+        public List<T> list = new List<T>();
 
-        if(!b)
-        {
-            if (createCategoryCapacity > 0) { categories.Add( new CList_Category<T>( category , createCategoryCapacity ) ); index = categories.Count - 1; }
-            else { return false; }
-        }
+        //Methods
 
-        if (categories[index].list.Count + 1 <= categories[index].capacity)
+        public bool Contains ( T obj , out CList_Category<T> category ) { category = CList_CategoryOf( obj ); return list.Contains( obj ); }
+
+        public bool Remove ( T obj )
         {
-            list.Add( obj );
-            categories[index].list.Add( obj );
-        }
-        else
-        {
+            foreach (CList_Category<T> c in categories)
+            {
+                if (c.list.Contains( obj )) { c.list.Remove( obj ); list.Remove( obj ); return true; }
+            }
+
             return false;
         }
 
-        return true;
-    }
-
-    public CList_Category<T> CList_CategoryOf ( T obj)
-   {
-        foreach(CList_Category<T> c in categories)
+        public bool Add ( T obj , string category , int createCategoryCapacity = 0 )
         {
-            if (c.list.Contains( obj )) { return c; }
-        }
-        return null;
-    }
+            bool b = false; int index = 0; int i = 0;
+            foreach (CList_Category<T> c in categories) { if (c.name == category) { b = true; index = i; break; } i++; }
 
-    public void AddCList_Category(List<CList_Category<T>> cat )
-    { int i =0;
-        foreach (CList_Category<T> s in cat)
+            if (!b)
+            {
+                if (createCategoryCapacity > 0) { categories.Add( new CList_Category<T>( category , createCategoryCapacity ) ); index = categories.Count - 1; }
+                else { return false; }
+            }
+
+            if (categories[index].list.Count + 1 <= categories[index].capacity)
+            {
+                list.Add( obj );
+                categories[index].list.Add( obj );
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public CList_Category<T> CList_CategoryOf ( T obj )
         {
-            categories.Add( new CList_Category<T>( s.name != "" ? s.name : i.ToString(), s.capacity > 0 ? s.capacity : 10000 ) );i++;
+            foreach (CList_Category<T> c in categories)
+            {
+                if (c.list.Contains( obj )) { return c; }
+            }
+            return null;
         }
-    }
 
-    public List<T> Get () { return list.GetRange(0,list.Capacity); }
-    public List<T> Get (string category) {
-        CList_Category<T> c = GetCategory(category);
-        return c != null ? c.list != null ? c.list : new List<T>( 0 ) : new List<T>(0);
-    }
-
-    public CList_Category<T> GetCategory(string category )
-    {
-        foreach(CList_Category<T> c in categories)
+        public void AddCList_Category ( List<CList_Category<T>> cat )
         {
-            if(c.name == category) { return c; }
+            int i =0;
+            foreach (CList_Category<T> s in cat)
+            {
+                categories.Add( new CList_Category<T>( s.name != "" ? s.name : i.ToString() , s.capacity > 0 ? s.capacity : 10000 ) ); i++;
+            }
         }
-        return null;
-    }
 
-    public void Setup (string[] catsNames, int[] catsCapacities)
-    {
-        list = new List<T>();
-        categories = new List<CList_Category<T>>();
-        for (int i = 0 ; i < catsNames.Length ; i ++)
+        public List<T> Get () { return list.GetRange( 0 , list.Capacity ); }
+        public List<T> Get ( string category )
         {
-            categories.Add(new CList_Category<T>(catsNames[i], catsCapacities[i]) );
+            CList_Category<T> c = GetCategory(category);
+            return c != null ? c.list != null ? c.list : new List<T>( 0 ) : new List<T>( 0 );
+        }
+
+        public CList_Category<T> GetCategory ( string category )
+        {
+            foreach (CList_Category<T> c in categories)
+            {
+                if (c.name == category) { return c; }
+            }
+            return null;
+        }
+
+        public void Setup ( string[] catsNames , int[] catsCapacities )
+        {
+            list = new List<T>();
+            categories = new List<CList_Category<T>>();
+            for (int i = 0 ; i < catsNames.Length ; i++)
+            {
+                categories.Add( new CList_Category<T>( catsNames[i] , catsCapacities[i] ) );
+            }
+        }
+
+        //Constructors
+
+        public CList ( int capacity , int categoriesCount = 1 )
+        {
+            list.Capacity = capacity;
+            categories = new List<CList_Category<T>>();
+            AddCList_Category( new List<CList_Category<T>>( categoriesCount ) );
+        }
+        public CList ( List<T> source , int categoriesCount = 1 )
+        {
+            list = new List<T>( source );
+            categories = new List<CList_Category<T>>();
+            AddCList_Category( new List<CList_Category<T>>( categoriesCount ) );
+        }
+        public CList ( List<T> source , List<CList_Category<T>> categoriesAdd )
+        {
+            list = new List<T>( source );
+            categories = new List<CList_Category<T>>();
+            AddCList_Category( categoriesAdd );
+        }
+
+        public static implicit operator List<T> ( CList<T> c ) { return c.list; }
+
+        //Subclasses
+
+    }
+    [System.Serializable]
+    public class CList_Category<T>
+    {
+        public string name;
+        public int capacity;
+        [SerializeField]
+        public List<T> list = new List<T>();
+
+        public CList_Category ( string _name , int _capacity )
+        {
+            name = _name; capacity = _capacity;
+        }
+    }
+    [System.Serializable]
+    public struct trilean
+    {
+        [HideInInspector]
+        public short v;
+
+        /// <summary>
+        /// True value of a trilean.
+        /// </summary>
+        public static trilean True { get { return new trilean( 1 ); } }
+        /// <summary>
+        /// Neutral value of a trilean.
+        /// </summary>
+        public static trilean Null { get { return new trilean( 0 ); } }
+        /// <summary>
+        /// False value of a trilean.
+        /// </summary>
+        public static trilean False { get { return new trilean( -1 ); } }
+
+        public bool IsTrue { get { return v == 1; } }
+        public bool IsFalse { get { return v == -1; } }
+        public bool IsNull { get { return v == 0; } }
+        public bool Active { get { return v != 0; } }
+
+
+        /// <summary>
+        /// A trilean is like a boolean, but with a neutral value. So it can be true, false, or neither.
+        /// </summary>
+        public trilean ( short val )
+        {
+            v = val;
+            v = v < -1 ? (short)-1 : v > 1 ? (short)1 : v;
+        }
+
+        /// <summary>
+        /// Combine two bools into a trilean.
+        /// </summary>
+        public static trilean Combine ( bool a , bool b )
+        {
+            if (a == b) { return a ? trilean.True : trilean.False; }
+            else { return trilean.Null; }
+        }
+
+        public static implicit operator trilean ( bool a )
+        {
+            return new trilean( a );
+        }
+
+        public static implicit operator bool ( trilean a )
+        {
+            return a.v > 0;
+        }
+
+        /// <summary>
+        /// Combine two trilean a and b. True if both are true, False if both are false, Null otherwise.
+        /// </summary>
+        public static trilean Combine ( trilean a , trilean b )
+        {
+            if (a == trilean.Null || b == trilean.Null) { return trilean.Null; }
+
+            if (a == b) { return a; }
+            else { return trilean.Null; }
+        }
+
+        /// <summary>
+        /// Set this trilean as Null
+        /// </summary>
+        public void Release () { v = 0; }
+
+        /// <summary>
+        /// A trilean is like a boolean, but with a neutral value. So it can be true, false, or neither.
+        /// </summary>
+        public trilean ( bool a , bool b )
+        {
+            v = trilean.Combine( a , b ).v;
+        }
+
+        public trilean ( bool b ) { v = (short)( b ? 1 : -1 ); }
+
+        /// <summary>
+        /// Return true if the trilean is not equal to Null
+        /// </summary>
+
+        public string ToString ( int simple_number_both = 0 )
+        {
+            string str = "";
+            switch (v) { case -1: str += "False"; break; case 1: str += "True"; break; default: str += "Null"; break; }
+            switch (simple_number_both) { default: break; case 1: str = v.ToString(); break; case 2: str += v.ToString(); break; }
+            return str;
+        }
+        public static bool operator == ( trilean a , trilean b )
+        {
+            return a.Equals( b );
+        }
+        public static bool operator != ( trilean a , trilean b )
+        {
+            return !a.Equals( b );
+        }
+
+        /// <summary>
+        /// Return true if both trileans are true
+        /// </summary>
+        public static bool operator & ( trilean a , trilean b )
+        {
+            if (a == trilean.True && b == trilean.True) { return true; }
+            else { return false; }
+        }
+        /// <summary>
+        /// Return true if only one trilean is true
+        /// </summary>
+        public static bool operator ^ ( trilean a , trilean b )
+        {
+            if (a != b && ( a == trilean.True || b == trilean.True )) { return true; }
+            else { return false; }
+        }
+        /// <summary>
+        /// Return true if at least one trilean is true
+        /// </summary>
+        public static bool operator | ( trilean a , trilean b )
+        {
+            if (a == trilean.True || b == trilean.True) { return true; }
+            else { return false; }
+        }
+
+        /// <summary>
+        /// Combine two trilean a and b. 'True' if both are true, 'False' if both are false, 'Null' otherwise.
+        /// </summary>
+        public static trilean operator * ( trilean a , trilean b )
+        {
+            return trilean.Combine( a , b );
+        }
+        /// <summary>
+        /// Add two trilean together. Literally add their values : (True=1 | False=-1 | Null=0)
+        /// </summary>
+        public static trilean operator + ( trilean a , trilean b )
+        {
+            return new trilean( (short)( a.v + b.v ) );
+        }
+        /// <summary>
+        /// Substract two trilean together. Literally Substract their values : (True=1 | False=-1 | Null=0)
+        /// </summary>
+        public static trilean operator - ( trilean a , trilean b )
+        {
+            return new trilean( (short)( a.v - b.v ) );
+        }
+        /// <summary>
+        /// Divide two trilean together. Literally Divide their values : (True=1 | False=-1 | Null=0). If the divider is Null, return Null (avoid dividing by 0)
+        /// </summary>
+        public static trilean operator / ( trilean a , trilean b )
+        {
+            if (b == trilean.Null) { return trilean.Null; }
+            return new trilean( (short)( a.v / b.v ) );
+        }
+
+    }
+
+    [System.Serializable]
+    public struct small
+    {
+        public sbyte v;
+
+        public static small A { get { return new small( 1 ); } }
+        public static small B { get { return new small( 0 ); } }
+        public static small C { get { return new small( -1 ); } }
+
+        public small ( int value ) { int v2 = value; v2 = v2 > 1 ? 1 : v2 < -1 ? -1 : v2; v = (sbyte)v2; }
+
+        public static bool operator == ( small a , small b )
+        {
+            return a.Equals( b );
+        }
+        public static bool operator != ( small a , small b )
+        {
+            return !a.Equals( b );
+        }
+
+    }
+
+    [System.Serializable]
+    public struct flaot
+    {
+        public float value;
+
+        public flaot ( float a ) { value = a; }
+
+        public static implicit operator flaot ( float a )
+        {
+            return new flaot( a );
+        }
+
+        public static implicit operator float ( flaot a )
+        {
+            return a.value;
+        }
+
+        public static flaot operator * ( flaot a , flaot b )
+        {
+            return new flaot( ( a.value * b.value ) * Mathf.Sign( a.value ) );
+        }
+        public static flaot operator / ( flaot a , flaot b )
+        {
+            return new flaot( ( a.value / b.value ) * Mathf.Sign( a.value ) );
+        }
+        public static flaot operator + ( flaot a , flaot b )
+        {
+            return new flaot( a.value + b.value );
+        }
+        public static flaot operator - ( flaot a , flaot b )
+        {
+            return new flaot( a.value - b.value );
+        }
+        public static bool operator == ( flaot a , flaot b )
+        {
+            return a.Equals( b );
+        }
+        public static bool operator != ( flaot a , flaot b )
+        {
+            return !a.Equals( b );
+        }
+        public static bool operator & ( flaot a , flaot b )
+        {
+            return Mathf.Sign( a.value ) == Mathf.Sign( b.value );
+        }
+        public static bool operator ^ ( flaot a , flaot b )
+        {
+            return Mathf.Sign( a.value ) != Mathf.Sign( b.value );
+        }
+        public static bool operator | ( flaot a , flaot b )
+        {
+            return ( a.value != 0 ) || ( b.value != 0 );
         }
     }
 
-    //Constructors
 
-    public CList ( int capacity , int categoriesCount = 1 )
+    [System.Serializable]
+    public struct coefficient
     {
-        list.Capacity = capacity;
-        categories = new List<CList_Category<T>>();
-        AddCList_Category( new List<CList_Category<T>>(categoriesCount ) );
+        public float value;
+        public bool overide;
+
+        public float Apply ( float source )
+        {
+            if (overide) { return value; }
+            else { return source * value; }
+        }
+
+        public static coefficient Default { get { return new coefficient( 1 , false ); } }
+        public static coefficient Neutral { get { return new coefficient( 1 , false ); } }
+
+        public coefficient ( float val , bool over )
+        {
+            value = val;
+            overide = over;
+        }
     }
-    public CList ( List<T> source , int categoriesCount = 1 )
-    {
-        list = new List<T>( source );
-        categories = new List<CList_Category<T>>();
-        AddCList_Category( new List<CList_Category<T>>( categoriesCount ) ) ;
-    }
-    public CList ( List<T> source , List<CList_Category<T>> categoriesAdd )
-    {
-        list = new List<T>( source );
-        categories = new List<CList_Category<T>>();
-        AddCList_Category( categoriesAdd );
-    }
-
-    public static implicit operator List<T> ( CList<T> c) { return c.list; }
-
-    //Subclasses
-
-}
-[System.Serializable]
-public class CList_Category<T>
-{
-    public string name;
-    public int capacity;
-    [SerializeField]
-    public List<T> list = new List<T>();
-
-    public CList_Category ( string _name , int _capacity )
-    {
-        name = _name; capacity = _capacity;
-    }
-}
-[System.Serializable]
-public struct trilean 
-{
-    [HideInInspector]
-    public short v;
-
-    /// <summary>
-    /// True value of a trilean.
-    /// </summary>
-    public static trilean True { get { return new trilean( 1 ); } }
-    /// <summary>
-    /// Neutral value of a trilean.
-    /// </summary>
-    public static trilean Null { get { return new trilean( 0 ); } }
-    /// <summary>
-    /// False value of a trilean.
-    /// </summary>
-    public static trilean False { get { return new trilean( -1 ); } }
-
-    public bool IsTrue { get { return v == 1; } }
-    public bool IsFalse { get { return v == -1; } }
-    public bool IsNull { get { return v == 0; } }
-    public bool Active { get { return v != 0; } }
-
-
-    /// <summary>
-    /// A trilean is like a boolean, but with a neutral value. So it can be true, false, or neither.
-    /// </summary>
-    public trilean (short val)
-    {
-        v = val;
-        v = v < -1 ? (short)-1 : v > 1 ? (short)1 : v;
-    }
-
-    /// <summary>
-    /// Combine two bools into a trilean.
-    /// </summary>
-    public static trilean Combine ( bool a, bool b )
-    {
-        if(a == b) { return a ? trilean.True : trilean.False; }
-        else { return trilean.Null; }
-    }
-
-    public static implicit operator trilean ( bool a )
-    {
-        return new trilean( a );
-    }
-
-    public static implicit operator bool ( trilean a )
-    {
-        return a.v > 0;
-    }
-
-    /// <summary>
-    /// Combine two trilean a and b. True if both are true, False if both are false, Null otherwise.
-    /// </summary>
-    public static trilean Combine ( trilean a , trilean b )
-    {
-        if(a == trilean.Null || b == trilean.Null) { return trilean.Null; }
-
-        if(a == b) { return a; }
-        else { return trilean.Null; }
-    }
-
-    /// <summary>
-    /// Set this trilean as Null
-    /// </summary>
-    public void Release () { v = 0; }
-
-    /// <summary>
-    /// A trilean is like a boolean, but with a neutral value. So it can be true, false, or neither.
-    /// </summary>
-    public trilean ( bool a , bool b )
-    {
-        v = trilean.Combine( a , b ).v;
-    }
-
-    public trilean ( bool b ) { v = (short)( b  ? 1 : -1 ); }
-
-    /// <summary>
-    /// Return true if the trilean is not equal to Null
-    /// </summary>
-
-    public string ToString (int simple_number_both=0) { string str = "";
-        switch (v) { case -1: str += "False";break; case 1: str+= "True";break; default: str += "Null";break; }
-        switch (simple_number_both) { default: break; case 1:str = v.ToString();break; case 2: str += v.ToString();break; }
-        return str;
-    }
-    public static bool operator ==(trilean a, trilean b )
-    {
-        return a.Equals( b );
-    }
-    public static bool operator != ( trilean a , trilean b )
-    {
-        return !a.Equals( b );
-    }
-
-    /// <summary>
-    /// Return true if both trileans are true
-    /// </summary>
-    public static bool operator & ( trilean a , trilean b )
-    {
-        if (a == trilean.True && b == trilean.True) { return true; }
-        else { return false; }
-    }
-    /// <summary>
-    /// Return true if only one trilean is true
-    /// </summary>
-    public static bool operator ^ ( trilean a , trilean b )
-    {
-        if (a != b && (a == trilean.True ||b == trilean.True)) { return true; }
-        else { return false; }
-    }
-    /// <summary>
-    /// Return true if at least one trilean is true
-    /// </summary>
-    public static bool operator | ( trilean a , trilean b )
-    {
-        if(a == trilean.True ||b == trilean.True) { return true; }
-        else {  return false;}
-    }
-
-    /// <summary>
-    /// Combine two trilean a and b. 'True' if both are true, 'False' if both are false, 'Null' otherwise.
-    /// </summary>
-    public static trilean operator * ( trilean a , trilean b )
-    {
-        return trilean.Combine(a,b);
-    }
-    /// <summary>
-    /// Add two trilean together. Literally add their values : (True=1 | False=-1 | Null=0)
-    /// </summary>
-    public static trilean operator + ( trilean a , trilean b )
-    {
-        return new trilean( (short)( a.v + b.v ) );
-    }
-    /// <summary>
-    /// Substract two trilean together. Literally Substract their values : (True=1 | False=-1 | Null=0)
-    /// </summary>
-    public static trilean operator - ( trilean a , trilean b )
-    {
-        return new trilean( (short)( a.v - b.v ) );
-    }
-    /// <summary>
-    /// Divide two trilean together. Literally Divide their values : (True=1 | False=-1 | Null=0). If the divider is Null, return Null (avoid dividing by 0)
-    /// </summary>
-    public static trilean operator / ( trilean a , trilean b )
-    {
-        if(b == trilean.Null) { return trilean.Null; }
-        return new trilean( (short)( a.v / b.v ) );
-    }
-
-}
-
-[System.Serializable]
-public struct small
-{
-    public sbyte v;
-
-    public static small A { get { return new small( 1 ); } }
-    public static small B { get { return new small( 0 ); } }
-    public static small C { get { return new small( -1 ); } }
-
-    public small(int value ) { int v2 = value; v2 = v2 > 1 ? 1 : v2 < -1 ? -1 : v2; v = (sbyte)v2; }
-
-    public static bool operator == ( small a , small b )
-    {
-        return a.Equals( b );
-    }
-    public static bool operator != ( small a , small b )
-    {
-        return !a.Equals( b );
-    }
-
-}
-
-[System.Serializable]
-public struct flaot
-{
-    public float value;
-
-    public flaot(float a ) { value = a; }
-
-    public static implicit operator flaot (float a)
-    {
-        return new flaot( a );
-    }
-
-    public static implicit operator float ( flaot a )
-    {
-        return a.value;
-    }
-
-    public static flaot operator * ( flaot a , flaot b )
-    {
-        return new flaot( ( a.value * b.value ) * Mathf.Sign( a.value ) );
-    }
-    public static flaot operator / ( flaot a , flaot b )
-    {
-        return new flaot( ( a.value / b.value ) * Mathf.Sign( a.value ) );
-    }
-    public static flaot operator + ( flaot a , flaot b )
-    {
-        return new flaot( a.value + b.value );
-    }
-    public static flaot operator - ( flaot a , flaot b )
-    {
-        return new flaot( a.value - b.value );
-    }
-    public static bool operator == ( flaot a , flaot b )
-    {
-        return a.Equals( b );
-    }
-    public static bool operator != ( flaot a , flaot b )
-    {
-        return !a.Equals( b );
-    }
-    public static bool operator & ( flaot a , flaot b )
-    {
-        return Mathf.Sign( a.value ) == Mathf.Sign( b.value );
-    }
-    public static bool operator ^ ( flaot a , flaot b )
-    {
-        return Mathf.Sign( a.value ) != Mathf.Sign( b.value );
-    }
-    public static bool operator | ( flaot a , flaot b )
-    {
-        return ( a.value != 0 ) || ( b.value != 0 );
-    }
-}
-
-
-[System.Serializable]
-public struct coefficient 
-{
-    public float value;
-    public bool overide;
-
-    public float Apply ( float source )
-    {
-        if (overide) { return value; }
-        else { return source * value; }
-    }
-
-    public static coefficient Default { get { return new coefficient( 1 , false ); } }
-    public static coefficient Neutral { get { return new coefficient( 1 , false ); } }
-
-    public coefficient (float val, bool over )
-    {
-        value = val;
-        overide = over;
-    }
-}
 
 [System.Serializable]
 public struct interval
-{
-    public float _bottom;
-    public float _top;
-
-    public float top { get { return _top; } set { _top = value; _bottom = _bottom > _top ? _top : _bottom; } }
-    public float bottom { get { return _bottom; } set { _bottom = value; _top = _top < _bottom ? _bottom : _top; } }
-    public float amplitude { get { return top - bottom; } }
-    public float random { get { return Random.Range( bottom , top ); } }
-
-    public static interval Null { get { return new interval( 0 , 0 ); } }
-    public static interval Default { get { return new interval( -1 , 1 ); } }
-    public interval ( float _top_,float _bottom_ ) { _bottom = _bottom_; _top = _top_; bottom = _bottom; top = _top; }
-    public static interval CreateFromTop ( float _top_,float _amplitude_) { return new interval( _top_,_top_ - _amplitude_); }
-    public static interval CreateFromBottom ( float _bottom_ , float _amplitude_ ) { return new interval( _bottom_ + _amplitude_ , _bottom_ ); }
-    public bool Contains(float v )
     {
-        return v >= _bottom && v <= _top;
-    }
+        public float _bottom;
+        public float _top;
 
-    public string ToString (string F)
-    {
-        return _bottom.ToString( F ) + " | " + _top.ToString( F );
-    }
+        public float top { get { return _top; } set { _top = value; _bottom = _bottom > _top ? _top : _bottom; } }
+        public float bottom { get { return _bottom; } set { _bottom = value; _top = _top < _bottom ? _bottom : _top; } }
+        public float amplitude { get { return top - bottom; } }
+        public float random { get { return Random.Range( bottom , top ); } }
 
-    public float GetRatio(float v,bool crop = false )
-    {
-        float r = ( v - bottom ) / ( top - bottom );
-        return !crop ? r : ( r < 0 ? 0 : r > 1 ? 1 : r );
-    }
+        public static interval Null { get { return new interval( 0 , 0 ); } }
+        public static interval Default { get { return new interval( -1 , 1 ); } }
+        public interval ( float _top_ , float _bottom_ ) { _bottom = _bottom_; _top = _top_; bottom = _bottom; top = _top; }
+        public static interval CreateFromTop ( float _top_ , float _amplitude_ ) { return new interval( _top_ , _top_ - _amplitude_ ); }
+        public static interval CreateFromBottom ( float _bottom_ , float _amplitude_ ) { return new interval( _bottom_ + _amplitude_ , _bottom_ ); }
+        public bool Contains ( float v )
+        {
+            return v >= _bottom && v <= _top;
+        }
 
-    public float Get(float r )
-    {
-        return Mathf.Lerp( bottom , top , r );
-    }
+        public string ToString ( string F )
+        {
+            return _bottom.ToString( F ) + " | " + _top.ToString( F );
+        }
 
-    public static implicit operator float (interval i ) { return i.random; }
-}
+        public float GetRatio ( float v , bool crop = false )
+        {
+            float r = ( v - bottom ) / ( top - bottom );
+            return !crop ? r : ( r < 0 ? 0 : r > 1 ? 1 : r );
+        }
+
+        public float Get ( float r )
+        {
+            return Mathf.Lerp( bottom , top , r );
+        }
+
+        public static implicit operator float ( interval i ) { return i.random; }
+    }
 
 [System.Serializable]
 public struct AudioElement
-{
-    public AudioClip clip;
-    public float probability;
-    public interval pitch;
-
-    public static AudioElement NULL { get { return new AudioElement( null , 0 ); } }
-
-    public AudioElement(AudioClip _clip ) { clip = _clip; probability = 1; pitch = new interval( 1 , 1 ); }
-    public AudioElement(AudioClip _clip, float _p) { clip = _clip; probability = _p; pitch = new interval( 1 , 1 ); }
-    public AudioElement(AudioClip _clip, float _p , interval _pitch) { clip = _clip; probability = _p; pitch = _pitch; }
-
-    public static void SetupAudioSource(AudioSource a, AudioElement ae, float _pitch = -1 )
     {
-        a.clip = ae.clip;
-        a.pitch = _pitch < 0 ? ae.pitch : _pitch;
+        public AudioClip clip;
+        public float probability;
+        public interval pitch;
+
+        public static AudioElement NULL { get { return new AudioElement( null , 0 ); } }
+
+        public AudioElement ( AudioClip _clip ) { clip = _clip; probability = 1; pitch = new interval( 1 , 1 ); }
+        public AudioElement ( AudioClip _clip , float _p ) { clip = _clip; probability = _p; pitch = new interval( 1 , 1 ); }
+        public AudioElement ( AudioClip _clip , float _p , interval _pitch ) { clip = _clip; probability = _p; pitch = _pitch; }
+
+        public static void SetupAudioSource ( AudioSource a , AudioElement ae , float _pitch = -1 )
+        {
+            a.clip = ae.clip;
+            a.pitch = _pitch < 0 ? ae.pitch : _pitch;
+        }
+
+        public static implicit operator AudioClip ( AudioElement a ) { return a.clip; }
+        public static implicit operator float ( AudioElement a ) { return a.probability; }
+        public static implicit operator interval ( AudioElement a ) { return a.pitch; }
+
+        public static AudioElement GetRandom ( AudioElement[] audioElements )
+        {
+            ObjectProbalized<AudioElement>[] list = new  ObjectProbalized<AudioElement>[audioElements.Length];
+
+            for (int i = 0 ; i < audioElements.Length ; i++) { list[i] = new ObjectProbalized<AudioElement>( audioElements[i] , audioElements[i].probability ); }
+
+            return ObjectProbalized<AudioElement>.Get( list );
+        }
     }
-
-    public static implicit operator AudioClip ( AudioElement a ) { return a.clip; }
-    public static implicit operator float ( AudioElement a ) { return a.probability; }
-    public static implicit operator interval ( AudioElement a ) { return a.pitch; }
-
-    public static AudioElement GetRandom (AudioElement[] audioElements )
+[System.Serializable]
+public class ObjectProbalize
     {
-        ObjectProbalized<AudioElement>[] list = new  ObjectProbalized<AudioElement>[audioElements.Length];
 
-        for(int i = 0 ;i < audioElements.Length ; i++) { list[i] = new ObjectProbalized<AudioElement>(audioElements[i],audioElements[i].probability); }
-
-        return ObjectProbalized<AudioElement>.Get( list );
     }
-}
-[System.Serializable]
-public class ObjectProbalize 
-{
-
-}
-[System.Serializable]
+    [System.Serializable]
 public class ObjectProbalized<T> : ObjectProbalize
-{
-    public T obj;
-    public float probability=1;
-    interval interval = interval.Null;
-    bool isNull;
-
-    public static ObjectProbalized<T> NULL { get { return new ObjectProbalized<T>( true ); } }
-    public static ObjectProbalized<T>[] NULLARRAY { get { return new ObjectProbalized<T>[1] { NULL }; } }
-
-    public ObjectProbalized () { obj = default; probability = 1; }
-    public ObjectProbalized (T _obj, float _p){obj = _obj; probability = _p;}
-    public ObjectProbalized (bool _null) { obj = default; probability = 1; isNull = _null; }
-
-    public bool IsNull () { return isNull; }
-
-    public static void SetInterval(ref ObjectProbalized<T>[] array )
     {
-        ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr , 0 );
-        if(Sum(_arr) > 1) { Flatten( ref _arr ); }
+        public T obj;
+        public float probability=1;
+        interval interval = interval.Null;
+        bool isNull;
 
-        //Debug.Log( _arr.Length );
-        float bottom= 0; int id = 0;
-        foreach (ObjectProbalized<T> obj in array) 
+        public static ObjectProbalized<T> NULL { get { return new ObjectProbalized<T>( true ); } }
+        public static ObjectProbalized<T>[] NULLARRAY { get { return new ObjectProbalized<T>[1] { NULL }; } }
+
+        public ObjectProbalized () { obj = default; probability = 1; }
+        public ObjectProbalized ( T _obj , float _p ) { obj = _obj; probability = _p; }
+        public ObjectProbalized ( bool _null ) { obj = default; probability = 1; isNull = _null; }
+
+        public bool IsNull () { return isNull; }
+
+        public static void SetInterval ( ref ObjectProbalized<T>[] array )
         {
-            //Debug.Log( bottom.ToString("F2") + " | " + _arr[id].probability.ToString("F2") + " or " + obj.probability.ToString("F2"));
+            ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr , 0 );
+            if (Sum( _arr ) > 1) { Flatten( ref _arr ); }
 
-            obj.interval = interval.CreateFromBottom( bottom , _arr[id].probability );
-            bottom += _arr[id].probability;
-            id++;
+            //Debug.Log( _arr.Length );
+            float bottom= 0; int id = 0;
+            foreach (ObjectProbalized<T> obj in array)
+            {
+                //Debug.Log( bottom.ToString("F2") + " | " + _arr[id].probability.ToString("F2") + " or " + obj.probability.ToString("F2"));
 
-            Debug.Log( obj.interval.ToString( "F2" ) );
-        }
-    }
+                obj.interval = interval.CreateFromBottom( bottom , _arr[id].probability );
+                bottom += _arr[id].probability;
+                id++;
 
-    public static float Sum( ObjectProbalized<T>[] array )
-    {
-        float sum =0;
-        foreach (ObjectProbalized<T> o in array) { sum += o.probability; }
-        return sum;
-    }
-
-    public static float Flatten ( ref ObjectProbalized<T>[] array )
-    {
-        float sum = Sum( array ); if(sum == 0) { return 0; }
-        foreach (ObjectProbalized<T> o in array) { o.probability /= sum; }
-        return sum ;
-    }
-
-    public static ObjectProbalized<T> Get ( ObjectProbalized<T>[] array, out int id )
-    {
-        if(array.Length == 0) { id = -1; return null; }
-        if(array.Length == 1 && array[0].isNull) { id = -1; return null; }
-
-        ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr,0 ); Flatten( ref _arr );
-
-        SetInterval( ref _arr );
-        float v = Random.Range(0,1f);
-
-        id = 0;
-        foreach (ObjectProbalized<T> obj in _arr)
-        {
-            if (obj.interval.Contains(v) ) { return obj; }
-            id++;
-        }
-        id = -1;
-
-        return null; 
-    }
-
-    public static ObjectProbalized<T> Get( ObjectProbalized<T>[] array )
-    {
-        int id = 0;
-        ObjectProbalized<T> selected = Get(array, out id);
-        /*
-        id = 0;int a = 0;
-        foreach (ObjectProbalized<T> o in array) { if (o == selected) { id = a; a++; } }
-        */
-        return selected;
-    }
-
-    public static implicit operator T ( ObjectProbalized<T> objectProbalizeds )
-    {
-        return objectProbalizeds.obj;
-    }
-
-    public static T[] ConvertArray( ObjectProbalized<T>[] objectProbalizeds )
-    {
-        T[] array = new T[objectProbalizeds.Length];
-
-        for(int i = 0 ; i < array.Length ; i++) { array[i] = objectProbalizeds[i].obj; }
-
-        return array;
-    }
-
-    public static ObjectProbalized<T>[] SetArray( T[] array , float[] probas = null)
-    {
-        ObjectProbalized<T>[] arr = new ObjectProbalized<T>[array.Length];
-
-        for(int i = 0 ; i < array.Length ; i++)
-        {
-            arr[i] = new ObjectProbalized<T>( array[i] , probas == null ? 1 : probas[i] );
+                //Debug.Log( obj.interval.ToString( "F2" ) );
+            }
         }
 
-        return arr;
+        public static float Sum ( ObjectProbalized<T>[] array )
+        {
+            float sum =0;
+            foreach (ObjectProbalized<T> o in array) { sum += o.probability; }
+            return sum;
+        }
+
+        public static float Flatten ( ref ObjectProbalized<T>[] array )
+        {
+            float sum = Sum( array ); if (sum == 0) { return 0; }
+            foreach (ObjectProbalized<T> o in array) { o.probability /= sum; }
+            return sum;
+        }
+
+        public static ObjectProbalized<T> Get ( ObjectProbalized<T>[] array , out int id )
+        {
+            if (array.Length == 0) { id = -1; return null; }
+            if (array.Length == 1 && array[0].isNull) { id = -1; return null; }
+
+            ObjectProbalized<T>[] _arr = new ObjectProbalized<T>[array.Length]; array.CopyTo( _arr , 0 ); Flatten( ref _arr );
+
+            SetInterval( ref _arr );
+            float v = Random.Range(0,1f);
+
+            id = 0;
+            foreach (ObjectProbalized<T> obj in _arr)
+            {
+                if (obj.interval.Contains( v )) { return obj; }
+                id++;
+            }
+            id = -1;
+
+            return null;
+        }
+
+        public static ObjectProbalized<T> Get ( ObjectProbalized<T>[] array )
+        {
+            int id = 0;
+            ObjectProbalized<T> selected = Get(array, out id);
+            /*
+            id = 0;int a = 0;
+            foreach (ObjectProbalized<T> o in array) { if (o == selected) { id = a; a++; } }
+            */
+            return selected;
+        }
+
+        public static implicit operator T ( ObjectProbalized<T> objectProbalizeds )
+        {
+            return objectProbalizeds.obj;
+        }
+
+        public static T[] ConvertArray ( ObjectProbalized<T>[] objectProbalizeds )
+        {
+            T[] array = new T[objectProbalizeds.Length];
+
+            for (int i = 0 ; i < array.Length ; i++) { array[i] = objectProbalizeds[i].obj; }
+
+            return array;
+        }
+
+        public static ObjectProbalized<T>[] SetArray ( T[] array , float[] probas = null )
+        {
+            ObjectProbalized<T>[] arr = new ObjectProbalized<T>[array.Length];
+
+            for (int i = 0 ; i < array.Length ; i++)
+            {
+                arr[i] = new ObjectProbalized<T>( array[i] , probas == null ? 1 : probas[i] );
+            }
+
+            return arr;
+        }
     }
-}
 
 [System.Serializable]
 public class ObjectProbalizedTyped<T> : ObjectProbalized<T>
-{
-    public string type;
-    public ObjectProbalizedTyped ( T _obje , float _p, string _t ) { obj = _obje; probability = _p; type = _t; }
-}
+    {
+        public string type;
+        public ObjectProbalizedTyped ( T _obje , float _p , string _t ) { obj = _obje; probability = _p; type = _t; }
+    }
 
 [System.Serializable]
 public struct RandomScalar
-{
-    public static float __1_1 { get { return Random.Range( -1f , 1f ); } }
-    public static float __10_10 { get { return Random.Range( -10f , 10f ); } }
-    public static float __100_100 { get { return Random.Range( -100f , 100f ); } }
-    public static float __1000_1000 { get { return Random.Range( -1000f , 1000f ); } }
-    public static float _0_1 { get { return Random.Range( 0 , 1f ); } }
-    public static float _0_10 { get { return Random.Range( 0 , 10f ); } }
-    public static float _0_100 { get { return Random.Range( 0 , 100f ); } }
-    public static float _0_1000 { get { return Random.Range( 0 , 1000f ); } }
-
-    public static float GetAround(float center,float amplitude,float curve )
     {
-        return GetBetween( center - amplitude / 2f , center + amplitude / 2f , curve );
+        public static float __1_1 { get { return Random.Range( -1f , 1f ); } }
+        public static float __10_10 { get { return Random.Range( -10f , 10f ); } }
+        public static float __100_100 { get { return Random.Range( -100f , 100f ); } }
+        public static float __1000_1000 { get { return Random.Range( -1000f , 1000f ); } }
+        public static float _0_1 { get { return Random.Range( 0 , 1f ); } }
+        public static float _0_10 { get { return Random.Range( 0 , 10f ); } }
+        public static float _0_100 { get { return Random.Range( 0 , 100f ); } }
+        public static float _0_1000 { get { return Random.Range( 0 , 1000f ); } }
+
+        public static float GetAround ( float center , float amplitude , float curve )
+        {
+            return GetBetween( center - amplitude / 2f , center + amplitude / 2f , curve );
+        }
+
+        public static float GetBetween ( float min , float max , float curve = 1 )
+        {
+            return Mathf.Pow( 1f / curve ,
+                Random.Range(
+                    Mathf.Pow( min , curve ) , Mathf.Pow( max , curve ) ) );
+        }
     }
 
-    public static float GetBetween(float min, float max, float curve = 1)
+[System.Serializable]
+public class toggler
+{
+    private List<trilean> toggles;
+    public trilean[] trileans { get { List < trilean > t = new List<trilean>( toggles ); t.Add( main ); return t.ToArray(); } }
+    [SerializeField]private trilean main;
+    [SerializeField]private Type type;
+
+    public bool Get ()
     {
-        return Mathf.Pow( 1f / curve ,
-            Random.Range( 
-                Mathf.Pow( min , curve ) , Mathf.Pow( max , curve ) ) );
+        if (toggles.Count <= 0) { return main; }
+        switch (type)
+        {
+            default: goto case Type.AND;
+            case Type.AND:
+                foreach (trilean b in trileans) { if (b.IsFalse) { return false; } }
+                return true;
+            case Type.OR:
+                foreach (trilean b in trileans) { if (b.IsTrue) { return true; } }
+                return false;
+        }
+    }
+
+    public int Set(bool b, int i = -1 ) { return Set( new trilean( b ) , i ); }
+
+    public int Set ( trilean b  , int i = -1 )
+    {
+        if (i < 0 || i >= toggles.Count)
+        {
+            toggles.Add( b ); return toggles.Count - 1;
+        }
+        else
+        {
+            toggles[i] = b; return i;
+        }
+    }
+
+    public void Remove ( int id ) { if (id >= 0 && id < toggles.Count) { toggles.RemoveAt( id ); } }
+
+    public toggler ( Type t , bool m, params bool[] b )
+    {
+        type = t;
+        main = new trilean( m );
+        toggles = new List<trilean>();
+        foreach (bool ba in b)
+        {
+            toggles.Add( new trilean( ba ) );
+        }
+    }
+    public toggler ( Type t ,trilean m, params trilean[] b )
+    {
+        type = t;
+        main = m;
+        toggles = new List<trilean>( b );
+    }
+    public static toggler ORYES { get { return new toggler( Type.OR , true ); } }
+    public static toggler ORNO { get { return new toggler( Type.OR , false ); } }
+    public static toggler ANDYES { get { return new toggler( Type.AND , true ); } }
+    public static toggler ANDNO { get { return new toggler( Type.AND , false ); } }
+
+    public static implicit operator bool ( toggler t ) { return t.Get(); }
+
+    [System.Serializable]
+    public struct actor
+    {
+        private toggler toggle;
+        private int id;
+
+        public actor ( toggler t ) { toggle = t; id = toggle.Set( false ); }
+
+        public bool Get () { return toggle; }
+        public void Yes () { toggle.Set( true , id ); }
+        public void No () { toggle.Set( false , id ); }
+        public void Neutral () { toggle.Set( trilean.Null , id ); }
+        public void Release () { toggle.Remove( id ); }
+
+        public static implicit operator bool ( actor t ) { return t.Get(); }
+    }
+
+    public struct replica
+    {
+        private toggler toggle;
+
+        public replica ( toggler t ) { toggle = t; }
+
+        public bool Get () { return toggle; }
+
+        public static implicit operator bool ( replica t ) { return t.Get(); }
+    }
+
+    public enum Type
+    {
+        AND,
+        OR
     }
 }
+
+
+[System.Serializable]
+public class combiner
+{
+    private List<float> coefs = new List<float>();
+    public float[] floats { get { List < float > t = new List<float>( coefs ); t.Add( main ); return t.ToArray(); } }
+    [SerializeField]private float main = 1;
+    [SerializeField]private Type type = Type.MULT;
+
+    public float Get ()
+    {
+        float r = main;
+
+        if (coefs != null)
+        {
+            foreach (float f in coefs)
+            {
+                switch (type)
+                {
+                    default: goto case Type.MULT;
+                    case Type.MULT: r *= f; break;
+                    case Type.ADD: r += f; break;
+                }
+            }
+        }
+        else
+        {
+            coefs = new List<float>();
+        }
+
+        return r;
+    }
+
+    public int Set(float f = float.NaN, int i = -1 )
+    {
+        if(f == float.NaN)
+        {
+            f = NeutralValue;
+        }
+
+        coefs ??= new List<float>();
+
+        if (i < 0 || i >= coefs.Count)
+        {
+            coefs.Add( f ); return coefs.Count - 1;
+        }
+        else
+        {
+            coefs[i] = f; return i;
+        }
+    }
+
+    public void Remove ( int id ) { if (coefs == null) { return; } if (id >= 0 && id < coefs.Count) { coefs.RemoveAt( id ); } }
+
+    public combiner ( Type t , float m , params float[] f )
+    {
+        type = t;
+        main = m;
+        coefs = new List<float>();
+        foreach (float a in f)
+        {
+            coefs.Add( a );
+        }
+    }
+
+    public static combiner MULT { get { return new combiner( Type.MULT , 1 ); } }
+    public static combiner ADD { get { return new combiner( Type.ADD , 0 ); } }
+
+    public static implicit operator float ( combiner t ) { return t.Get(); }
+
+    [System.Serializable]
+    public struct actor
+    {
+        private combiner combine;
+        private int id;
+
+        public actor ( combiner t ) { combine = t; id = combine.Set(  ); }
+
+        public float Get () { return combine; }
+        public void Release () { combine.Remove( id ); }
+
+        public static implicit operator float ( actor t ) { return t.Get(); }
+    }
+
+    public float NeutralValue { get
+        {
+            switch (type)
+            {
+                default:goto case Type.ADD; 
+                case Type.ADD: return 0;
+                case Type.MULT: return 1; 
+            }
+        } }
+
+    public enum Type
+    {
+        ADD,
+        MULT
+    }
+}
+
+[System.Serializable]
+public struct Normal
+{
+    public Vector3 point;
+    public Vector3 vector;
+    public float height;
+    public bool isNull;
+
+    public static Normal Null{get{return new Normal ( Vector3.zero, Vector3.zero,true); }}
+
+    public Normal(Vector3 p, Vector3 v ) { point = p; vector = v; isNull = false; height = vector.magnitude; }
+    public Normal(Vector3 p, Vector3 v, bool n) { point = p; vector = v; isNull = n; height = vector.magnitude; }
+}
+
 

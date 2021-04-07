@@ -34,6 +34,8 @@ public class InputManager : MonoBehaviour
 
     private void Awake ()
     {
+        instance = this;
+
         DontDestroyOnLoad( gameObject );
 
         SetupInputer(); SetupGameInputs();
@@ -355,4 +357,5 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public static InputManager instance;
 }

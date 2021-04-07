@@ -10,6 +10,7 @@ public class AudioPoint : MonoBehaviour
     public bool isPlaying { get { return audioSource.isPlaying; } }
     public bool isComplete { get { return ( audioSource != null && clips != null ) && ( clips != null ? clips.Length > 0 : false ); } }
     public float pitch { get { return isComplete ? audioSource.pitch : 0; } }
+    public float volume { get { return isComplete ? audioSource.volume : 0; } }
     public void SetAudio(AudioElement ae ){ AudioElement.SetupAudioSource( audioSource , ae );  }
     public void SetVolume(float v ) {  audioSource.volume = v;  }
     public void SetPitch(float p ) { audioSource.pitch = p; }

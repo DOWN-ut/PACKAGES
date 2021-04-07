@@ -28,12 +28,12 @@ public class ColorPalette_Editor : EditorWindow
         List<ColorPalette> foundPalettes = Asseting.FindAssetsByType<ColorPalette>();
         List<float> orders = new List<float>(); foreach(ColorPalette p in foundPalettes) { orders.Add( p.order ); }
 
-        List<float> sorted = Calculations.ListSorter(orders,true);
+        List<int> sorted; ArrayProcess.ListSorter(orders,out sorted);
 
         palettes = new List<ColorPalette>();
         for (int i = 0 ; i < foundPalettes.Count ;i++)
         {
-            palettes.Add( foundPalettes[(int)sorted[i]] );
+            palettes.Add( foundPalettes[sorted[i]] );
         }
 
         GUILayout.BeginHorizontal();

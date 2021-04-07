@@ -43,7 +43,9 @@ public class Physicbody : MonoBehaviour
     private Vector3 _gravityDirection;
     private float _gravityForce;
     private bool localGravity = false;
-    public bool useGravity = true;
+    public bool useGravity { get { return usingGravity; } }
+
+    public toggler usingGravity = new toggler(toggler.Type.AND,true);
 
     private PhysicMaterial physicMaterial;
     public Vector3 gravity { 
