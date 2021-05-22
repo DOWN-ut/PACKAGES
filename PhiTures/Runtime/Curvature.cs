@@ -70,7 +70,7 @@ public class Curvature {
             int p1ID = Mathf.CeilToInt(y/2f);
             int p2ID = Mathf.CeilToInt( (y+1.1f) / 2f );
 
-            Debug.Log( p2ID );
+            //Debug.Log( p2ID );
 
             Vector3 med = medians[medID];
             Vector3 p1 = pees[p1ID];
@@ -100,14 +100,30 @@ public class Curvature {
         return npees.ToArray();
     }
 
-    public void Process ( int smoothSteps = 1 )
+    public void Process ( int smoothSteps = 1 , float maxDistance = 100)
     {
         List<Vector3> precurve = new List<Vector3>();
 
-        for(int i = 0 ; i < points.Count ; i++)
+        for(int i = 0 ; i < points.Count - 1 ; i++)
         {
-            precurve.Add( points[i] );
+            Vector3 d = (points[i+1] - points[i] );
+
+            if (d.magnitude >= maxDistance)
+            {
+                Vector3 np = points[i];
+                for (int z = 0 ; z < 20 && d.magnitude > maxDistance ; z++ )
+                {
+                    precurve.Add( np );
+                    np += d.normalized * maxDistance;
+                    d = (points[i + 1] - np);
+                }
+            }
+            else
+            {
+                precurve.Add( points[i] );
+            }
         }
+        precurve.Add( points[points.Count -1] );
 
         for (int i = 0 ; i < smoothSteps ; i++)
         {

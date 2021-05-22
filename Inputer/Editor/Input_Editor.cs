@@ -33,6 +33,9 @@ public class Input_Editor : Editor
         sp = serializedObject.FindProperty( "lookSensibility" );
         EditorGUILayout.PropertyField( sp );
 
+        sp = serializedObject.FindProperty( "tapInterval" );
+        EditorGUILayout.PropertyField( sp );
+
         serializedObject.ApplyModifiedProperties();
     }
 

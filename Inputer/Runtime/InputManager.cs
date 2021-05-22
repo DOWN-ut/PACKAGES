@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour
     public Vector2 movement {
         get
         {
-            return new Vector2( Get( "forward" ) ? 1 : Get( "backward" ) ? -1 : 0 , Get( "rightward" ) ? -1 : Get( "leftward" ) ? 1 : 0 );
+            return new Vector2( Get( "rightward" ) ? 1 : Get( "leftward" ) ? -1 : 0, Get( "forward" ) ? 1 : Get( "backward" ) ? -1 : 0 );
         }
     }
     public Vector2 look { get { _look = GetV( "look" ); return profile.Look(_look); } }
@@ -253,6 +253,15 @@ public class InputManager : MonoBehaviour
 
         return Vector2.zero;
     }
+    
+    public InputStruct GetStruct(string _key )
+    {
+        foreach (InputElement ie in gameinputs)
+        {
+            if (ie.name == _key) { return ie; }
+        }
+        return InputStruct.Null;
+    }
 
     public int GetCount( string _key )
     {
@@ -304,11 +313,43 @@ public class InputManager : MonoBehaviour
 
     #endregion
 
-    public IEnumerator TapCoroutine (InputElement ie, float tapInterval = 0.1f)
+    public IEnumerator TapCoroutine (InputElement ie, float tapInterval = 0)
     {
+        tapInterval = tapInterval == 0 ? profile.tapInterval : tapInterval;
         ie.taps.Add( true );//print( ie.name );
         yield return new WaitForSeconds( tapInterval );
         ie.taps.RemoveAt( 0 );
+    }
+
+    public struct InputStruct
+    {
+        public bool boolValue;
+        public Vector2 vectorValue;
+        public int tapCount;
+
+        public InputStruct(bool b, Vector2 v, int t ) { boolValue = b; vectorValue = v; tapCount = t; }
+
+        public static  InputStruct Null { get { return new InputStruct( false , Vector2.zero , 0 ); } }
+
+        public static implicit operator InputStruct (InputElement ie )
+        {
+            return new InputStruct( ie.boolValue , ie.vectorValue , ie.tapCount );
+        }
+
+        public static implicit operator bool ( InputStruct i )
+        {
+            return i.boolValue;
+        }
+
+        public static implicit operator Vector2 ( InputStruct i )
+        {
+            return i.vectorValue;
+        }
+
+        public static implicit operator int ( InputStruct i )
+        {
+            return i.tapCount;
+        }
     }
 
     [System.Serializable]

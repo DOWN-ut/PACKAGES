@@ -5,6 +5,7 @@ using UnityEngine;
 public class Input_Profile : MonoBehaviour
 {
     public string layout = "qwerty";
+    public float tapInterval = 0.15f;
     [Space(10)]
     public List<InputElement> inputs = new List<InputElement>();
 

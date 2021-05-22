@@ -18,15 +18,10 @@ public class Calculations : MonoBehaviour
  new List<char>() { '*','/'},
  new List<char>() { '^'}
     };
-
-
     public static void ValueTowards(ref float value, float to,float speed )
     {
         value = Mathf.MoveTowards( value , to , speed );
     }
-
-
-
     /// <summary>
     /// Return the index of the first true-bool in the given ones. -1 if none are.
     /// </summary>
@@ -38,7 +33,6 @@ public class Calculations : MonoBehaviour
         }
         return -1;
     }
-
     public static float FloatTransfert(ref float from,ref float to )
     {
         float to0 = to;
@@ -48,9 +42,6 @@ public class Calculations : MonoBehaviour
 
         return t;
     }
-
-
-
     public static float ConcatFloats(params float[] f )
     {
         float r = 0;
@@ -62,12 +53,10 @@ public class Calculations : MonoBehaviour
 
         return r;
     }
-
     public static float Restric(float value, float max,float min )
     {
         return value > max ? max : value < min ? min : value;
     }
-
     public static List<object> ConcatFieldsInList(object[] list , string varName )
     {
         List<object> nl = new List<object>();
@@ -83,8 +72,6 @@ public class Calculations : MonoBehaviour
 
         return nl;
     }
-
-
     /// <summary>
     /// Applies the given formula to the given value
     /// </summary>
@@ -195,6 +182,50 @@ public class Calculations : MonoBehaviour
 
         return str;
     }
+
+    /// <summary>
+    /// Creates a loop using the gives function
+    /// </summary>
+    /// <param name="f">Function</param>
+    /// <param name="x">Given value, between 0 and 2 : 0 to 1 first part loop, 1 to 2 second part loop </param>
+    /// <param name="lerpBetween"></param>
+    /// <returns></returns>
+    public static float LoopFunctionProcess( LoopFunction f , float x)
+    {
+        x = (x <= 1) ? (x) : ( 2 - x );
+
+        switch(f.function)
+        {
+            default:goto case LoopFunctionType.Linear;
+            case LoopFunctionType.Linear:
+                return x;
+            case LoopFunctionType.Sinus:
+                return Mathf.Sin( x * Mathf.PI );
+            case LoopFunctionType.Cosinus:
+                return Mathf.Cos( x * Mathf.PI );
+            case LoopFunctionType.Power:
+                return Mathf.Pow( x , f.argument );
+        }
+    }
+
+    public struct LoopFunction
+    {
+        public LoopFunctionType function;
+        public float argument;
+
+        public static LoopFunction Sinus { get { return new LoopFunction( LoopFunctionType.Sinus , 0 ); } }
+
+        public LoopFunction(LoopFunctionType f ) { function = f; argument = 0; }
+        public LoopFunction(LoopFunctionType f , float a) { function = f; argument = a; }
+    }
+
+    public enum LoopFunctionType
+    {
+        Linear,
+        Sinus,
+        Cosinus,
+        Power
+    }
 }
 /// <summary>
 /// Transform and Vector functions
@@ -280,7 +311,7 @@ public class TransformProcess
 
         return r / p.Length;
     }
-}
+}   
 /// <summary>
 /// String functions
 /// </summary>
@@ -322,6 +353,8 @@ public class StringProcess
     /// <returns></returns>
     public static string Capitalize ( string str )
     {
+        if(str.Length <= 0) { return str; }
+
         string n = LowToUpChar(str[0]).ToString();
         for (int i = 1 ; i < str.Length ; i++)
         {
@@ -1428,43 +1461,118 @@ public struct writing
 
 [System.Serializable]
 public struct interval
+{
+    public float _bottom;
+    public float _top;
+
+    public float top { get { return _top; } set { _top = value; _bottom = _bottom > _top ? _top : _bottom; } }
+    public float bottom { get { return _bottom; } set { _bottom = value; _top = _top < _bottom ? _bottom : _top; } }
+    public float middle { get { return ( _top + _bottom ) * .5f; } }
+    public float amplitude { get { return top - bottom; } }
+    public float random { get { return Random.Range( bottom , top ); } }
+
+    public static interval Null { get { return new interval( 0 , 0 ); } }
+    public static interval Default { get { return new interval( -1 , 1 ); } }
+    public interval ( float _top_ , float _bottom_ ) { _bottom = _bottom_; _top = _top_; bottom = _bottom; top = _top; }
+    public static interval CreateFromTop ( float _top_ , float _amplitude_ ) { return new interval( _top_ , _top_ - _amplitude_ ); }
+    public static interval CreateFromBottom ( float _bottom_ , float _amplitude_ ) { return new interval( _bottom_ + _amplitude_ , _bottom_ ); }
+
+    /// <summary>
+    /// Cut the interval at the given positions
+    /// </summary>
+    /// <param name="ats"></param>
+    /// <returns></returns>
+    public interval[] Cut(params float[] ats )
     {
-        public float _bottom;
-        public float _top;
+        if(ats.Length <= 0) { return this; }
 
-        public float top { get { return _top; } set { _top = value; _bottom = _bottom > _top ? _top : _bottom; } }
-        public float bottom { get { return _bottom; } set { _bottom = value; _top = _top < _bottom ? _bottom : _top; } }
-        public float amplitude { get { return top - bottom; } }
-        public float random { get { return Random.Range( bottom , top ); } }
+        List<interval> ints = new List<interval>();
 
-        public static interval Null { get { return new interval( 0 , 0 ); } }
-        public static interval Default { get { return new interval( -1 , 1 ); } }
-        public interval ( float _top_ , float _bottom_ ) { _bottom = _bottom_; _top = _top_; bottom = _bottom; top = _top; }
-        public static interval CreateFromTop ( float _top_ , float _amplitude_ ) { return new interval( _top_ , _top_ - _amplitude_ ); }
-        public static interval CreateFromBottom ( float _bottom_ , float _amplitude_ ) { return new interval( _bottom_ + _amplitude_ , _bottom_ ); }
-        public bool Contains ( float v )
+        foreach(float at in ats)
         {
-            return v >= _bottom && v <= _top;
+            if(at <= bottom || at >= top) { continue; }
+
+            if(ints.Count <= 0) { ints.Add(new interval(at,bottom)); ints.Add( new interval( top , at ) ); }
+            else
+            {
+                foreach(interval i in ints)
+                {
+                    if (i.Contains( at ))
+                    {
+                        ints.Add( new interval( at , i.bottom ) ); ints.Add( new interval( i.top , at ) ); break;
+                    }
+                }
+            }
         }
 
-        public string ToString ( string F )
-        {
-            return _bottom.ToString( F ) + " | " + _top.ToString( F );
-        }
-
-        public float GetRatio ( float v , bool crop = false )
-        {
-            float r = ( v - bottom ) / ( top - bottom );
-            return !crop ? r : ( r < 0 ? 0 : r > 1 ? 1 : r );
-        }
-
-        public float Get ( float r )
-        {
-            return Mathf.Lerp( bottom , top , r );
-        }
-
-        public static implicit operator float ( interval i ) { return i.random; }
+        return ints.ToArray();
     }
+
+    /// <summary>
+    /// Separate the interval into to parts, separated by a gap from b to t
+    /// </summary>
+    /// <param name="b"></param>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    public interval[] Separate ( float b , float t )
+    {
+        if (b <= bottom) { return new interval[1] { new interval( top , t ) }; }
+
+        if (t >= top) { return new interval[1] { new interval( b , bottom ) }; }
+
+        return new interval[2] { new interval( b , bottom ) , new interval( top , t ) };
+    }
+
+    public float DistanceFrom(float v )
+    {
+        if (Contains( v )) { return 0; }
+
+        return Mathf.Min( Mathf.Abs( v - bottom ) , Mathf.Abs( v - top ) );
+    }
+
+    public float MinEdgeDistance(float v ){  return Mathf.Min( TopDistance( v ) , BottomDistance( v ) ); }
+    public float MaxEdgeDistance(float v ){  return Mathf.Max( TopDistance( v ) , BottomDistance( v ) ); }
+    public float TopDistance(float v ) { return Mathf.Abs( top - v ); }
+    public float BottomDistance(float v ) { return Mathf.Abs( bottom - v ); }
+
+    /// <summary>
+    /// True if the closest edge is Top, false if it is Bottom | True if a the same distance
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public bool ClosestEdge(float v ) { return TopDistance( v ) <= BottomDistance( v ); }
+    public bool Contains ( float v , bool exclusiveBot = false , bool exclusiveTop = false )
+    {
+        return  exclusiveBot ?  ( v > _bottom && v <= _top ) :
+                exclusiveTop ?  ( v >= _bottom && v < _top ) :
+                                ( v >= _bottom && v <= _top ); 
+    }
+    public bool Intersect ( interval a )
+    {
+        return Contains( a.bottom ) || Contains( a.top );
+    }
+    public void MoveRight(float v ) { _bottom += v; _top += v; }
+    public void MoveLeft(float v ) { _bottom -= v; _top -= v; }
+
+    public string ToString (string F = "F1", char a = '[' , char b = ',' ,  char c = ']')
+    {
+        return a.ToString() + " " + _bottom.ToString( F ) + " " + b.ToString() + " " + _top.ToString( F ) + " " + c.ToString() ;
+    }
+
+    public float GetRatio ( float v , bool crop = false )
+    {
+        float r = ( v - bottom ) / ( top - bottom );
+        return !crop ? r : ( r < 0 ? 0 : r > 1 ? 1 : r );
+    }
+
+    public float Get ( float r )
+    {
+        return Mathf.Lerp( bottom , top , r );
+    }
+
+    public static implicit operator float ( interval i ) { return i.random; }
+    public static implicit operator interval[] ( interval i ) { return new interval[1] { i }; }
+}
 
 [System.Serializable]
 public struct AudioElement
@@ -1854,6 +1962,356 @@ public struct Normal
 
     public Normal(Vector3 p, Vector3 v ) { point = p; vector = v; isNull = false; height = vector.magnitude; }
     public Normal(Vector3 p, Vector3 v, bool n) { point = p; vector = v; isNull = n; height = vector.magnitude; }
+
+    public static Normal AverageOf(params Normal[] normals)
+    {
+        Vector3 p = Vector3.zero; Vector3 d = Vector3.zero; bool nu = true;
+
+        foreach(Normal n in normals)
+        {
+            if (nu) { nu = nu && n.isNull; }
+            if (n.isNull) { continue; }
+            p += n.point;
+            d += n.vector;
+        }
+
+        if (nu) { return Null; }
+
+        return new Normal( p / normals.Length , d / normals.Length, nu );
+    }
+}
+
+[System.Serializable]
+public class LineArray<T>
+{
+    private float width = 1; public float getWidth { get { return width; } }
+
+    [SerializeField] private List<Element<T>> list; public Element<T>[] getList { get { return list.ToArray(); } } public int count { get { return list == null ? 0 : list.Count; } }
+
+    private List<intervalID> intervals; public intervalID[] getIntervals { get { return intervals.ToArray(); } }
+
+    public int Add(T obj,float wid,AddMode mode = AddMode.Random )
+    {
+        if(intervals.Count <= 0) { return -1; }
+
+        int r = -1; interval ninte = interval.Null;
+        switch (mode)
+        {
+            default:goto case AddMode.Random;
+
+            case AddMode.Random:
+                List<intervalID> rlist = new List<intervalID>(intervals);
+
+                for (int i = 0 ; i < intervals.Count ; i++)
+                {
+                    int ran = Random.Range(0,rlist.Count);
+                    intervalID itd = rlist[ran];
+
+                    if (itd.inter.amplitude < wid) { rlist.RemoveAt( ran ); }
+                    else
+                    {
+                        float wid2 = wid/2f;
+                        float mid =(itd.inter.top+itd.inter.bottom)/2f;
+                        ninte = new interval( mid + wid2 , mid - wid2 );
+                        r = itd.id ;
+                        break;
+                    }
+                }
+                break;
+
+            case AddMode.Center:
+                List<intervalID> nlist = new List<intervalID>(intervals);
+
+                for (int i = 0 ; i < intervals.Count ; i++)
+                {
+                    int itdID; float w2 = width/2f;
+                    intervalID itd = GetIntervalAtPosition( w2 , out itdID , nlist);
+                    if (itd.inter.amplitude < wid) { nlist.RemoveAt( itdID ); }
+                    else
+                    {
+                        float wid2 = wid/2f;
+                        float mid = 
+                            itd.inter.Contains(w2) ? 
+                                (itd.inter.MinEdgeDistance(w2) >= wid ? (w2) :
+                                                                        (itd.inter.ClosestEdge(w2) ?    (itd.inter.top - wid2) :
+                                                                                                        (itd.inter.bottom + wid2) )) :
+                            (itd.inter.bottom >= w2) ?  (itd.inter.bottom + wid2) :
+                            (itd.inter.top <= w2) ?     (itd.inter.top - wid2) :
+                                                        ((itd.inter.top+itd.inter.bottom)/2f);
+
+                        ninte = new interval( mid + wid2 , mid - wid2 );
+                        r = (itd.id == 0) ? 0 : (itd.id + 1) ;
+                        break;
+                    }
+                }
+                break;
+
+            case AddMode.Right: goto case AddMode.Left;
+            case AddMode.Left:
+                int min = (mode == AddMode.Left) ? 0 : (intervals.Count - 1);
+                int max = (mode == AddMode.Left) ? (intervals.Count - 1) : 0;
+
+                for (int i = min ; ( mode == AddMode.Left ) ? ( i <= max ) : ( i >= max ) ; i += ( mode == AddMode.Left ) ? 1 : -1)
+                {
+                    if (intervals[i].inter.amplitude >= wid)
+                    {
+                        ninte = ( mode == AddMode.Left ) ? interval.CreateFromBottom( intervals[i].inter.bottom , wid ) : interval.CreateFromTop( intervals[i].inter.top , wid );
+                        r = intervals[i].id + 1; break;
+                    }
+                }
+                break;
+        }
+
+        if (r == -1) { return -1; }
+
+        if (r >= count || count <= 0)
+        {
+            list.Add( new Element<T>( obj , ninte ) ); Debug.Log( "Added at :" + r);
+        }
+        else
+        {
+            list.Insert( r , new Element<T>( obj , ninte ) ); Debug.Log( "Inserted at :" + r );
+        }
+
+        UpdateIntervals();
+        return r;
+    }
+
+    void UpdateIntervals ()
+    {
+        intervals = new List<intervalID>();
+        interval last = new interval(width,0);
+
+        if (count <= 0) { intervals.Add(new intervalID( last , 0)); return; }
+
+        for(int i = 0 ; i < count ;i++)
+        {
+            intervalID[] arr = intervalID.FromIntervalArray(last.Separate( Get(i).position.bottom , Get(i).position.top ));
+
+            string str = i.ToString() + "   |   ";
+            foreach(intervalID idt in arr) { str += idt.ToString() + " "; } 
+
+            if(i == (count - 1))
+            {
+                arr[0].id = i;  
+                intervals.Add( arr[0] );
+
+                if (arr.Length == 2)
+                {
+                    arr[1].id = i + 1;
+                    intervals.Add( arr[1] );
+                }
+
+                last = arr[0];
+            }
+            else if (arr.Length == 2)
+            {
+                arr[0].id = i;
+                intervals.Add( arr[0] );        //If the separation returns 2 intervals, then the first is bellow the current element ; if only 1, it is above it
+                last = arr[1];
+            }
+            else { last = arr[0];}
+
+            str += "    " + last.ToString();
+            Debug.Log( str );
+        }
+
+        foreach(intervalID it in intervals.ToArray())
+        {
+            if(it.inter.amplitude <= 0) { intervals.Remove( it ); }
+        }
+
+    }
+
+
+    /*
+    public int Add(T obj, float wid, out interval[] valids , AddMode mode = AddMode.Random )
+    {
+        if (list == null) { list = new List<Element<T>>(); }
+
+        if (list.Count > 0)
+        {
+            interval inter = interval.CreateFromBottom(0,wid);
+            List<interval> li = new List<interval>();
+            List<int> ids = new List<int>();
+
+            int i = -1;
+            foreach (Element<T> e in list)
+            {
+                i++;
+
+                if (inter.Contains( width , true )) { break; }                                 //Stop if we reach the top-limit of the LineArray
+                else if (inter.Contains( e.position.bottom ))
+                {
+                    inter.MoveRight( e.position.top - inter.bottom ); continue;      //If we intersect an element on the right, jump over it to the right 
+                }
+                else if (inter.Contains( e.position.top ))
+                {
+                    inter.MoveRight( e.position.top - inter.bottom );  continue;         //If we intersect an element on the left, move to the right
+                }
+                else
+                {
+                    li.Add( inter ); ids.Add( i );                              //If we do not intersect with anything, add the current interval to the list, and move to the right
+                    inter.MoveRight( wid ); continue;
+                }
+            }
+
+            while( !inter.Contains(width,false,true) && i < 50)
+            {
+                li.Add( inter ); ids.Add( i ); i++;
+                inter.MoveRight( wid );
+            }
+
+            if (li.Count <= 0) { valids = new interval[0]; return -1; }
+            valids = li.ToArray();
+
+            int selected = 0;
+            switch (mode)
+            {
+                default: goto case AddMode.Random;
+                case AddMode.Random:
+                    selected = Random.Range( 0 , ids.Count );
+                    break;
+
+                case AddMode.Left:
+                    selected = 0;
+                    break;
+
+                case AddMode.Right:
+                    selected = valids.Length - 1;
+                    break;
+
+                case AddMode.Center:
+                    float mid = width/2f; selected = 0; float min = float.MaxValue;
+                    for (i = 0 ; i < valids.Length ; i++)
+                    {
+                        if (valids[i].Contains( mid )) { selected = i; break; }
+
+                        float topD = (mid - valids[i].top);
+                        if (topD > 0 && topD < min) { min = topD; selected = i; continue; }
+
+                        float botD = (valids[i].bottom - mid);
+                        if (botD > 0 && botD < min) { min = botD; selected = i; continue; }
+                    }
+
+                    break;
+            }
+
+            list.Insert(Mathf.Min(ids[selected],list.Count-1) , new Element<T>( obj , valids[selected] ) );
+            return selected;
+        }
+        else
+        {
+            switch (mode)
+            {
+                default: goto case AddMode.Random;
+                case AddMode.Random:
+                    float bot1 = Random.Range(0,width-wid);
+                    list.Add( new Element<T>( obj , interval.CreateFromBottom(bot1, bot1 + wid ) ));
+                    break;
+
+                case AddMode.Left:
+                    list.Add(new Element<T>( obj , interval.CreateFromBottom( 0 , wid ) ) );
+                    break;
+
+                case AddMode.Right:
+                    list.Add( new Element<T>( obj , interval.CreateFromBottom( width - wid , width ) ) );
+                    break;
+
+                case AddMode.Center:
+                    float bot0 = (width/2f) - (wid/2f); 
+                    list.Add( new Element<T>( obj , interval.CreateFromBottom( bot0 , bot0 + wid ) ) );
+                    break;
+            }
+            valids = new interval[0];
+            return 0;
+        }
+    }
+    */
+
+    public Element<T> Get(int id ) { return list == null ? null : id < 0 ? null : id > list.Count ? null : list[id]; }
+    public void Set ( T obj , int id )
+    {
+        if (list == null ? true : ( id < 0 || id > list.Count )) { return; }
+
+        list[id].obj = obj;
+    }
+
+    public intervalID GetIntervalAtPosition(float p , out int itdID , List<intervalID> nlist = null  )
+    {
+        if (nlist == null) { nlist = intervals; }
+        intervalID inter = intervals.Count <= 0 ? (intervalID)interval.Null : intervals[0];
+
+        float minD = float.MaxValue; int i = 0; itdID = 0;
+        foreach (intervalID id in nlist)
+        {
+            if (id.inter.Contains( p )) { itdID =i; return id; }
+
+            float d = id.inter.DistanceFrom(p);
+            if(d < minD) { inter = id; minD = d; itdID = i; }
+
+            i++;
+        }
+
+        return inter;
+    }
+
+    public void RemoveAt(int i )
+    {
+        if(i < 0 || i >= list.Count) { return; }
+        list.RemoveAt( i );
+    }
+
+    public bool empty { get { return list == null; } }
+
+    public Element<T>[] ToArray ()
+    {
+        return list.ToArray();
+    }
+
+    public LineArray(float w ) { width = w; list = new List<Element<T>>(); intervals = new List<intervalID>(); UpdateIntervals(); }
+
+    public class Element<T>
+    {
+        public T obj;
+        public interval position;
+
+        public Element (T o, interval i) {obj = o ; position = i;}
+    }
+
+    public struct intervalID
+    {
+        public interval inter;
+        public int id;
+
+        public intervalID ( interval i ) { inter = i; id = 0; }
+        public intervalID ( interval i, int d ) { inter = i; id = d; }
+
+        public static implicit operator interval (intervalID i ) { return i.inter; }
+        public static implicit operator intervalID (interval i ) { return new intervalID(i); }
+
+        public static intervalID[] FromIntervalArray ( interval[] ints )
+        {
+            intervalID[] arr = new intervalID[ints.Length];
+            for(int i = 0 ; i < ints.Length ;i++)
+            {
+                arr[i] = new intervalID( ints[i] );
+            }
+            return arr;
+        }
+
+        public string ToString ( string F = "F1" , char a = '[' , char b = ',' , char c = ']' ) { return inter.ToString(F,a,b,c); }
+    }
+
+    public static implicit operator Element<T>[] (LineArray<T> l ) { return l.list.ToArray(); }
+
+    public enum AddMode
+    {
+        Random,
+        Left,
+        Right,
+        Center
+    }
 }
 
 

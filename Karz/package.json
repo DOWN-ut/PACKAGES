@@ -1,0 +1,25 @@
+{
+  "name": "com.downun-karz",
+  "version": "1.0.0",
+  "displayName": "Karz",
+  "description": "This package contains extensions to the Unity wheel-system and others tools to make car/racing games",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "dependencies":{
+	"com.downun-phitures":"1.0.0"
+  },
+  "keywords": [
+    "cars",
+"race" 
+  ],
+  "author": {
+    "name": "Saint-Val Yahnis",
+    "email": "xynhay0@gmail.com"
+  },
+  "hideInEditor": false,
+   "dependencies":
+          {
+            "com.downun-phitures": "1.0.1"
+          },
+ "testables" : [ "com.downun-phitures" ]
+}

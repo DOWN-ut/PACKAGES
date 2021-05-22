@@ -1276,7 +1276,7 @@ public class @INPUT : IInputActionCollection, IDisposable
                     ""id"": ""240545ee-5bdf-43fa-9701-adfb05821497"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=10,y=10)"",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""RightJoystick"",
                     ""isComposite"": false,
